@@ -5,9 +5,9 @@ branding:
   icon: hash
   color: black
 inputs:
-  # github-token:
-  #   description: Github token
-  #   default: ${{ github.token }}
+  github-token:
+    description: Github token
+    default: ${{ github.token }}
   yaml-form:
     description: 'The location of the yaml form file'
     default: '.github/ISSUE_TEMPLATE/bug_report.yml'
