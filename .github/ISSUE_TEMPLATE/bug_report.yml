@@ -405,6 +405,14 @@ body:
         - 0.1.0
     validations:
       required: true
+  - type: dropdown
+    id: custom
+    attributes:
+      label: custom tags
+      description: adding custom tags
+      options:
+    validations:
+      required: true
   - type: input
     id: node_version
     attributes:

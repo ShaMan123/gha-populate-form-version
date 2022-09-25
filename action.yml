@@ -61,5 +61,4 @@ runs:
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        github_token: ${{ inputs.github_token }}
         commit_message: ${{ inputs.commit_message }}
