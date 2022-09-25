@@ -6551,5 +6551,6 @@ try {
 	cp__default["default"].execSync(`git commit -m "${commitMessage}"`);
 	cp__default["default"].execSync(`git push`);
 } catch (error) {
+	console.log(error);
 	coreExports.setFailed(error);
 }

@@ -37,5 +37,6 @@ try {
 	cp.execSync(`git commit -m "${commitMessage}"`);
 	cp.execSync(`git push`);
 } catch (error) {
+	console.log(error);
 	setFailed(error);
 }

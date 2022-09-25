@@ -39,7 +39,7 @@ inputs:
   tags:
     description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit-to`'
   commit-message:
-    default: 'dfgdfg'
+    default: 'chore(): update bug report version'
     type: string
 outputs:
   tags:
