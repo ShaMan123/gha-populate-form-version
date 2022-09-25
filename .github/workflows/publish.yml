@@ -15,8 +15,12 @@ jobs:
     name: Update bug report version to ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v2
-      # - uses: actions/setup-node@v3
-      - name: 'do it!'
+      - name: Update bug report fabric
         uses: ./
         with:
-          package: 'fabric'
+          package: fabric
+      - name: Update bug report lodash
+        uses: ./
+        with:
+          package: lodash
+          dropdown-id: lodash
