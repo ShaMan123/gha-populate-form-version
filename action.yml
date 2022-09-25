@@ -30,9 +30,9 @@ inputs:
     description: 'Display order of populated tags (`asc | desc`)'
     default: 'desc'
     type: choice
-      options:
-      - desc
-      - asc
+    options:
+    - desc
+    - asc
   limit-to:
     description: 'limit populated tags'
     type: number
