@@ -1,0 +1,37 @@
+name: Populate Yaml Dropdown Version
+description: Populates the package version dropdown of a yaml form
+author: ShaMan123
+branding:
+  icon: hash
+  color: black
+inputs:
+  # github-token:
+  #   description: Github token
+  #   default: ${{ github.token }}
+  yaml-form:
+    description: The location of the yaml form file
+    default: .github/ISSUE_TEMPLATE/bug_report.yml
+  dropdown-id:
+    description: The id of the dropdown in the yaml form to populate tags into
+    default: .github/ISSUE_TEMPLATE/bug_report.yml
+  package:
+    description: The name of the published package
+    default: ${{ env.npm_package_name }}
+  registry:
+    description: The name of the published package
+    default: npm
+  order:
+    description: display order of populated tags (`asc | desc`)
+    default: desc
+  limit-to:
+    description: limit populated tags
+  tags:
+    description: provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit-to`
+  commit-message:
+    default: 'chore(): update bug report version'
+outputs:
+  tags:
+    description: an array of the resulting tags
+runs:
+  using: node16
+  main: dist/main.js
