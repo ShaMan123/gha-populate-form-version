@@ -17,7 +17,6 @@
 	"scripts": {
 		"build": "rollup -c",
 		"test": "jest --passWithNoTests --coverage",
-		"local": "babel-node src/cli",
 		"format": "prettier --write src/*.js src/**/*.js"
 	},
 	"dependencies": {
