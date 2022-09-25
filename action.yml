@@ -10,19 +10,19 @@ inputs:
   #   default: ${{ github.token }}
   yaml-form:
     description: The location of the yaml form file
-    default: .github/ISSUE_TEMPLATE/bug_report.yml
+    default: '.github/ISSUE_TEMPLATE/bug_report.yml'
   dropdown-id:
     description: The id of the dropdown in the yaml form to populate tags into
-    default: version
+    default: 'version'
   package:
     description: The name of the published package
-    default: ${{ github.context.payload.repository.name }}
+    default: '${{ github.context.payload.repository.name }}'
   registry:
     description: The name of the published package
-    default: npm
+    default: 'npm'
   order:
     description: display order of populated tags (`asc | desc`)
-    default: desc
+    default: 'desc'
   limit-to:
     description: limit populated tags
   tags:
