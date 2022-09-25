@@ -18,7 +18,7 @@ inputs:
     type: string
   package:
     description: 'The name of the published package'
-    default: '${{ github.context.payload.repository.name }}'
+    default: ${{ github.context.payload.repository.name }}
     type: string
   registry:
     description: 'The name of the published package'
@@ -36,9 +36,9 @@ inputs:
   limit_to:
     description: 'limit populated tags'
     type: number
-  tags:
-    description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit_to`'
-    type: sequence
+  # tags:
+  #   description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit_to`'
+  #   type: sequence
   commit_message:
     default: 'chore(): update bug report version'
     type: string
@@ -58,7 +58,7 @@ runs:
         INPUT_REGISTRY: ${{ inputs.registry }}
         INPUT_ORDER: ${{ inputs.order }}
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
-        INPUT_TAGS: ${{ inputs.tags }}
+        # INPUT_TAGS: ${{ inputs.tags }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
