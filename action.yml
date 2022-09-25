@@ -11,24 +11,36 @@ inputs:
   yaml-form:
     description: The location of the yaml form file
     default: '.github/ISSUE_TEMPLATE/bug_report.yml'
+    type: string
   dropdown-id:
     description: The id of the dropdown in the yaml form to populate tags into
     default: 'version'
+    type: string
   package:
     description: The name of the published package
     default: '${{ github.context.payload.repository.name }}'
+    type: string
   registry:
     description: The name of the published package
     default: 'npm'
+    type: choice
+      options:
+      - npm
   order:
     description: display order of populated tags (`asc | desc`)
     default: 'desc'
+    type: choice
+      options:
+      - desc
+      - asc
   limit-to:
     description: limit populated tags
+    type: number
   tags:
     description: provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit-to`
   commit-message:
     default: 'chore(): update bug report version'
+    type: string
 outputs:
   tags:
     description: an array of the resulting tags
