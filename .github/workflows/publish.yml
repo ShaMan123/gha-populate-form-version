@@ -28,7 +28,7 @@ jobs:
       - name: Update bug report custom
         uses: ./
         with:
-          # package: pip
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           dropdown: custom
           registry: github
           # tags: [a, b, c, d, e]

@@ -53,6 +53,7 @@ runs:
       run: node dist/main.cjs
       shell: bash
       env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         INPUT_FORM: ${{ inputs.form }}
         INPUT_DROPDOWN: ${{ inputs.dropdown }}
         INPUT_PACKAGE: ${{ inputs.package }}

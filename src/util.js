@@ -11,12 +11,7 @@ function listNPMTags(packageName) {
 }
 function listGithubReleases() {
 	return github
-		.getOctokit(
-			getInput('github_token', {
-				trimWhitespace: true,
-				required: true,
-			}),
-		)
+		.getOctokit(process.env.GITHUB_TOKEN)
 		.rest.repos.listReleases(github.context.repo);
 }
 export async function listTags(registry, packageName, order, limitTo) {
