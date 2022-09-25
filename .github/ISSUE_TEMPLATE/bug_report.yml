@@ -10,9 +10,7 @@ body:
     id: terms
     attributes:
       label: CheckList
-      description: >-
-        By submitting this issue, you agree to follow our [Code of
-        Conduct]()
+      description: By submitting this issue, you agree to follow our [Code of Conduct]()
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
@@ -24,8 +22,7 @@ body:
         If you are working on a version below latest you should upgrade to
         latest before filing a bug report, your issue might have been resolved
         already.
-      options:
-        - latest
+      options: []
     validations:
       required: true
   - type: input
