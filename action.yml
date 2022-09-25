@@ -33,5 +33,9 @@ outputs:
   tags:
     description: an array of the resulting tags
 runs:
-  using: node16
-  main: dist/main.js
+  using: composite
+  steps:
+    - run: node dist/main.js
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: ${{ inputs.commit-message }}

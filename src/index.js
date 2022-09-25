@@ -14,9 +14,9 @@ try {
 		core.getInput('tags') || listTags(registry, packageName, order, limitTo);
 	core.setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
-	cp.execSync(`git add ${form}`);
-	cp.execSync(`git commit -m "${commitMessage}"`);
-	cp.execSync(`git push`);
+	// cp.execSync(`git add ${form}`);
+	// cp.execSync(`git commit -m "${commitMessage}"`);
+	// cp.execSync(`git push`);
 } catch (error) {
 	core.setFailed(error);
 }
