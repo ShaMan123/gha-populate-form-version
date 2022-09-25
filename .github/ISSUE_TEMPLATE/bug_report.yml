@@ -316,7 +316,7 @@ body:
     attributes:
       label: custom tags
       description: adding custom tags
-      options:
+      options: null
     validations:
       required: true
   - type: input
