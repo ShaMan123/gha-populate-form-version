@@ -21,11 +21,12 @@ inputs:
     default: ${{ github.event.repository.name }}
     type: string
   registry:
-    description: 'The name of the published package'
+    description: 'The name of the registry the package is published at'
     default: 'npm'
     type: string
     options:
       - npm
+      - github
   order:
     description: 'Display order of populated tags (`asc | desc`)'
     default: 'desc'

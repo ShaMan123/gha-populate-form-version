@@ -30,4 +30,5 @@ jobs:
         with:
           # package: pip
           dropdown: custom
+          registry: github
           # tags: [a, b, c, d, e]
