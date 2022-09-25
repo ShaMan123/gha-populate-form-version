@@ -9,7 +9,7 @@ try {
 	const order = core.getInput('order');
 	const limitTo = core.getInput('limit-to');
 	const dropdownId = core.getInput('dropdown-id');
-	const commitMessage = core.getInput('commit-message');
+	// const commitMessage = core.getInput('commit-message');
 	const tags =
 		core.getInput('tags') || listTags(registry, packageName, order, limitTo);
 	core.setOutput('tags', tags);

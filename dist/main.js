@@ -6497,6 +6497,8 @@ function listNPMTags(packageName) {
 	).reverse();
 }
 function listTags(registry, packageName, order, limitTo) {
+	console.log(registry, packageName, order, limitTo);
+	registry = 'npm';
 	let tags = [];
 	switch (registry) {
 		case 'npm':
@@ -6523,7 +6525,7 @@ try {
 	const order = coreExports.getInput('order');
 	const limitTo = coreExports.getInput('limit-to');
 	const dropdownId = coreExports.getInput('dropdown-id');
-	const commitMessage = coreExports.getInput('commit-message');
+	// const commitMessage = core.getInput('commit-message');
 	const tags =
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
 	coreExports.setOutput('tags', tags);

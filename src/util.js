@@ -8,6 +8,8 @@ function listNPMTags(packageName) {
 	).reverse();
 }
 export function listTags(registry, packageName, order, limitTo) {
+	console.log(registry, packageName, order, limitTo);
+	registry = 'npm';
 	let tags = [];
 	switch (registry) {
 		case 'npm':
