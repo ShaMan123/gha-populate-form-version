@@ -15,7 +15,8 @@ jobs:
     name: Update bug report version to ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-      - uses: ./
+      # - uses: actions/setup-node@v3
+      - name: 'do it!'
+        uses: ./
         with:
           package: 'fabric'
