@@ -36,6 +36,7 @@ runs:
   using: composite
   steps:
     - run: node dist/main.js
+      shell: bash
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ inputs.commit-message }}
