@@ -24,4 +24,4 @@ jobs:
         with:
           package: lodash
           dropdown: lodash
-          limit-to: 20
+          limit_to: 20

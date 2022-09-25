@@ -14,13 +14,13 @@ try {
 	});
 	const order = getInput('order', { trimWhitespace: true, required: true });
 	const limitTo =
-		Math.abs(Number(getInput('limit-to', { trimWhitespace: true }))) ||
+		Math.abs(Number(getInput('limit_to', { trimWhitespace: true }))) ||
 		undefined;
 	const dropdownId = getInput('dropdown', {
 		trimWhitespace: true,
 		required: true,
 	});
-	const commitMessage = getInput('commit-message', {
+	const commitMessage = getInput('commit_message', {
 		trimWhitespace: true,
 		required: true,
 	});
@@ -29,13 +29,13 @@ try {
 		listTags(registry, packageName, order, limitTo);
 	setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
-	cp.execSync(`git config --global user.name github-actions[bot]`);
-	cp.execSync(
-		`git config --global user.email github-actions[bot]@users.noreply.github.com`,
-	);
-	cp.execSync(`git add ${form}`);
-	cp.execSync(`git commit -m "${commitMessage}"`);
-	cp.execSync(`git push`);
+	// cp.execSync(`git config --global user.name github-actions[bot]`);
+	// cp.execSync(
+	// 	`git config --global user.email github-actions[bot]@users.noreply.github.com`,
+	// );
+	// cp.execSync(`git add ${form}`);
+	// cp.execSync(`git commit -m "${commitMessage}"`);
+	// cp.execSync(`git push`);
 } catch (error) {
 	console.log(error);
 	setFailed(error);

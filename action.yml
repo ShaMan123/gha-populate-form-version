@@ -5,7 +5,7 @@ branding:
   icon: hash
   color: black
 inputs:
-  github-token:
+  github_token:
     description: Github token
     default: ${{ github.token }}
   form:
@@ -33,17 +33,33 @@ inputs:
     options:
       - desc
       - asc
-  limit-to:
+  limit_to:
     description: 'limit populated tags'
     type: number
   tags:
-    description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit-to`'
-  commit-message:
+    description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit_to`'
+  commit_message:
     default: 'chore(): update bug report version'
     type: string
 outputs:
   tags:
     description: an array of the resulting tags
 runs:
-  using: node16
-  main: dist/main.cjs
+  using: composite
+  steps:
+    - name: Update ${{ inputs.form }}
+    - run: node dist/main.cjs
+      shell: bash
+      env:
+        INPUT_FORM: ${{ inputs.form }}
+        INPUT_DROPDOWN: ${{ inputs.dropdown }}
+        INPUT_PACKAGE: ${{ inputs.package }}
+        INPUT_REGISTRY: ${{ inputs.registry }}
+        INPUT_ORDER: ${{ inputs.order }}
+        INPUT_LIMIT_TO: ${{ inputs.limit_to }}
+        INPUT_TAGS: ${{ inputs.tags }}
+        INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        github_token: ${{ inputs.github_token }}
+        commit_message: ${{ inputs.commit_message }}
