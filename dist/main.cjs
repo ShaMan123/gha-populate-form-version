@@ -90824,9 +90824,13 @@ try {
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
 	coreExports.setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
-	// cp.execSync(`git add ${form}`);
-	// cp.execSync(`git commit -m "${commitMessage}"`);
-	// cp.execSync(`git push`);
+	cp__default["default"].execSync(`git config user.name github-actions[bot]`);
+	cp__default["default"].execSync(
+		`git config user.email github-actions[bot]@users.noreply.github.com`,
+	);
+	cp__default["default"].execSync(`git add ${form}`);
+	cp__default["default"].execSync(`git commit -m "${commitMessage}"`);
+	cp__default["default"].execSync(`git push`);
 } catch (error) {
 	coreExports.setFailed(error);
 }

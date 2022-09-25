@@ -1,6 +1,7 @@
 import { getInput, setOutput, setFailed } from '@actions/core';
 import github from '@actions/github';
 import { listTags, writeYAML } from './util';
+import cp from 'node:child_process';
 
 try {
 	const form =
@@ -20,9 +21,13 @@ try {
 		getInput('tags') || listTags(registry, packageName, order, limitTo);
 	setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
-	// cp.execSync(`git add ${form}`);
-	// cp.execSync(`git commit -m "${commitMessage}"`);
-	// cp.execSync(`git push`);
+	cp.execSync(`git config user.name github-actions[bot]`);
+	cp.execSync(
+		`git config user.email github-actions[bot]@users.noreply.github.com`,
+	);
+	cp.execSync(`git add ${form}`);
+	cp.execSync(`git commit -m "${commitMessage}"`);
+	cp.execSync(`git push`);
 } catch (error) {
 	setFailed(error);
 }
