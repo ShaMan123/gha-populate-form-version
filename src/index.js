@@ -4,11 +4,11 @@ import { listTags, writeYAML } from './util';
 
 try {
 	const form = core.getInput('yaml-form');
-	const packageName = core.getInput('package');
-	const registry = core.getInput('registry');
-	const order = core.getInput('order');
+	const packageName = core.getInput('package').trim();
+	const registry = core.getInput('registry').trim();
+	const order = core.getInput('order').trim();
 	const limitTo = core.getInput('limit-to');
-	const dropdownId = core.getInput('dropdown-id');
+	const dropdownId = core.getInput('dropdown-id').trim();
 	// const commitMessage = core.getInput('commit-message');
 	const tags =
 		core.getInput('tags') || listTags(registry, packageName, order, limitTo);

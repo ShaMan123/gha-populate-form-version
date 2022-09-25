@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"author": "ShaMan123",
 	"repository": "https://github.com/ShaMan123/gha-populate-form-version",
+	"type": "module",
 	"keywords": [
 		"actions",
 		"pull-request",

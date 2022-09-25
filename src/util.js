@@ -3,6 +3,10 @@ import YAML from 'js-yaml';
 import cp from 'node:child_process';
 
 function listNPMTags(packageName) {
+	console.log(
+		'sss',
+		cp.execSync(`npm view ${packageName} versions --json`).toString(),
+	);
 	return JSON.parse(
 		cp.execSync(`npm view ${packageName} versions --json`).toString(),
 	).reverse();

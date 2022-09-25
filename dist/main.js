@@ -6492,6 +6492,10 @@ var jsYaml = {
 };
 
 function listNPMTags(packageName) {
+	console.log(
+		'sss',
+		cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
+	);
 	return JSON.parse(
 		cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
 	).reverse();
@@ -6520,11 +6524,11 @@ function writeYAML(file, dropdownId, tags) {
 
 try {
 	const form = coreExports.getInput('yaml-form');
-	const packageName = coreExports.getInput('package');
-	const registry = coreExports.getInput('registry');
-	const order = coreExports.getInput('order');
+	const packageName = coreExports.getInput('package').trim();
+	const registry = coreExports.getInput('registry').trim();
+	const order = coreExports.getInput('order').trim();
 	const limitTo = coreExports.getInput('limit-to');
-	const dropdownId = coreExports.getInput('dropdown-id');
+	const dropdownId = coreExports.getInput('dropdown-id').trim();
 	// const commitMessage = core.getInput('commit-message');
 	const tags =
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
