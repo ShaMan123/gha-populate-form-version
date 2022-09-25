@@ -1,5 +1,5 @@
 import core from '@actions/core';
-// import github from '@actions/github';
+import cp from 'node:child_process';
 import { listTags, writeYAML } from './util';
 
 try {

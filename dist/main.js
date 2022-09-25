@@ -10,7 +10,7 @@ var require$$1 = require('tls');
 var require$$4 = require('events');
 require('assert');
 var require$$6 = require('util');
-var cp$1 = require('child_process');
+var cp = require('child_process');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -22,7 +22,7 @@ var require$$3__default = /*#__PURE__*/_interopDefaultLegacy(require$$3);
 var require$$1__default = /*#__PURE__*/_interopDefaultLegacy(require$$1);
 var require$$4__default = /*#__PURE__*/_interopDefaultLegacy(require$$4);
 var require$$6__default = /*#__PURE__*/_interopDefaultLegacy(require$$6);
-var cp__default = /*#__PURE__*/_interopDefaultLegacy(cp$1);
+var cp__default = /*#__PURE__*/_interopDefaultLegacy(cp);
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -6528,9 +6528,9 @@ try {
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
 	coreExports.setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
-	cp.execSync(`git add ${form}`);
-	cp.execSync(`git commit -m "${commitMessage}"`);
-	cp.execSync(`git push`);
+	cp__default["default"].execSync(`git add ${form}`);
+	cp__default["default"].execSync(`git commit -m "${commitMessage}"`);
+	cp__default["default"].execSync(`git push`);
 } catch (error) {
 	coreExports.setFailed(error);
 }
