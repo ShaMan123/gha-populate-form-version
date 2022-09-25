@@ -16,7 +16,7 @@ try {
 	const limitTo =
 		Math.abs(Number(getInput('limit-to', { trimWhitespace: true }))) ||
 		undefined;
-	const dropdownId = getInput('dropdown-id', {
+	const dropdownId = getInput('dropdown', {
 		trimWhitespace: true,
 		required: true,
 	});

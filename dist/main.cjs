@@ -6530,7 +6530,7 @@ try {
 	const limitTo =
 		Math.abs(Number(coreExports.getInput('limit-to', { trimWhitespace: true }))) ||
 		undefined;
-	const dropdownId = coreExports.getInput('dropdown-id', {
+	const dropdownId = coreExports.getInput('dropdown', {
 		trimWhitespace: true,
 		required: true,
 	});

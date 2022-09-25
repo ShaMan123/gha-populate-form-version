@@ -12,7 +12,7 @@ inputs:
     description: 'The location of the yaml form file'
     default: '.github/ISSUE_TEMPLATE/bug_report.yml'
     type: string
-  dropdown-id:
+  dropdown:
     description: 'The id of the dropdown in the yaml form to populate tags into'
     default: 'version'
     type: string
