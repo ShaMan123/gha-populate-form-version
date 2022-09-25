@@ -3,7 +3,7 @@ import cp from 'node:child_process';
 import { listTags, writeYAML } from './util';
 
 try {
-	const form = getInput('yaml-form', { trimWhitespace: true, required: true });
+	const form = getInput('form', { trimWhitespace: true, required: true });
 	const packageName = getInput('package', {
 		trimWhitespace: true,
 		required: true,
@@ -28,11 +28,10 @@ try {
 		getInput('tags', { trimWhitespace: true }) ||
 		listTags(registry, packageName, order, limitTo);
 	setOutput('tags', tags);
-	console.log({ tags });
 	writeYAML(form, dropdownId, tags);
-	cp.execSync(`git config user.name github-actions[bot]`);
+	cp.execSync(`git config --global user.name github-actions[bot]`);
 	cp.execSync(
-		`git config user.email github-actions[bot]@users.noreply.github.com`,
+		`git config --global user.email github-actions[bot]@users.noreply.github.com`,
 	);
 	cp.execSync(`git add ${form}`);
 	cp.execSync(`git commit -m "${commitMessage}"`);
