@@ -38,6 +38,7 @@ inputs:
     type: number
   tags:
     description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit_to`'
+    type: sequence
   commit_message:
     default: 'chore(): update bug report version'
     type: string
