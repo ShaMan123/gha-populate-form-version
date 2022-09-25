@@ -287,8 +287,7 @@ body:
     id: lodash
     attributes:
       label: lodash version
-      description: >-
-        lodash
+      description: lodash
       options: []
     validations:
       required: true
