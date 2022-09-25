@@ -6532,5 +6532,5 @@ try {
 	cp.execSync(`git commit -m "${commitMessage}"`);
 	cp.execSync(`git push`);
 } catch (error) {
-	coreExports.setFailed(error.message);
+	coreExports.setFailed(error);
 }
