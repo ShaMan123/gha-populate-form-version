@@ -18,5 +18,5 @@ try {
 	cp.execSync(`git commit -m "${commitMessage}"`);
 	cp.execSync(`git push`);
 } catch (error) {
-	core.setFailed(error.message);
+	core.setFailed(error);
 }
