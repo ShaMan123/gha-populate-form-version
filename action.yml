@@ -18,7 +18,7 @@ inputs:
     type: string
   package:
     description: 'The name of the published package'
-    default: ${{ github.context.payload.repository.name }}
+    default: ${{ github.event.repository.name }}
     type: string
   registry:
     description: 'The name of the published package'
