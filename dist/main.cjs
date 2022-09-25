@@ -6530,6 +6530,7 @@ try {
 	const limitTo = coreExports.getInput('limit-to');
 	const dropdownId = coreExports.getInput('dropdown-id').trim();
 	// const commitMessage = core.getInput('commit-message');
+	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
 	coreExports.setOutput('tags', tags);
