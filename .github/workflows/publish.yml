@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
-      - uses: .
+      - uses: '.'
         # env:
         #   VERSION: ${{ github.event.release.tag_name }}
