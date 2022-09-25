@@ -90808,19 +90808,16 @@ function writeYAML(file, dropdownId, tags) {
 
 try {
 	const form =
-		coreExports.getInput('yaml-form', { trimWhitespace: true, required: true }) ||
+		coreExports.getInput('yaml-form', { trimWhitespace: true }) ||
 		'.github/ISSUE_TEMPLATE/bug_report.yml';
 	const packageName =
 		coreExports.getInput('package', { trimWhitespace: true, required: true }) ||
 		github.context.payload.repository.name;
-	const registry =
-		coreExports.getInput('registry', { trimWhitespace: true, required: true }) || 'npm';
-	const order =
-		coreExports.getInput('order', { trimWhitespace: true, required: true }) || 'desc';
+	const registry = coreExports.getInput('registry', { trimWhitespace: true }) || 'npm';
+	const order = coreExports.getInput('order', { trimWhitespace: true }) || 'desc';
 	const limitTo = coreExports.getInput('limit-to');
 	const dropdownId =
-		coreExports.getInput('dropdown-id', { trimWhitespace: true, required: true }) ||
-		'version';
+		coreExports.getInput('dropdown-id', { trimWhitespace: true }) || 'version';
 	// const commitMessage = getInput('commit-message');
 	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
