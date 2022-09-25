@@ -3,6 +3,7 @@ import YAML from 'js-yaml';
 import cp from 'node:child_process';
 
 function listNPMTags(packageName) {
+	console.log('??', packageName, `npm view ${packageName} versions --json`);
 	console.log(
 		'sss',
 		cp.execSync(`npm view ${packageName} versions --json`).toString(),
@@ -12,8 +13,7 @@ function listNPMTags(packageName) {
 	).reverse();
 }
 export function listTags(registry, packageName, order, limitTo) {
-	console.log(registry, packageName, order, limitTo);
-	registry = 'npm';
+	console.log('??', registry, packageName, order, limitTo);
 	let tags = [];
 	switch (registry) {
 		case 'npm':

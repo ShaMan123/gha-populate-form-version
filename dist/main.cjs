@@ -6492,6 +6492,7 @@ var jsYaml = {
 };
 
 function listNPMTags(packageName) {
+	console.log('??', packageName, `npm view ${packageName} versions --json`);
 	console.log(
 		'sss',
 		cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
@@ -6501,8 +6502,7 @@ function listNPMTags(packageName) {
 	).reverse();
 }
 function listTags(registry, packageName, order, limitTo) {
-	console.log(registry, packageName, order, limitTo);
-	registry = 'npm';
+	console.log('??', registry, packageName, order, limitTo);
 	let tags = [];
 	switch (registry) {
 		case 'npm':
