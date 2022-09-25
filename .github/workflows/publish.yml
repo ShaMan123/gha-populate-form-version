@@ -28,6 +28,6 @@ jobs:
       - name: Update bug report custom
         uses: ./
         with:
-          package: pip
+          # package: pip
           dropdown: custom
-          tags: [a, b, c, d, e]
+          # tags: [a, b, c, d, e]
