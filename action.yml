@@ -24,20 +24,20 @@ inputs:
     description: 'The name of the published package'
     default: 'npm'
     type: string
-    # options:
-    #   - npm
+    options:
+      - npm
   order:
     description: 'Display order of populated tags (`asc | desc`)'
     default: 'desc'
     type: choice
     options:
-    - desc
-    - asc
+      - desc
+      - asc
   limit-to:
     description: 'limit populated tags'
     type: number
   tags:
-    description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit-to`''
+    description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit-to`'
   commit-message:
     default: 'chore(): update bug report version'
     type: string
