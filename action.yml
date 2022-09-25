@@ -24,7 +24,7 @@ inputs:
     description: 'The name of the published package'
     default: 'npm'
     type: choice
-      options:
+    options:
       - npm
   order:
     description: 'Display order of populated tags (`asc | desc`)'
