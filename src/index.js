@@ -1,14 +1,17 @@
 import core from '@actions/core';
+import github from '@actions/github';
 import cp from 'node:child_process';
 import { listTags, writeYAML } from './util';
 
 try {
-	const form = core.getInput('yaml-form');
-	const packageName = core.getInput('package').trim();
-	const registry = core.getInput('registry').trim();
-	const order = core.getInput('order').trim();
+	const form =
+		core.getInput('yaml-form') || '.github/ISSUE_TEMPLATE/bug_report.yml';
+	const packageName =
+		core.getInput('package').trim() || github.context.payload.repository.name;
+	const registry = core.getInput('registry').trim() || 'npm';
+	const order = core.getInput('order').trim() || 'desc';
 	const limitTo = core.getInput('limit-to');
-	const dropdownId = core.getInput('dropdown-id').trim();
+	const dropdownId = core.getInput('dropdown-id').trim() || 'version';
 	// const commitMessage = core.getInput('commit-message');
 	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
