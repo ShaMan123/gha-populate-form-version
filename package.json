@@ -14,7 +14,7 @@
 		"versions",
 		"dropdown"
 	],
-	"main": "dist/main.js",
+	"main": "dist/main.cjs",
 	"scripts": {
 		"build": "rollup -c",
 		"test": "jest --passWithNoTests --coverage",

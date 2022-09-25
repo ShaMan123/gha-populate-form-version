@@ -36,7 +36,7 @@ runs:
   using: composite
   steps:
     - uses: actions/setup-node@v3
-    - run: node dist/main.js
+    - run: node dist/main.cjs
       shell: bash
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
