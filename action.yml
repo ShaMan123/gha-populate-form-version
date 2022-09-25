@@ -23,9 +23,9 @@ inputs:
   registry:
     description: 'The name of the published package'
     default: 'npm'
-    type: choice
-    options:
-      - npm
+    type: string
+    # options:
+    #   - npm
   order:
     description: 'Display order of populated tags (`asc | desc`)'
     default: 'desc'
