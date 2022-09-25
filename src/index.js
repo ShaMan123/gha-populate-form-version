@@ -15,7 +15,7 @@ try {
 	const limitTo = getInput('limit-to');
 	const dropdownId =
 		getInput('dropdown-id', { trimWhitespace: true }) || 'version';
-	// const commitMessage = getInput('commit-message');
+	const commitMessage = getInput('commit-message');
 	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
 		getInput('tags') || listTags(registry, packageName, order, limitTo);

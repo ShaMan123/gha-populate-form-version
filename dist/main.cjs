@@ -90818,7 +90818,7 @@ try {
 	const limitTo = coreExports.getInput('limit-to');
 	const dropdownId =
 		coreExports.getInput('dropdown-id', { trimWhitespace: true }) || 'version';
-	// const commitMessage = getInput('commit-message');
+	const commitMessage = coreExports.getInput('commit-message');
 	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
