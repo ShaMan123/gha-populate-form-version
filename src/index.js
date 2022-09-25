@@ -1,6 +1,5 @@
-import { getInput } from '@actions/core';
+import { getInput, setOutput, setFailed } from '@actions/core';
 import github from '@actions/github';
-import cp from 'node:child_process';
 import { listTags, writeYAML } from './util';
 
 try {
@@ -19,11 +18,11 @@ try {
 	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
 		getInput('tags') || listTags(registry, packageName, order, limitTo);
-	core.setOutput('tags', tags);
+	setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
 	// cp.execSync(`git add ${form}`);
 	// cp.execSync(`git commit -m "${commitMessage}"`);
 	// cp.execSync(`git push`);
 } catch (error) {
-	core.setFailed(error);
+	setFailed(error);
 }

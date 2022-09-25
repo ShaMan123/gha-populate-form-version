@@ -55,7 +55,7 @@ function getAugmentedNamespace(n) {
 	return a;
 }
 
-var core$2 = {};
+var core$1 = {};
 
 var command = {};
 
@@ -2306,7 +2306,7 @@ function requirePathUtils () {
 var hasRequiredCore;
 
 function requireCore () {
-	if (hasRequiredCore) return core$2;
+	if (hasRequiredCore) return core$1;
 	hasRequiredCore = 1;
 	(function (exports) {
 		var __createBinding = (commonjsGlobal && commonjsGlobal.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -2645,8 +2645,8 @@ function requireCore () {
 		Object.defineProperty(exports, "toWin32Path", { enumerable: true, get: function () { return path_utils_1.toWin32Path; } });
 		Object.defineProperty(exports, "toPlatformPath", { enumerable: true, get: function () { return path_utils_1.toPlatformPath; } });
 		
-} (core$2));
-	return core$2;
+} (core$1));
+	return core$1;
 }
 
 var coreExports = requireCore();
@@ -87668,7 +87668,7 @@ var json = failsafe.extend({
   ]
 });
 
-var core$1 = json;
+var core = json;
 
 var YAML_DATE_REGEXP = new RegExp(
   '^([0-9][0-9][0-9][0-9])'          + // [1] year
@@ -88005,7 +88005,7 @@ var set = new type('tag:yaml.org,2002:set', {
   construct: constructYamlSet
 });
 
-var _default = core$1.extend({
+var _default = core.extend({
   implicit: [
     timestamp,
     merge
@@ -90729,7 +90729,7 @@ var Type                = type;
 var Schema              = schema;
 var FAILSAFE_SCHEMA     = failsafe;
 var JSON_SCHEMA         = json;
-var CORE_SCHEMA         = core$1;
+var CORE_SCHEMA         = core;
 var DEFAULT_SCHEMA      = _default;
 var load                = loader.load;
 var loadAll             = loader.loadAll;
@@ -90822,11 +90822,11 @@ try {
 	console.log({ form, packageName, registry, order, limitTo, dropdownId });
 	const tags =
 		coreExports.getInput('tags') || listTags(registry, packageName, order, limitTo);
-	core.setOutput('tags', tags);
+	coreExports.setOutput('tags', tags);
 	writeYAML(form, dropdownId, tags);
 	// cp.execSync(`git add ${form}`);
 	// cp.execSync(`git commit -m "${commitMessage}"`);
 	// cp.execSync(`git push`);
 } catch (error) {
-	core.setFailed(error);
+	coreExports.setFailed(error);
 }
