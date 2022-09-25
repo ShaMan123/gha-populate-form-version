@@ -1,0 +1,18 @@
+name: Publish
+
+on:
+  release:
+    branches:
+      - master
+    types: [published]
+
+jobs:
+  update-bug-report:
+    runs-on: ubuntu-latest
+    name: Update bug report version to ${{ github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+      - uses: ../../
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
