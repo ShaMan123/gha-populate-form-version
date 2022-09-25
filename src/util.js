@@ -10,7 +10,7 @@ function listNPMTags(packageName) {
 export function listTags(registry, packageName, order, limitTo) {
 	let tags = [];
 	switch (registry) {
-		case npm:
+		case 'npm':
 			tags = listNPMTags(packageName);
 			if (order === 'asc') tags.reverse();
 			return tags.slice(0, limitTo);
