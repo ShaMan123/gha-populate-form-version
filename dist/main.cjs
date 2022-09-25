@@ -6517,7 +6517,7 @@ function writeYAML(file, dropdownId, tags) {
 }
 
 try {
-	const form = coreExports.getInput('yaml-form', { trimWhitespace: true, required: true });
+	const form = coreExports.getInput('form', { trimWhitespace: true, required: true });
 	const packageName = coreExports.getInput('package', {
 		trimWhitespace: true,
 		required: true,
@@ -6542,15 +6542,15 @@ try {
 		coreExports.getInput('tags', { trimWhitespace: true }) ||
 		listTags(registry, packageName, order, limitTo);
 	coreExports.setOutput('tags', tags);
-	console.log({ tags });
 	writeYAML(form, dropdownId, tags);
-	cp__default["default"].execSync(`git config user.name github-actions[bot]`);
+	cp__default["default"].execSync(`git config --global user.name github-actions[bot]`);
 	cp__default["default"].execSync(
-		`git config user.email github-actions[bot]@users.noreply.github.com`,
+		`git config --global user.email github-actions[bot]@users.noreply.github.com`,
 	);
 	cp__default["default"].execSync(`git add ${form}`);
 	cp__default["default"].execSync(`git commit -m "${commitMessage}"`);
 	cp__default["default"].execSync(`git push`);
 } catch (error) {
+	console.log(error);
 	coreExports.setFailed(error);
 }
