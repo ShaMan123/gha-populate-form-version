@@ -16,7 +16,7 @@ inputs:
     default: version
   package:
     description: The name of the published package
-    default: ${{ env.npm_package_name }}
+    default: ${{ github.context.payload.repository.name }}
   registry:
     description: The name of the published package
     default: npm
