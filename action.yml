@@ -13,7 +13,7 @@ inputs:
     default: .github/ISSUE_TEMPLATE/bug_report.yml
   dropdown-id:
     description: The id of the dropdown in the yaml form to populate tags into
-    default: .github/ISSUE_TEMPLATE/bug_report.yml
+    default: version
   package:
     description: The name of the published package
     default: ${{ env.npm_package_name }}
