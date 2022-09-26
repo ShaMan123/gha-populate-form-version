@@ -24,12 +24,33 @@ async function run() {
 		const semverRange = getInput('semver', {
 			trimWhitespace: true,
 		});
-		const tags =
-			getInput('tags', { trimWhitespace: true }) ||
-			(await listTags(registry, packageName, order))
+		let tags;
+		const tagsInput = getInput('tags', { trimWhitespace: true });
+		if (tagsInput) {
+			try {
+				tags = JSON.parse(tagsInput);
+				if (!Array.isArray(tags)) {
+					throw new Error('bad parsing');
+				}
+			} catch (error) {
+				tags = tagsInput
+					.split(',')
+					.map((value) => value.trim())
+					.filter((value) => !!value);
+			}
+		} else {
+			const list = await listTags(registry, packageName);
+			const latest = list[0];
+			if (order === 'asc') {
+				list.reverse();
+			}
+			tags = list
 				.slice(0, limitTo)
 				.filter((tag) => semver.satisfies(semver.clean(tag), semverRange));
-		setOutput('tags', tags);
+
+			setOutput('latest', latest);
+			setOutput('tags', tags);
+		}
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
 		setFailed(error);

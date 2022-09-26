@@ -93637,7 +93637,13 @@ async function listGithubReleases(repoName) {
 			.rest.repos.listReleases({ owner, repo })
 	).data.map((value) => value.tag_name);
 }
-async function listTags(registry, packageName, order) {
+/**
+ *
+ * @param {string} registry
+ * @param {string} packageName
+ * @returns {string[]} tags in descending order
+ */
+async function listTags(registry, packageName) {
 	let tags = [];
 	switch (registry) {
 		case 'npm':
@@ -93649,7 +93655,7 @@ async function listTags(registry, packageName, order) {
 		default:
 			throw new Error(`registry ${registry} is not available`);
 	}
-	return order === 'asc' ? tags.reverse() : tags;
+	return tags;
 }
 function writeYAML(file, dropdownId, tags) {
 	const content = jsYaml.load(require$$0__default$1["default"].readFileSync(file).toString());
@@ -93689,12 +93695,33 @@ async function run() {
 		const semverRange = coreExports.getInput('semver', {
 			trimWhitespace: true,
 		});
-		const tags =
-			coreExports.getInput('tags', { trimWhitespace: true }) ||
-			(await listTags(registry, packageName, order))
+		let tags;
+		const tagsInput = coreExports.getInput('tags', { trimWhitespace: true });
+		if (tagsInput) {
+			try {
+				tags = JSON.parse(tagsInput);
+				if (!Array.isArray(tags)) {
+					throw new Error('bad parsing');
+				}
+			} catch (error) {
+				tags = tagsInput
+					.split(',')
+					.map((value) => value.trim())
+					.filter((value) => !!value);
+			}
+		} else {
+			const list = await listTags(registry, packageName);
+			const latest = list[0];
+			if (order === 'asc') {
+				list.reverse();
+			}
+			tags = list
 				.slice(0, limitTo)
 				.filter((tag) => semver.satisfies(semver.clean(tag), semverRange));
-		coreExports.setOutput('tags', tags);
+
+			coreExports.setOutput('latest', latest);
+			coreExports.setOutput('tags', tags);
+		}
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
 		coreExports.setFailed(error);
