@@ -317,6 +317,7 @@ body:
       label: Releases
       description: Releases of this repo
       options:
+        - v0.1.0
         - v0.0.19
         - v0.0.18
         - v0.0.17
