@@ -51,10 +51,13 @@ inputs:
     default: false
     type: boolean
 outputs:
+  # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#example-declaring-outputs-for-composite-actions
   tags:
     description: A stringified array of the resulting tags
+    value: ${{ steps.main.outputs.tags }}
   latest:
     description: Latest tag of `package` in `registry`
+    value: ${{ steps.main.outputs.latest }}
 runs:
   using: composite
   steps:
@@ -94,6 +97,3 @@ runs:
         git diff --staged --quiet || git commit -m "${{ inputs.commit_message }}"
         git push
       shell: bash
-  outputs:
-    tags: ${{ steps.main.outputs.tags }}
-    latest: ${{ steps.main.outputs.latest }}
