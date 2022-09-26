@@ -61,5 +61,9 @@
 		"trailingComma": "all",
 		"singleQuote": true,
 		"tabWidth": 2
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://github.com/sponsors/ShaMan123"
 	}
 }
