@@ -30,7 +30,10 @@ async function run() {
 			try {
 				tags = JSON.parse(tagsInput);
 			} catch (error) {
-				tags = tagsInput.split(',').map((value) => value.trim());
+				tags = tagsInput
+					.split(',')
+					.map((value) => value.trim())
+					.filter((value) => !!value);
 			}
 		} else {
 			const list = await listTags(registry, packageName);
