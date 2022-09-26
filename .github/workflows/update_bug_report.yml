@@ -36,4 +36,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dropdown: self
           registry: github
-          semver: '>=0.1.2'
+          semver: '>=0.1.20'
