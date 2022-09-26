@@ -2,6 +2,8 @@ name: Update Bug Report
 
 on:
   push:
+    # used for testing this action
+    # you shouldn't use this trigger
     branches:
       - '*'
   release:
