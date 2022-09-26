@@ -281,7 +281,8 @@ body:
     attributes:
       label: 'Using action owner: `react-native-math-view`'
       description: Releases of this repo
-      options: []
+      options:
+        - 3.4.9
     validations:
       required: true
   - type: dropdown
