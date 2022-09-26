@@ -74,11 +74,18 @@ jobs:
           package: node
           order: asc
           limit_to: 15
+      - name: Dry Run Axios
+        id: axios
+        uses: ./
+        with:
+          package: axios
+          limit_to: 10
+          dry_run: true
       - name: Update copy
         uses: ./
         with:
           dropdown: copy
-          tags: ${{ steps.node.outputs.tags }}
+          tags: ${{ steps.axios.outputs.tags }}
       # This step demonstrates how to generate tags
       - name: Mock tags
         id: mock_tags
