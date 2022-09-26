@@ -49,6 +49,7 @@ outputs:
 runs:
   using: composite
   steps:
+    - run: git pull
     - uses: actions/checkout@v2
     - name: Update ${{ inputs.form }}
       run: node dist/main.cjs
