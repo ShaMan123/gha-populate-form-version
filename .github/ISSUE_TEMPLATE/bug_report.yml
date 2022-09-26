@@ -315,7 +315,7 @@ body:
     attributes:
       label: generated tags
       options:
-
+        -
     validations:
       required: false
   - type: textarea
