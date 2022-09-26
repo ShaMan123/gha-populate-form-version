@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Update bug report version to ${{ github.event.release.tag_name }}
     steps:
+      - uses: actions/checkout@v3
       - name: Update bug report fabric
         uses: ./
         with:
