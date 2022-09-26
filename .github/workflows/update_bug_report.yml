@@ -1,15 +1,24 @@
-name: Update Bug Report
+name: 🚀 Update Bug Report
 
 on:
+  # used for testing this action
+  # you shouldn't use this trigger in production
   push:
-    # used for testing this action
-    # you shouldn't use this trigger
     branches:
-      - '*'
+      - main
+
+  # used for testing this action
+  # you shouldn't use this trigger in production
+  pull_request:
+    branches: [main]
+
+  # use in production
   release:
     branches:
       - main
     types: [published]
+
+  # use in production
   schedule:
     # runs on Monday midnight
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
@@ -21,21 +30,44 @@ jobs:
     name: Update bug report
     steps:
       - uses: actions/checkout@v3
-      - name: Update bug report fabric
+      - name: Update fabric
         uses: ./
         with:
           package: fabric
-      - name: Update bug report lodash
+          dropdown: fabric
+      - name: Update fabric tags
+        uses: ./
+        with:
+          # needed to fetch tags with the github client
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dropdown: fabric_tags
+          registry: github
+          package: fabricjs/fabric.js
+      - name: Update lodash
         uses: ./
         with:
           package: lodash
           dropdown: lodash
           limit_to: 20
-      # - name: Update bug report self
-      #   uses: ./
-      #   with:
-      #     # needed to fetch tags with the github client
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     dropdown: self
-      #     registry: github
-      #     semver: '>=0.1.21'
+      - name: Update self
+        uses: ./
+        with:
+          # needed to fetch tags with the github client
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          registry: github
+          semver: '>=0.1.21'
+      - name: Update react-native-math-view
+        uses: ./
+        with:
+          # needed to fetch tags with the github client
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dropdown: math
+          registry: github
+          package: react-native-math-view
+      - name: Update node
+        uses: ./
+        with:
+          dropdown: node_version
+          package: node
+          order: asc
+          limit_to: 15

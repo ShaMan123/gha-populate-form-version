@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Before you be
+        Before you begin
   - type: checkboxes
     id: terms
     attributes:
@@ -15,13 +15,10 @@ body:
         - label: I agree to follow this project's Code of Conduct
           required: true
   - type: dropdown
-    id: version
+    id: fabric
     attributes:
-      label: version
-      description: >-
-        If you are working on a version below latest you should upgrade to
-        latest before filing a bug report, your issue might have been resolved
-        already.
+      label: fabric npm version
+      description: fabric npm
       options:
         - 5.2.4
         - 5.2.2
@@ -220,6 +217,28 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: fabric_tags
+    attributes:
+      label: fabric tags
+      description: fabric tags
+      options:
+        - v5.2.4
+        - v5.2.3
+        - v4.5.0
+        - v4.4.0
+        - v4.3.1
+        - v4.3.0
+        - v4.2.0
+        - v4.1.0
+        - v3.6.6
+        - v3.6.5
+        - v3.6.4
+        - v4.0.0
+        - v3.6.3
+        - v3.6.2
+    validations:
+      required: true
+  - type: dropdown
     id: lodash
     attributes:
       label: lodash version
@@ -248,7 +267,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: self
+    id: version
     attributes:
       label: Releases
       description: Releases of this repo
@@ -257,10 +276,35 @@ body:
         - v0.1.21
     validations:
       required: true
-  - type: input
+  - type: dropdown
+    id: math
+    attributes:
+      label: 'Using action owner: `react-native-math-view`'
+      description: Releases of this repo
+      options:
+        - 3.4.9
+    validations:
+      required: true
+  - type: dropdown
     id: node_version
     attributes:
       label: Node Version (if applicable)
+      options:
+        - 0.0.0
+        - 0.1.14
+        - 0.1.15
+        - 0.1.16
+        - 0.1.17
+        - 0.1.18
+        - 0.1.19
+        - 0.1.20
+        - 0.1.21
+        - 0.1.22
+        - 0.1.23
+        - 0.1.24
+        - 0.1.25
+        - 0.1.26
+        - 0.1.27
     validations:
       required: false
   - type: textarea

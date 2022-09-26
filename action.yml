@@ -52,9 +52,18 @@ outputs:
 runs:
   using: composite
   steps:
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
+    - run: echo "job_ref=${{ github.ref }}" >> $GITHUB_ENV
+      shell: bash
+    - run: echo "job_ref=${{ github.head_ref }}" >> $GITHUB_ENV
+      if: ${{ github.head_ref }}
+      shell: bash
+    - run: echo "job_ref=${{ github.event.repository.default_branch }}" >> $GITHUB_ENV
+      if: ${{ github.action == 'release' }}
+      shell: bash
     - uses: actions/checkout@v3
       with:
-        ref: ${{ github.event.repository.default_branch }}
+        ref: ${{ env.job_ref }}
     - name: Update ${{ inputs.form }}
       run: node dist/main.cjs
       shell: bash
@@ -69,7 +78,7 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
         # INPUT_TAGS: ${{ inputs.tags }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
-    - name: Commit to ${{ github.event.repository.default_branch }}
+    - name: Commit to ${{ env.job_ref }}
       run: |
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com

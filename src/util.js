@@ -9,11 +9,18 @@ function listNPMTags(packageName) {
 		cp.execSync(`npm view ${packageName} versions --json`).toString(),
 	).reverse();
 }
-async function listGithubReleases() {
+async function listGithubReleases(repoName) {
+	let owner, repo;
+	if (repoName.indexOf('/') > -1) {
+		[owner, repo] = repoName.split('/');
+	} else {
+		owner = github.context.repo.owner;
+		repo = repoName;
+	}
 	return (
 		await github
 			.getOctokit(process.env.GITHUB_TOKEN)
-			.rest.repos.listReleases(github.context.repo)
+			.rest.repos.listReleases({ owner, repo })
 	).data.map((value) => value.tag_name);
 }
 export async function listTags(registry, packageName, order) {
@@ -23,7 +30,7 @@ export async function listTags(registry, packageName, order) {
 			tags = listNPMTags(packageName);
 			break;
 		case 'github':
-			tags = listGithubReleases();
+			tags = listGithubReleases(packageName);
 			break;
 		default:
 			throw new Error(`registry ${registry} is not available`);
@@ -35,6 +42,13 @@ export function writeYAML(file, dropdownId, tags) {
 	const found = content.body.find(
 		(entry) => entry.id === dropdownId && entry.type === 'dropdown',
 	);
+	if (!found) {
+		throw new Error(
+			`dropdown ${dropdownId} not found.\n${content.body.filter(
+				(entry) => entry.type === 'dropdown',
+			)}`,
+		);
+	}
 	found.attributes.options = tags;
 	fs.writeFileSync(file, YAML.dump(content));
 }
