@@ -342,6 +342,11 @@ body:
         - lodash@4.17.19
         - lodash@4.17.18
         - lodash@4.17.17
+        - pixijs@v6.5.4
+        - pixijs@v6.5.3
+        - pixijs@v6.5.2
+        - pixijs@v6.5.1
+        - pixijs@v6.5.0
     validations:
       required: false
   - type: textarea
