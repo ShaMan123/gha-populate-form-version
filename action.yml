@@ -37,6 +37,9 @@ inputs:
   limit_to:
     description: 'limit populated tags'
     type: number
+  semver:
+    description: 'A semver range query used to filter satisfying tags, see `semver#satisfies`'
+    type: string
   # tags:
   #   description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit_to`'
   #   type: sequence
