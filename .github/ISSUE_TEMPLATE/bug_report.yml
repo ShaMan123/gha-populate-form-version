@@ -332,7 +332,9 @@ body:
     id: generated
     attributes:
       label: Generated Tags
-      description: Created using `actions/github-script@v6` and mixed with outputs of previous steps
+      description: >-
+        Created using `actions/github-script@v6` and mixed with outputs of
+        previous steps
       options:
         - 1.2.3
         - 4.5.6
