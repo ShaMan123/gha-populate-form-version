@@ -49,6 +49,7 @@ outputs:
 runs:
   using: composite
   steps:
+    - uses: actions/checkout@v2
     - name: Update ${{ inputs.form }}
       run: node dist/main.cjs
       shell: bash
@@ -65,5 +66,4 @@ runs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ inputs.commit_message }}
-        add_options: '-u'
-        create_branch: true
+        ref: ${{ github.head_ref }}
