@@ -16,18 +16,18 @@ async function listGithubReleases() {
 			.rest.repos.listReleases(github.context.repo)
 	).data.map((value) => value.tag_name);
 }
-export async function listTags(registry, packageName, order, limitTo) {
+export async function listTags(registry, packageName, order) {
 	let tags = [];
 	switch (registry) {
 		case 'npm':
 			tags = listNPMTags(packageName);
-			if (order === 'asc') tags.reverse();
-			return tags.slice(0, limitTo);
 		case 'github':
-			return listGithubReleases();
+			tags = listGithubReleases();
+			break;
 		default:
 			throw new Error(`registry ${registry} is not available`);
 	}
+	return order === 'asc' ? tags.reverse() : tags;
 }
 export function writeYAML(file, dropdownId, tags) {
 	const content = YAML.load(fs.readFileSync(file).toString());
