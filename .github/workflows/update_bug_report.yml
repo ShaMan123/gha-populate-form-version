@@ -72,6 +72,11 @@ jobs:
           package: node
           order: asc
           limit_to: 15
+      - name: Update copy
+        uses: ./
+        with:
+          dropdown: copy
+          tags: ${{ steps.node.outputs.tags }}
       - name: Mock tags
         id: mock_tags
         uses: actions/github-script@v6
