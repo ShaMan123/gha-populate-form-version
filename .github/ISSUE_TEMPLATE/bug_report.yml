@@ -45,6 +45,7 @@ body:
       label: lodash version
       description: lodash
       options:
+        - v0.2.0
         - v0.1.21
         - v0.1.19
         - v0.1.18
