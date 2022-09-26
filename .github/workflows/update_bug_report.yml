@@ -90,7 +90,7 @@ jobs:
           result-encoding: string
           script: |
             return ['1.2.3', '4.5.6', '7.8.9', process.env.NODE_LATEST_VERSION, '${{ steps.fabric.outputs.latest }}']
-              .concat(${{ fromJSON(steps.lodash.outputs.tags) }});
+              .concat(${{ steps.lodash.outputs.tags }});
       - name: Update generated
         uses: ./
         with:
