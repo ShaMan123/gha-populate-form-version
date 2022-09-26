@@ -26,7 +26,7 @@ async function run() {
 		});
 		const tags =
 			getInput('tags', { trimWhitespace: true }) ||
-			(await listTags(registry, packageName, order, limitTo))
+			(await listTags(registry, packageName, order))
 				.slice(0, limitTo)
 				.filter((tag) => semver.satisfies(semver.clean(tag), semverRange));
 		setOutput('tags', tags);
