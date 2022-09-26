@@ -21,17 +21,25 @@ jobs:
     name: Update bug report
     steps:
       - uses: actions/checkout@v3
-      - name: Update bug report fabric
+      - name: Update fabric
         uses: ./
         with:
           package: fabric
-      - name: Update bug report lodash
+      - name: Update fabric tags
+        uses: ./
+        with:
+          # needed to fetch tags with the github client
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dropdown: fabric_tags
+          registry: github
+          package: fabricjs/fabric.js
+      - name: Update lodash
         uses: ./
         with:
           package: lodash
           dropdown: lodash
           limit_to: 20
-      - name: Update bug report self
+      - name: Update self
         uses: ./
         with:
           # needed to fetch tags with the github client
@@ -39,3 +47,11 @@ jobs:
           dropdown: self
           registry: github
           semver: '>=0.1.21'
+      - name: Update react-native-math-view
+        uses: ./
+        with:
+          # needed to fetch tags with the github client
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dropdown: math
+          registry: github
+          package: react-native-math-view
