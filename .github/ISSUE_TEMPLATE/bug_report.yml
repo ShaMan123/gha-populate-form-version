@@ -341,6 +341,7 @@ body:
         - 4.5.6
         - 7.8.9
         - 18.9.1
+        - 5.2.4
     validations:
       required: false
   - type: textarea
