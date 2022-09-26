@@ -52,7 +52,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Setup repo
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
     - run: echo "job_ref=${{ github.ref }}" >> $GITHUB_ENV
       shell: bash
