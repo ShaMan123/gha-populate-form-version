@@ -52,6 +52,8 @@ runs:
     - run: git pull
       shell: bash
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
     - name: Update ${{ inputs.form }}
       run: node dist/main.cjs
       shell: bash
@@ -68,4 +70,3 @@ runs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ inputs.commit_message }}
-        ref: ${{ github.head_ref }}
