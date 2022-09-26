@@ -25,6 +25,7 @@ jobs:
         uses: ./
         with:
           package: fabric
+          dropdown: fabric
       - name: Update fabric tags
         uses: ./
         with:
@@ -44,7 +45,6 @@ jobs:
         with:
           # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: self
           registry: github
           semver: '>=0.1.21'
       - name: Update react-native-math-view
@@ -55,3 +55,8 @@ jobs:
           dropdown: math
           registry: github
           package: react-native-math-view
+      - name: Update node
+        uses: ./
+        with:
+          dropdown: node_version
+          package: node
