@@ -93682,7 +93682,6 @@ async function run() {
 		coreExports.setOutput('tags', tags);
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
-		console.log(error);
 		coreExports.setFailed(error);
 	}
 }
