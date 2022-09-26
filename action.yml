@@ -66,4 +66,4 @@ runs:
       with:
         commit_message: ${{ inputs.commit_message }}
         add_options: '-u'
-        new_branch: true
+        create_branch: true
