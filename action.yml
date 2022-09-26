@@ -50,11 +50,11 @@ inputs:
     description: When set to `true` will not commit the modified yaml form
     default: false
     type: boolean
-outputs:
-  tags:
-    description: A stringified array of the resulting tags
-  latest:
-    description: Latest tag of `package` in `registry`
+# outputs:
+#   tags:
+#     description: A stringified array of the resulting tags
+#   latest:
+#     description: Latest tag of `package` in `registry`
 runs:
   using: composite
   steps:
