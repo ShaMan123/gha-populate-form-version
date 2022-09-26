@@ -65,4 +65,6 @@ runs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ inputs.commit_message }}
+        skip_fetch: false
+        skip_checkout: false
         create_branch: false
