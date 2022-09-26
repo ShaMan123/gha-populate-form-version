@@ -86,6 +86,8 @@ body:
     id: node_version
     attributes:
       label: Node Version (if applicable)
+      options:
+        -
     validations:
       required: false
   - type: textarea
