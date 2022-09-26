@@ -10,6 +10,11 @@ A github action populating the package version dropdown of a [yaml form](https:/
 Follow [this workflow](.github/workflows/update_bug_report.yml).\
 Replace the `uses` directive to point to the [published action](https://github.com/marketplace/actions/populate-yaml-dropdown-version).
 
+```diff
+- uses: ./
++ uses: ShaMan123/gha-populate-form-version@v0.3.1
+```
+
 
 ## Live
 
