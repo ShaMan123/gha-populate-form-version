@@ -317,6 +317,7 @@ body:
       label: Releases
       description: Releases of this repo
       options:
+        - v0.1.14
         - v0.1.13
         - v0.1.12
         - v0.1.11
