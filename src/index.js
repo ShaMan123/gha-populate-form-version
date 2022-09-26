@@ -1,4 +1,5 @@
 import { getInput, setFailed, setOutput } from '@actions/core';
+import semver from 'semver';
 import { listTags, writeYAML } from './util';
 
 async function run() {
@@ -20,9 +21,14 @@ async function run() {
 			trimWhitespace: true,
 			required: true,
 		});
+		const semverRange = getInput('semver', {
+			trimWhitespace: true,
+		});
 		const tags =
 			getInput('tags', { trimWhitespace: true }) ||
-			(await listTags(registry, packageName, order, limitTo));
+			(await listTags(registry, packageName, order, limitTo))
+				.slice(0, limitTo)
+				.filter((tag) => semver.satisfies(semver.clean(tag), semverRange));
 		setOutput('tags', tags);
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
