@@ -65,9 +65,20 @@ jobs:
           registry: github
           package: react-native-math-view
       - name: Update node
+        id: node
         uses: ./
         with:
           dropdown: node_version
           package: node
           order: asc
           limit_to: 15
+      - name: Mock tags
+        id: mock_tags
+        uses: actions/github-script@v6
+        script: |
+        return ['1.2.3', '4.5.6', '7.8.9', '${{ steps.node.outputs.latest }}'];
+      - name: Update generated
+        uses: ./
+        with:
+          dropdown: generated
+          tags: ${{ steps.mock_tags.outputs.result }}

@@ -310,6 +310,14 @@ body:
         - 0.1.27
     validations:
       required: false
+  - type: dropdown
+    id: generated
+    attributes:
+      label: generated tags
+      options:
+
+    validations:
+      required: false
   - type: textarea
     id: steps
     attributes:
