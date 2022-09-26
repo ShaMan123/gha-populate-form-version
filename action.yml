@@ -89,7 +89,7 @@ runs:
         INPUT_TAGS: ${{ inputs.tags }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
     - name: Commit to ${{ env.job_ref }}
-      if: ${{ inputs.dry_run == false }}
+      # if: ${{ inputs.dry_run == false }}
       run: |
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
