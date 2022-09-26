@@ -75,7 +75,7 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
         # INPUT_TAGS: ${{ inputs.tags }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
-    - name: Commit to ${{ github.event.repository.default_branch }}
+    - name: Commit to ${{ env.job_ref }}
       run: |
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
