@@ -318,7 +318,6 @@ body:
       description: Releases of this repo
       options:
         - v0.0.19
-
     validations:
       required: true
   - type: input
