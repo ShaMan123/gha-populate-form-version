@@ -312,10 +312,10 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: custom
+    id: self
     attributes:
-      label: custom tags
-      description: adding custom tags
+      label: Releases
+      description: Releases of this repo
       options:
         - v0.0.19
         - v0.0.18

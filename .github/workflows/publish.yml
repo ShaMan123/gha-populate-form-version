@@ -25,10 +25,9 @@ jobs:
           package: lodash
           dropdown: lodash
           limit_to: 20
-      - name: Update bug report custom
+      - name: Update bug report self
         uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: custom
+          dropdown: self
           registry: github
-          # tags: [a, b, c, d, e]
