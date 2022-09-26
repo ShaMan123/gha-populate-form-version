@@ -1,4 +1,7 @@
-# gha-update-form-version
+# update-form-version action
+
+[![🧪 Test](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/test.yml/badge.svg)](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/test.yml)
+[![🚀 Update Bug Report](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/update_bug_report.yml/badge.svg)](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/update_bug_report.yml)
 
 A github action populating the package version dropdown of a [yaml form](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms)
 
