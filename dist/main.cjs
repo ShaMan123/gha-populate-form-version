@@ -93656,6 +93656,13 @@ function writeYAML(file, dropdownId, tags) {
 	const found = content.body.find(
 		(entry) => entry.id === dropdownId && entry.type === 'dropdown',
 	);
+	if (!found) {
+		throw new Error(
+			`dropdown ${dropdownId} not found.\n${content.body.filter(
+				(entry) => entry.type === 'dropdown',
+			)}`,
+		);
+	}
 	found.attributes.options = tags;
 	require$$0__default$1["default"].writeFileSync(file, jsYaml.dump(content));
 }
