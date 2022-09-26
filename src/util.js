@@ -23,7 +23,13 @@ async function listGithubReleases(repoName) {
 			.rest.repos.listReleases({ owner, repo })
 	).data.map((value) => value.tag_name);
 }
-export async function listTags(registry, packageName, order) {
+/**
+ *
+ * @param {string} registry
+ * @param {string} packageName
+ * @returns {string[]} tags in descending order
+ */
+export async function listTags(registry, packageName) {
 	let tags = [];
 	switch (registry) {
 		case 'npm':
@@ -35,7 +41,7 @@ export async function listTags(registry, packageName, order) {
 		default:
 			throw new Error(`registry ${registry} is not available`);
 	}
-	return order === 'asc' ? tags.reverse() : tags;
+	return tags;
 }
 export function writeYAML(file, dropdownId, tags) {
 	const content = YAML.load(fs.readFileSync(file).toString());

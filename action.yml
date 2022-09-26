@@ -35,14 +35,14 @@ inputs:
       - desc
       - asc
   limit_to:
-    description: 'limit populated tags'
+    description: 'Limit populated tags'
     type: number
   semver:
     description: 'A semver range query used to filter satisfying tags, see `semver#satisfies`'
     type: string
-  # tags:
-  #   description: 'Provide an array of tags instead of fetching from the `registry`, overrides `package`, `registry`, `order`, `limit_to`'
-  #   type: sequence
+  tags:
+    description: 'A stringified array of tags overriding fetching `package` tags from `registry`, overrides `order`, `limit_to` and dismisses outputs as well'
+    type: string
   commit_message:
     default: 'chore(): update bug report version'
     type: string
@@ -52,7 +52,9 @@ inputs:
     type: boolean
 outputs:
   tags:
-    description: an array of the resulting tags
+    description: A stringified array of the resulting tags
+  latest:
+    description: Latest tag of `package` in `registry`
 runs:
   using: composite
   steps:
@@ -80,7 +82,7 @@ runs:
         INPUT_ORDER: ${{ inputs.order }}
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
         INPUT_SEMVER: ${{ inputs.semver }}
-        # INPUT_TAGS: ${{ inputs.tags }}
+        INPUT_TAGS: ${{ inputs.tags }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
     - name: Commit to ${{ env.job_ref }}
       if: ${{ !inputs.dry_run }}
