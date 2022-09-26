@@ -49,8 +49,8 @@ outputs:
 runs:
   using: composite
   steps:
-    - run: git pull
-      shell: bash
+    # - run: git pull
+    #   shell: bash
     - uses: actions/checkout@v2
       with:
         ref: ${{ github.head_ref }}
