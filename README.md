@@ -1,4 +1,4 @@
-# Update Form Version Dropdown Action
+# Populate Form Version Dropdown Action
 
 [![🧪 Test](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/test.yml/badge.svg)](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/test.yml)
 [![🚀 Update Bug Report](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/update_bug_report.yml/badge.svg)](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/update_bug_report.yml)
