@@ -8,13 +8,7 @@ A github action populating the package version dropdown of a [yaml form](https:/
 
 ## Configuring
 Follow [this workflow](.github/workflows/update_bug_report.yml).\
-Replace the `uses` directive to point to the [published action](https://github.com/marketplace/actions/populate-yaml-dropdown-version).
-
-```diff
-- uses: ./
-+ uses: ShaMan123/gha-populate-form-version@v0.3.1
-```
-
+Replace the `uses: ./` directive to point to the [![published action ](https://img.shields.io/github/v/tag/ShaMan123/gha-populate-form-version?label=ShaMan123%2Fgha-populate-form-version%40&sort=semver)](https://github.com/marketplace/actions/populate-yaml-dropdown-version).
 
 ## Live
 
