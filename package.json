@@ -17,6 +17,7 @@
 	],
 	"main": "dist/main.cjs",
 	"scripts": {
+		"start": "npm run build -- -w",
 		"build": "rollup -c",
 		"test": "mocha test/index.test.js",
 		"format": "prettier --write src/*.js src/**/*.js"
