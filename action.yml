@@ -74,3 +74,4 @@ runs:
         git add ${{ inputs.form }}
         git commit -m ${{ inputs.commit_message }}
         git push
+      shell: bash
