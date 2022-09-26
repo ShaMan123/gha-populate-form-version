@@ -8,6 +8,10 @@ on:
     branches:
       - main
     types: [published]
+  schedule:
+    # runs on Monday midnight
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
+    - cron: '0 0 * * 1'
 
 jobs:
   update-bug-report:
@@ -28,6 +32,8 @@ jobs:
       - name: Update bug report self
         uses: ./
         with:
+          # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dropdown: self
           registry: github
+          semver: '>=0.1.2'
