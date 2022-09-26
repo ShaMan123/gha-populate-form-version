@@ -317,17 +317,10 @@ body:
       label: Releases
       description: Releases of this repo
       options:
+        - v0.1.12
         - v0.1.11
         - v0.1.1
         - v0.1.0
-        - v0.0.19
-        - v0.0.18
-        - v0.0.17
-        - v0.0.16
-        - v0.0.15
-        - v0.0.14
-        - v0.0.2
-        - v0.0.1
     validations:
       required: true
   - type: input
