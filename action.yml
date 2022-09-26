@@ -53,7 +53,7 @@ runs:
   using: composite
   steps:
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
-    - run: echo "job_ref=${{ github.ref }}" >> $GITHUB_ENV
+    - run: echo "job_ref=${{ github.base_ref }} || ${{ github.ref }}" >> $GITHUB_ENV
       shell: bash
     - run: echo "job_ref=${{ github.base_ref }}" >> $GITHUB_ENV
       if: ${{ github.action == 'pull_request' }}
