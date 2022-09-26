@@ -219,7 +219,7 @@ body:
   - type: dropdown
     id: fabric_tags
     attributes:
-      label: Repo Tags
+      label: Github Releases
       description: fabric tags
       options:
         - v5.2.4
@@ -269,7 +269,7 @@ body:
   - type: dropdown
     id: version
     attributes:
-      label: Github Releases + semver option
+      label: Github releases of triggering repo + semver option
       description: Releases of this repo
       options:
         - v0.3.2
@@ -282,7 +282,7 @@ body:
   - type: dropdown
     id: math
     attributes:
-      label: Using Owner
+      label: Using owner of triggering repo
       description: Releases of `react-native-math-view`
       options:
         - 3.4.9
@@ -291,7 +291,8 @@ body:
   - type: dropdown
     id: node_version
     attributes:
-      label: Node Version (asc limit to 15)
+      label: asc, limit to 15
+      description: node npm
       options:
         - 0.0.0
         - 0.1.14
@@ -313,8 +314,8 @@ body:
   - type: dropdown
     id: copy
     attributes:
-      label: Using `outputs.tags`
-      description: axios
+      label: Using `outputs.tags` from a dry run
+      description: Axios npm
       options:
         - 0.27.2
         - 0.27.1
@@ -331,6 +332,7 @@ body:
     id: generated
     attributes:
       label: Generated Tags
+      description: Created using `actions/github-script@v6` and mixed with outputs of previous steps
       options:
         - 1.2.3
         - 4.5.6
