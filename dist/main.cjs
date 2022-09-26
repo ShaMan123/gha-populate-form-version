@@ -93635,6 +93635,7 @@ async function listTags(registry, packageName, order) {
 	switch (registry) {
 		case 'npm':
 			tags = listNPMTags(packageName);
+			break;
 		case 'github':
 			tags = listGithubReleases();
 			break;
