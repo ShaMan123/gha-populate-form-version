@@ -15,7 +15,7 @@ Replace the `uses` directive to point to the [published action](https://github.c
 
 This repo uses the action it defines.\
 Take a look at the [issue template](../../issues/new?template=bug_report.yml).\
-Versions have been populated into it called from [this workflow](.github/workflows/update_bug_report.yml).
+Versions have been populated into it using [this workflow](.github/workflows/update_bug_report.yml).
 
 
 
