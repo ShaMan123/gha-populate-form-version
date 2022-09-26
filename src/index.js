@@ -29,6 +29,9 @@ async function run() {
 		if (tagsInput) {
 			try {
 				tags = JSON.parse(tagsInput);
+				if (!Array.isArray(tags)) {
+					throw new Error('bad parsing');
+				}
 			} catch (error) {
 				tags = tagsInput
 					.split(',')
