@@ -15,7 +15,7 @@ async function run() {
 		});
 		const order = getInput('order', { trimWhitespace: true, required: true });
 		const limitTo =
-			Math.abs(Number(getInput('limit_to', { trimWhitespace: true }))) ||
+			Math.max(Number(getInput('limit_to', { trimWhitespace: true })), 0) ||
 			undefined;
 		const dropdownId = getInput('dropdown', {
 			trimWhitespace: true,
