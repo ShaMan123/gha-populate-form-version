@@ -81,6 +81,14 @@ jobs:
           package: axios
           limit_to: 10
           dry_run: true
+      - name: Dry Run pixijs
+        id: pixijs
+        uses: ./
+        with:
+          package: pixijs/pixijs
+          registry: github
+          limit_to: 10
+          dry_run: true
       - name: Update copy
         uses: ./
         with:
@@ -97,7 +105,8 @@ jobs:
           result-encoding: string
           script: |
             return ['1.2.3', '4.5.6', '7.8.9', `node@${process.env.NODE_LATEST_VERSION}`, 'fabric@${{ steps.fabric.outputs.latest }}']
-              .concat(${{ steps.lodash.outputs.tags }}.slice(0, 5).map(tag => `lodash@${tag}`));
+              .concat(${{ steps.lodash.outputs.tags }}.slice(0, 5).map(tag => `lodash@${tag}`))
+              .concat(${{ steps.pixijs.outputs.tags }}.slice(0, 5).map(tag => `pixijs@${tag}`));
       - name: Update generated
         uses: ./
         with:

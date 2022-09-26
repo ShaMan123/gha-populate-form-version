@@ -269,7 +269,7 @@ body:
   - type: dropdown
     id: version
     attributes:
-      label: Github Releases
+      label: Github Releases + semver option
       description: Releases of this repo
       options:
         - v0.3.2
