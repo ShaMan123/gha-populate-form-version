@@ -31,11 +31,11 @@ jobs:
           package: lodash
           dropdown: lodash
           limit_to: 20
-      - name: Update bug report self
-        uses: ./
-        with:
-          # needed to fetch tags with the github client
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: self
-          registry: github
-          semver: '>=0.1.21'
+      # - name: Update bug report self
+      #   uses: ./
+      #   with:
+      #     # needed to fetch tags with the github client
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     dropdown: self
+      #     registry: github
+      #     semver: '>=0.1.21'
