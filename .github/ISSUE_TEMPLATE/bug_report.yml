@@ -313,7 +313,7 @@ body:
   - type: dropdown
     id: copy
     attributes:
-      label: copied tags from prev action
+      label: copied tags from prev action using `outputs.tags`
       options:
         - 0.0.0
         - 0.1.14
