@@ -73,12 +73,14 @@ jobs:
           order: asc
           limit_to: 15
       - name: Update copy
+        needs: node
         uses: ./
         with:
           dropdown: copy
           tags: ${{ steps.node.outputs.tags }}
       - name: Mock tags
         id: mock_tags
+        needs: node
         uses: actions/github-script@v6
         env:
           NODE_LATEST_VERSION: ${{ steps.node.outputs.latest }}
@@ -88,6 +90,7 @@ jobs:
           script: |
             return ['1.2.3', '4.5.6', '7.8.9', process.env.NODE_LATEST_VERSION];
       - name: Update generated
+        needs: node
         uses: ./
         with:
           dropdown: generated
