@@ -51,9 +51,9 @@ runs:
   steps:
     # - run: git pull
     #   shell: bash
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        ref: ${{ github.head_ref }}
+        ref: ${{ github.event.repository.default_branch }}
     - name: Update ${{ inputs.form }}
       run: node dist/main.cjs
       shell: bash
@@ -67,7 +67,10 @@ runs:
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
         # INPUT_TAGS: ${{ inputs.tags }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: ${{ inputs.commit_message }}
-        push: git push origin HEAD:main -u
+    - name: Commit to ${{ github.event.repository.default_branch }}
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add ${{ inputs.form }}
+        git commit -m ${{ inputs.commit_message }}
+        git push
