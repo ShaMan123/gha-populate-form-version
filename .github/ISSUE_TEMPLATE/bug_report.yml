@@ -67,6 +67,7 @@ body:
       label: Releases
       description: Releases of this repo
       options:
+        - v0.2.0
         - v0.1.21
     validations:
       required: true
