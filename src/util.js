@@ -9,10 +9,12 @@ function listNPMTags(packageName) {
 		cp.execSync(`npm view ${packageName} versions --json`).toString(),
 	).reverse();
 }
-function listGithubReleases() {
-	return github
-		.getOctokit(process.env.GITHUB_TOKEN)
-		.rest.repos.listReleases(github.context.repo);
+async function listGithubReleases() {
+	return (
+		await github
+			.getOctokit(process.env.GITHUB_TOKEN)
+			.rest.repos.listReleases(github.context.repo)
+	).data.map((value) => value.tag_name);
 }
 export async function listTags(registry, packageName, order, limitTo) {
 	let tags = [];
