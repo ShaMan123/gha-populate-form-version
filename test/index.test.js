@@ -9,14 +9,13 @@ describe('action', function () {
 	});
 	it('npm by package', async function () {
 		assert.ok(
-			(await listTags('npm', '  fabric ', 'desc')).length > 0,
+			(await listTags('npm', '  fabric ')).length > 0,
 			'should fetch tags from npm',
 		);
 	});
 	it('github by user and repo', async function () {
 		assert.ok(
-			(await listTags('github', 'ShaMan123/react-native-math-view', 'desc'))
-				.length > 0,
+			(await listTags('github', 'ShaMan123/react-native-math-view')).length > 0,
 			'should fetch tags from github by user and repo',
 		);
 	});

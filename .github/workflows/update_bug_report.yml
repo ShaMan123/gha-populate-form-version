@@ -31,6 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Update fabric
+        id: fabric
         uses: ./
         with:
           package: fabric
@@ -44,6 +45,7 @@ jobs:
           registry: github
           package: fabricjs/fabric.js
       - name: Update lodash
+        id: lodash
         uses: ./
         with:
           package: lodash
@@ -65,9 +67,32 @@ jobs:
           registry: github
           package: react-native-math-view
       - name: Update node
+        id: node
         uses: ./
         with:
           dropdown: node_version
           package: node
           order: asc
           limit_to: 15
+      - name: Update copy
+        uses: ./
+        with:
+          dropdown: copy
+          tags: ${{ steps.node.outputs.tags }}
+      # This step demonstrates how to generate tags
+      - name: Mock tags
+        id: mock_tags
+        uses: actions/github-script@v6
+        env:
+          NODE_LATEST_VERSION: ${{ steps.node.outputs.latest }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            return ['1.2.3', '4.5.6', '7.8.9', `node@${process.env.NODE_LATEST_VERSION}`, 'fabric@${{ steps.fabric.outputs.latest }}']
+              .concat(${{ steps.lodash.outputs.tags }}.slice(0, 5).map(tag => `lodash@${tag}`));
+      - name: Update generated
+        uses: ./
+        with:
+          dropdown: generated
+          tags: ${{ steps.mock_tags.outputs.result }}
