@@ -17,7 +17,7 @@ body:
   - type: dropdown
     id: fabric
     attributes:
-      label: fabric npm version
+      label: npm version
       description: fabric npm
       options:
         - 5.2.4
@@ -219,7 +219,7 @@ body:
   - type: dropdown
     id: fabric_tags
     attributes:
-      label: fabric tags
+      label: Repo Tags
       description: fabric tags
       options:
         - v5.2.4
@@ -241,7 +241,7 @@ body:
   - type: dropdown
     id: lodash
     attributes:
-      label: lodash version
+      label: limit to 20
       description: lodash
       options:
         - 4.17.21
@@ -269,7 +269,7 @@ body:
   - type: dropdown
     id: version
     attributes:
-      label: Releases
+      label: Github Releases
       description: Releases of this repo
       options:
         - v0.3.2
@@ -282,8 +282,8 @@ body:
   - type: dropdown
     id: math
     attributes:
-      label: 'Using action owner: `react-native-math-view`'
-      description: Releases of this repo
+      label: Using Owner
+      description: Releases of `react-native-math-view`
       options:
         - 3.4.9
     validations:
@@ -291,7 +291,7 @@ body:
   - type: dropdown
     id: node_version
     attributes:
-      label: Node Version (if applicable)
+      label: Node Version (asc limit to 15)
       options:
         - 0.0.0
         - 0.1.14
@@ -313,7 +313,7 @@ body:
   - type: dropdown
     id: copy
     attributes:
-      label: copied tags from prev action using `outputs.tags`
+      label: Using `outputs.tags`
       options:
         - 0.0.0
         - 0.1.14
@@ -335,7 +335,7 @@ body:
   - type: dropdown
     id: generated
     attributes:
-      label: generated tags
+      label: Generated Tags
       options:
         - 1.2.3
         - 4.5.6
