@@ -32,7 +32,6 @@ async function run() {
 		setOutput('tags', tags);
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
-		console.log(error);
 		setFailed(error);
 	}
 }
