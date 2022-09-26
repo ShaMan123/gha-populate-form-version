@@ -314,6 +314,7 @@ body:
     id: copy
     attributes:
       label: Using `outputs.tags`
+      description: axios
       options:
         - 0.27.2
         - 0.27.1
