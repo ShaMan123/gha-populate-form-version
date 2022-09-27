@@ -12,6 +12,7 @@ on:
   pull_request:
     branches: [main]
 
+  # use in production
   workflow_dispatch:
 
   # use in production
