@@ -89843,7 +89843,10 @@ async function run() {
 		}
 		const tags = list
 			.slice(0, limitTo)
-			.filter((tag) => semver.satisfies(semver.clean(tag), semverRange));
+			.filter(
+				(tag) =>
+					!semverRange || semver.satisfies(semver.clean(tag), semverRange),
+			);
 		coreExports.setOutput('latest', latest);
 		coreExports.setOutput('tags', tags);
 	} catch (error) {
