@@ -244,7 +244,7 @@ body:
       label: limit to 20
       description: lodash
       options:
-        -
+        - null
     validations:
       required: true
   - type: dropdown
