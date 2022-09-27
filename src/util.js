@@ -14,11 +14,20 @@ async function listGithubReleases(repoName) {
 		owner = github.context.repo.owner;
 		repo = repoName;
 	}
-	return (
-		await github
-			.getOctokit(process.env.GITHUB_TOKEN)
-			.rest.repos.listReleases({ owner, repo })
-	).data.map((value) => value.tag_name);
+	let page = 1;
+	const tags = [];
+	async function fetch() {
+		const results = (
+			await github
+				.getOctokit(process.env.GITHUB_TOKEN)
+				.rest.repos.listReleases({ owner, repo, per_page: 100, page })
+		).data.map((value) => value.tag_name);
+		tags.push(...results);
+		page++;
+		return results.length > 0 && fetch();
+	}
+	await fetch();
+	return tags;
 }
 /**
  *
