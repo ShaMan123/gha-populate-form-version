@@ -41,11 +41,11 @@ jobs:
           script: |
             switch (${{ github.event_name }}) {
               case 'pull_request':
-                return ${{ github.head_ref }};
+                return '${{ github.head_ref }}';
               case 'release':
-                return ${{ github.event.repository.default_branch }};
+                return '${{ github.event.repository.default_branch }}';
               default:
-                return ${{ github.ref }};
+                return '${{ github.ref }}';
             }
       - name: Checkout ${{ steps.branch.outputs.result }}
         uses: actions/checkout@v3
