@@ -39,7 +39,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
-            switch (${{ github.event_name }}) {
+            switch ('${{ github.event_name }}') {
               case 'pull_request':
                 return '${{ github.head_ref }}';
               case 'release':
