@@ -490,6 +490,7 @@ body:
       label: Using `outputs.tags` from a dry run
       description: Axios npm
       options:
+        - 1.0.0-alpha.1
         - 0.27.2
         - 0.27.1
         - 0.27.0
