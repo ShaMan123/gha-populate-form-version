@@ -8,6 +8,9 @@ inputs:
   github_token:
     description: Github token
     default: ${{ github.token }}
+  ref:
+    description: Github ref/branch to update, inferred from the event type if omitted
+    type: string
   form:
     description: 'The location of the yaml form file'
     default: '.github/ISSUE_TEMPLATE/bug_report.yml'
@@ -75,9 +78,10 @@ runs:
         INPUT_ORDER: ${{ inputs.order }}
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
         INPUT_SEMVER: ${{ inputs.semver }}
-    - name: Issue Forms Dropdown Options
+    - name: Set dropdown options
       uses: ShaMan123/gha-form-dropdown-options@v0.0.5
       with:
+        ref: ${{ inputs.ref }}
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
         options: ${{ inputs.tags || steps.main.outputs.tags }}
