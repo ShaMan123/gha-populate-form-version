@@ -32,6 +32,25 @@ jobs:
     runs-on: ubuntu-latest
     name: Update bug report
     steps:
+      - name: Get branch for job
+        id: branch
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            switch ('${{ github.event_name }}') {
+              case 'pull_request':
+                return '${{ github.head_ref }}';
+              case 'release':
+                return '${{ github.event.repository.default_branch }}';
+              default:
+                return '${{ github.ref }}';
+            }
+      - name: Checkout ${{ steps.branch.outputs.result }}
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.branch.outputs.result }}
       - name: Update fabric
         id: fabric
         uses: ./
