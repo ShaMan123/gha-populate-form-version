@@ -71,7 +71,7 @@ describe('action', function () {
 			assert.ok(!existsSync(test), 'should cleanup test');
 		});
 
-		it.only('passing tags', async function () {
+		it('passing tags', async function () {
 			const inputs = {
 				// github_token,
 				form: test,
