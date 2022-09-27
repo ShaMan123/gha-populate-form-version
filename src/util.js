@@ -1,6 +1,4 @@
 import github from '@actions/github';
-import fs from 'fs';
-import YAML from 'js-yaml';
 import cp from 'node:child_process';
 
 function listNPMTags(packageName) {
@@ -16,11 +14,20 @@ async function listGithubReleases(repoName) {
 		owner = github.context.repo.owner;
 		repo = repoName;
 	}
-	return (
-		await github
-			.getOctokit(process.env.GITHUB_TOKEN)
-			.rest.repos.listReleases({ owner, repo })
-	).data.map((value) => value.tag_name);
+	let page = 1;
+	const tags = [];
+	async function fetch() {
+		const results = (
+			await github
+				.getOctokit(process.env.GITHUB_TOKEN)
+				.rest.repos.listReleases({ owner, repo, per_page: 100, page })
+		).data.map((value) => value.tag_name);
+		tags.push(...results);
+		page++;
+		return results.length > 0 && fetch();
+	}
+	await fetch();
+	return tags;
 }
 /**
  *
@@ -38,22 +45,7 @@ export async function listTags(registry, packageName) {
 			tags = listGithubReleases(packageName);
 			break;
 		default:
-			throw new Error(`registry ${registry} is not available`);
+			throw new Error(`registry "${registry}" is not supported`);
 	}
 	return tags;
-}
-export function writeYAML(file, dropdownId, tags) {
-	const content = YAML.load(fs.readFileSync(file).toString());
-	const found = content.body.find(
-		(entry) => entry.id === dropdownId && entry.type === 'dropdown',
-	);
-	if (!found) {
-		throw new Error(
-			`dropdown ${dropdownId} not found.\n${content.body.filter(
-				(entry) => entry.type === 'dropdown',
-			)}`,
-		);
-	}
-	found.attributes.options = tags;
-	fs.writeFileSync(file, YAML.dump(content));
 }
