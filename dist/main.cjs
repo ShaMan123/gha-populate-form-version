@@ -55,7 +55,7 @@ function getAugmentedNamespace(n) {
 	return a;
 }
 
-var core$1 = {};
+var core = {};
 
 var command = {};
 
@@ -267,8 +267,8 @@ function validate(uuid) {
 
 var byteToHex = [];
 
-for (var i$1 = 0; i$1 < 256; ++i$1) {
-  byteToHex.push((i$1 + 0x100).toString(16).substr(1));
+for (var i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).substr(1));
 }
 
 function stringify(arr) {
@@ -2306,7 +2306,7 @@ function requirePathUtils () {
 var hasRequiredCore;
 
 function requireCore () {
-	if (hasRequiredCore) return core$1;
+	if (hasRequiredCore) return core;
 	hasRequiredCore = 1;
 	(function (exports) {
 		var __createBinding = (commonjsGlobal && commonjsGlobal.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -2645,8 +2645,8 @@ function requireCore () {
 		Object.defineProperty(exports, "toWin32Path", { enumerable: true, get: function () { return path_utils_1.toWin32Path; } });
 		Object.defineProperty(exports, "toPlatformPath", { enumerable: true, get: function () { return path_utils_1.toPlatformPath; } });
 		
-} (core$1));
-	return core$1;
+} (core));
+	return core;
 }
 
 var coreExports = requireCore();
@@ -3476,781 +3476,764 @@ function requireIterator () {
 	return iterator$1;
 }
 
-var yallist;
-var hasRequiredYallist;
+var yallist = Yallist$1;
 
-function requireYallist () {
-	if (hasRequiredYallist) return yallist;
-	hasRequiredYallist = 1;
-	yallist = Yallist;
+Yallist$1.Node = Node;
+Yallist$1.create = Yallist$1;
 
-	Yallist.Node = Node;
-	Yallist.create = Yallist;
+function Yallist$1 (list) {
+  var self = this;
+  if (!(self instanceof Yallist$1)) {
+    self = new Yallist$1();
+  }
 
-	function Yallist (list) {
-	  var self = this;
-	  if (!(self instanceof Yallist)) {
-	    self = new Yallist();
-	  }
+  self.tail = null;
+  self.head = null;
+  self.length = 0;
 
-	  self.tail = null;
-	  self.head = null;
-	  self.length = 0;
+  if (list && typeof list.forEach === 'function') {
+    list.forEach(function (item) {
+      self.push(item);
+    });
+  } else if (arguments.length > 0) {
+    for (var i = 0, l = arguments.length; i < l; i++) {
+      self.push(arguments[i]);
+    }
+  }
 
-	  if (list && typeof list.forEach === 'function') {
-	    list.forEach(function (item) {
-	      self.push(item);
-	    });
-	  } else if (arguments.length > 0) {
-	    for (var i = 0, l = arguments.length; i < l; i++) {
-	      self.push(arguments[i]);
-	    }
-	  }
-
-	  return self
-	}
-
-	Yallist.prototype.removeNode = function (node) {
-	  if (node.list !== this) {
-	    throw new Error('removing node which does not belong to this list')
-	  }
-
-	  var next = node.next;
-	  var prev = node.prev;
-
-	  if (next) {
-	    next.prev = prev;
-	  }
-
-	  if (prev) {
-	    prev.next = next;
-	  }
-
-	  if (node === this.head) {
-	    this.head = next;
-	  }
-	  if (node === this.tail) {
-	    this.tail = prev;
-	  }
-
-	  node.list.length--;
-	  node.next = null;
-	  node.prev = null;
-	  node.list = null;
-
-	  return next
-	};
-
-	Yallist.prototype.unshiftNode = function (node) {
-	  if (node === this.head) {
-	    return
-	  }
-
-	  if (node.list) {
-	    node.list.removeNode(node);
-	  }
-
-	  var head = this.head;
-	  node.list = this;
-	  node.next = head;
-	  if (head) {
-	    head.prev = node;
-	  }
-
-	  this.head = node;
-	  if (!this.tail) {
-	    this.tail = node;
-	  }
-	  this.length++;
-	};
-
-	Yallist.prototype.pushNode = function (node) {
-	  if (node === this.tail) {
-	    return
-	  }
-
-	  if (node.list) {
-	    node.list.removeNode(node);
-	  }
-
-	  var tail = this.tail;
-	  node.list = this;
-	  node.prev = tail;
-	  if (tail) {
-	    tail.next = node;
-	  }
-
-	  this.tail = node;
-	  if (!this.head) {
-	    this.head = node;
-	  }
-	  this.length++;
-	};
-
-	Yallist.prototype.push = function () {
-	  for (var i = 0, l = arguments.length; i < l; i++) {
-	    push(this, arguments[i]);
-	  }
-	  return this.length
-	};
-
-	Yallist.prototype.unshift = function () {
-	  for (var i = 0, l = arguments.length; i < l; i++) {
-	    unshift(this, arguments[i]);
-	  }
-	  return this.length
-	};
-
-	Yallist.prototype.pop = function () {
-	  if (!this.tail) {
-	    return undefined
-	  }
-
-	  var res = this.tail.value;
-	  this.tail = this.tail.prev;
-	  if (this.tail) {
-	    this.tail.next = null;
-	  } else {
-	    this.head = null;
-	  }
-	  this.length--;
-	  return res
-	};
-
-	Yallist.prototype.shift = function () {
-	  if (!this.head) {
-	    return undefined
-	  }
-
-	  var res = this.head.value;
-	  this.head = this.head.next;
-	  if (this.head) {
-	    this.head.prev = null;
-	  } else {
-	    this.tail = null;
-	  }
-	  this.length--;
-	  return res
-	};
-
-	Yallist.prototype.forEach = function (fn, thisp) {
-	  thisp = thisp || this;
-	  for (var walker = this.head, i = 0; walker !== null; i++) {
-	    fn.call(thisp, walker.value, i, this);
-	    walker = walker.next;
-	  }
-	};
-
-	Yallist.prototype.forEachReverse = function (fn, thisp) {
-	  thisp = thisp || this;
-	  for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
-	    fn.call(thisp, walker.value, i, this);
-	    walker = walker.prev;
-	  }
-	};
-
-	Yallist.prototype.get = function (n) {
-	  for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-	    // abort out of the list early if we hit a cycle
-	    walker = walker.next;
-	  }
-	  if (i === n && walker !== null) {
-	    return walker.value
-	  }
-	};
-
-	Yallist.prototype.getReverse = function (n) {
-	  for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-	    // abort out of the list early if we hit a cycle
-	    walker = walker.prev;
-	  }
-	  if (i === n && walker !== null) {
-	    return walker.value
-	  }
-	};
-
-	Yallist.prototype.map = function (fn, thisp) {
-	  thisp = thisp || this;
-	  var res = new Yallist();
-	  for (var walker = this.head; walker !== null;) {
-	    res.push(fn.call(thisp, walker.value, this));
-	    walker = walker.next;
-	  }
-	  return res
-	};
-
-	Yallist.prototype.mapReverse = function (fn, thisp) {
-	  thisp = thisp || this;
-	  var res = new Yallist();
-	  for (var walker = this.tail; walker !== null;) {
-	    res.push(fn.call(thisp, walker.value, this));
-	    walker = walker.prev;
-	  }
-	  return res
-	};
-
-	Yallist.prototype.reduce = function (fn, initial) {
-	  var acc;
-	  var walker = this.head;
-	  if (arguments.length > 1) {
-	    acc = initial;
-	  } else if (this.head) {
-	    walker = this.head.next;
-	    acc = this.head.value;
-	  } else {
-	    throw new TypeError('Reduce of empty list with no initial value')
-	  }
-
-	  for (var i = 0; walker !== null; i++) {
-	    acc = fn(acc, walker.value, i);
-	    walker = walker.next;
-	  }
-
-	  return acc
-	};
-
-	Yallist.prototype.reduceReverse = function (fn, initial) {
-	  var acc;
-	  var walker = this.tail;
-	  if (arguments.length > 1) {
-	    acc = initial;
-	  } else if (this.tail) {
-	    walker = this.tail.prev;
-	    acc = this.tail.value;
-	  } else {
-	    throw new TypeError('Reduce of empty list with no initial value')
-	  }
-
-	  for (var i = this.length - 1; walker !== null; i--) {
-	    acc = fn(acc, walker.value, i);
-	    walker = walker.prev;
-	  }
-
-	  return acc
-	};
-
-	Yallist.prototype.toArray = function () {
-	  var arr = new Array(this.length);
-	  for (var i = 0, walker = this.head; walker !== null; i++) {
-	    arr[i] = walker.value;
-	    walker = walker.next;
-	  }
-	  return arr
-	};
-
-	Yallist.prototype.toArrayReverse = function () {
-	  var arr = new Array(this.length);
-	  for (var i = 0, walker = this.tail; walker !== null; i++) {
-	    arr[i] = walker.value;
-	    walker = walker.prev;
-	  }
-	  return arr
-	};
-
-	Yallist.prototype.slice = function (from, to) {
-	  to = to || this.length;
-	  if (to < 0) {
-	    to += this.length;
-	  }
-	  from = from || 0;
-	  if (from < 0) {
-	    from += this.length;
-	  }
-	  var ret = new Yallist();
-	  if (to < from || to < 0) {
-	    return ret
-	  }
-	  if (from < 0) {
-	    from = 0;
-	  }
-	  if (to > this.length) {
-	    to = this.length;
-	  }
-	  for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
-	    walker = walker.next;
-	  }
-	  for (; walker !== null && i < to; i++, walker = walker.next) {
-	    ret.push(walker.value);
-	  }
-	  return ret
-	};
-
-	Yallist.prototype.sliceReverse = function (from, to) {
-	  to = to || this.length;
-	  if (to < 0) {
-	    to += this.length;
-	  }
-	  from = from || 0;
-	  if (from < 0) {
-	    from += this.length;
-	  }
-	  var ret = new Yallist();
-	  if (to < from || to < 0) {
-	    return ret
-	  }
-	  if (from < 0) {
-	    from = 0;
-	  }
-	  if (to > this.length) {
-	    to = this.length;
-	  }
-	  for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
-	    walker = walker.prev;
-	  }
-	  for (; walker !== null && i > from; i--, walker = walker.prev) {
-	    ret.push(walker.value);
-	  }
-	  return ret
-	};
-
-	Yallist.prototype.splice = function (start, deleteCount, ...nodes) {
-	  if (start > this.length) {
-	    start = this.length - 1;
-	  }
-	  if (start < 0) {
-	    start = this.length + start;
-	  }
-
-	  for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
-	    walker = walker.next;
-	  }
-
-	  var ret = [];
-	  for (var i = 0; walker && i < deleteCount; i++) {
-	    ret.push(walker.value);
-	    walker = this.removeNode(walker);
-	  }
-	  if (walker === null) {
-	    walker = this.tail;
-	  }
-
-	  if (walker !== this.head && walker !== this.tail) {
-	    walker = walker.prev;
-	  }
-
-	  for (var i = 0; i < nodes.length; i++) {
-	    walker = insert(this, walker, nodes[i]);
-	  }
-	  return ret;
-	};
-
-	Yallist.prototype.reverse = function () {
-	  var head = this.head;
-	  var tail = this.tail;
-	  for (var walker = head; walker !== null; walker = walker.prev) {
-	    var p = walker.prev;
-	    walker.prev = walker.next;
-	    walker.next = p;
-	  }
-	  this.head = tail;
-	  this.tail = head;
-	  return this
-	};
-
-	function insert (self, node, value) {
-	  var inserted = node === self.head ?
-	    new Node(value, null, node, self) :
-	    new Node(value, node, node.next, self);
-
-	  if (inserted.next === null) {
-	    self.tail = inserted;
-	  }
-	  if (inserted.prev === null) {
-	    self.head = inserted;
-	  }
-
-	  self.length++;
-
-	  return inserted
-	}
-
-	function push (self, item) {
-	  self.tail = new Node(item, self.tail, null, self);
-	  if (!self.head) {
-	    self.head = self.tail;
-	  }
-	  self.length++;
-	}
-
-	function unshift (self, item) {
-	  self.head = new Node(item, null, self.head, self);
-	  if (!self.tail) {
-	    self.tail = self.head;
-	  }
-	  self.length++;
-	}
-
-	function Node (value, prev, next, list) {
-	  if (!(this instanceof Node)) {
-	    return new Node(value, prev, next, list)
-	  }
-
-	  this.list = list;
-	  this.value = value;
-
-	  if (prev) {
-	    prev.next = this;
-	    this.prev = prev;
-	  } else {
-	    this.prev = null;
-	  }
-
-	  if (next) {
-	    next.prev = this;
-	    this.next = next;
-	  } else {
-	    this.next = null;
-	  }
-	}
-
-	try {
-	  // add if support for Symbol.iterator is present
-	  requireIterator()(Yallist);
-	} catch (er) {}
-	return yallist;
+  return self
 }
 
-var lruCache;
-var hasRequiredLruCache;
+Yallist$1.prototype.removeNode = function (node) {
+  if (node.list !== this) {
+    throw new Error('removing node which does not belong to this list')
+  }
 
-function requireLruCache () {
-	if (hasRequiredLruCache) return lruCache;
-	hasRequiredLruCache = 1;
+  var next = node.next;
+  var prev = node.prev;
 
-	// A linked list to keep track of recently-used-ness
-	const Yallist = requireYallist();
+  if (next) {
+    next.prev = prev;
+  }
 
-	const MAX = Symbol('max');
-	const LENGTH = Symbol('length');
-	const LENGTH_CALCULATOR = Symbol('lengthCalculator');
-	const ALLOW_STALE = Symbol('allowStale');
-	const MAX_AGE = Symbol('maxAge');
-	const DISPOSE = Symbol('dispose');
-	const NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
-	const LRU_LIST = Symbol('lruList');
-	const CACHE = Symbol('cache');
-	const UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
+  if (prev) {
+    prev.next = next;
+  }
 
-	const naiveLength = () => 1;
+  if (node === this.head) {
+    this.head = next;
+  }
+  if (node === this.tail) {
+    this.tail = prev;
+  }
 
-	// lruList is a yallist where the head is the youngest
-	// item, and the tail is the oldest.  the list contains the Hit
-	// objects as the entries.
-	// Each Hit object has a reference to its Yallist.Node.  This
-	// never changes.
-	//
-	// cache is a Map (or PseudoMap) that matches the keys to
-	// the Yallist.Node object.
-	class LRUCache {
-	  constructor (options) {
-	    if (typeof options === 'number')
-	      options = { max: options };
+  node.list.length--;
+  node.next = null;
+  node.prev = null;
+  node.list = null;
 
-	    if (!options)
-	      options = {};
+  return next
+};
 
-	    if (options.max && (typeof options.max !== 'number' || options.max < 0))
-	      throw new TypeError('max must be a non-negative number')
-	    // Kind of weird to have a default max of Infinity, but oh well.
-	    this[MAX] = options.max || Infinity;
+Yallist$1.prototype.unshiftNode = function (node) {
+  if (node === this.head) {
+    return
+  }
 
-	    const lc = options.length || naiveLength;
-	    this[LENGTH_CALCULATOR] = (typeof lc !== 'function') ? naiveLength : lc;
-	    this[ALLOW_STALE] = options.stale || false;
-	    if (options.maxAge && typeof options.maxAge !== 'number')
-	      throw new TypeError('maxAge must be a number')
-	    this[MAX_AGE] = options.maxAge || 0;
-	    this[DISPOSE] = options.dispose;
-	    this[NO_DISPOSE_ON_SET] = options.noDisposeOnSet || false;
-	    this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
-	    this.reset();
-	  }
+  if (node.list) {
+    node.list.removeNode(node);
+  }
 
-	  // resize the cache when the max changes.
-	  set max (mL) {
-	    if (typeof mL !== 'number' || mL < 0)
-	      throw new TypeError('max must be a non-negative number')
+  var head = this.head;
+  node.list = this;
+  node.next = head;
+  if (head) {
+    head.prev = node;
+  }
 
-	    this[MAX] = mL || Infinity;
-	    trim(this);
-	  }
-	  get max () {
-	    return this[MAX]
-	  }
+  this.head = node;
+  if (!this.tail) {
+    this.tail = node;
+  }
+  this.length++;
+};
 
-	  set allowStale (allowStale) {
-	    this[ALLOW_STALE] = !!allowStale;
-	  }
-	  get allowStale () {
-	    return this[ALLOW_STALE]
-	  }
+Yallist$1.prototype.pushNode = function (node) {
+  if (node === this.tail) {
+    return
+  }
 
-	  set maxAge (mA) {
-	    if (typeof mA !== 'number')
-	      throw new TypeError('maxAge must be a non-negative number')
+  if (node.list) {
+    node.list.removeNode(node);
+  }
 
-	    this[MAX_AGE] = mA;
-	    trim(this);
-	  }
-	  get maxAge () {
-	    return this[MAX_AGE]
-	  }
+  var tail = this.tail;
+  node.list = this;
+  node.prev = tail;
+  if (tail) {
+    tail.next = node;
+  }
 
-	  // resize the cache when the lengthCalculator changes.
-	  set lengthCalculator (lC) {
-	    if (typeof lC !== 'function')
-	      lC = naiveLength;
+  this.tail = node;
+  if (!this.head) {
+    this.head = node;
+  }
+  this.length++;
+};
 
-	    if (lC !== this[LENGTH_CALCULATOR]) {
-	      this[LENGTH_CALCULATOR] = lC;
-	      this[LENGTH] = 0;
-	      this[LRU_LIST].forEach(hit => {
-	        hit.length = this[LENGTH_CALCULATOR](hit.value, hit.key);
-	        this[LENGTH] += hit.length;
-	      });
-	    }
-	    trim(this);
-	  }
-	  get lengthCalculator () { return this[LENGTH_CALCULATOR] }
+Yallist$1.prototype.push = function () {
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    push(this, arguments[i]);
+  }
+  return this.length
+};
 
-	  get length () { return this[LENGTH] }
-	  get itemCount () { return this[LRU_LIST].length }
+Yallist$1.prototype.unshift = function () {
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    unshift(this, arguments[i]);
+  }
+  return this.length
+};
 
-	  rforEach (fn, thisp) {
-	    thisp = thisp || this;
-	    for (let walker = this[LRU_LIST].tail; walker !== null;) {
-	      const prev = walker.prev;
-	      forEachStep(this, fn, walker, thisp);
-	      walker = prev;
-	    }
-	  }
+Yallist$1.prototype.pop = function () {
+  if (!this.tail) {
+    return undefined
+  }
 
-	  forEach (fn, thisp) {
-	    thisp = thisp || this;
-	    for (let walker = this[LRU_LIST].head; walker !== null;) {
-	      const next = walker.next;
-	      forEachStep(this, fn, walker, thisp);
-	      walker = next;
-	    }
-	  }
+  var res = this.tail.value;
+  this.tail = this.tail.prev;
+  if (this.tail) {
+    this.tail.next = null;
+  } else {
+    this.head = null;
+  }
+  this.length--;
+  return res
+};
 
-	  keys () {
-	    return this[LRU_LIST].toArray().map(k => k.key)
-	  }
+Yallist$1.prototype.shift = function () {
+  if (!this.head) {
+    return undefined
+  }
 
-	  values () {
-	    return this[LRU_LIST].toArray().map(k => k.value)
-	  }
+  var res = this.head.value;
+  this.head = this.head.next;
+  if (this.head) {
+    this.head.prev = null;
+  } else {
+    this.tail = null;
+  }
+  this.length--;
+  return res
+};
 
-	  reset () {
-	    if (this[DISPOSE] &&
-	        this[LRU_LIST] &&
-	        this[LRU_LIST].length) {
-	      this[LRU_LIST].forEach(hit => this[DISPOSE](hit.key, hit.value));
-	    }
+Yallist$1.prototype.forEach = function (fn, thisp) {
+  thisp = thisp || this;
+  for (var walker = this.head, i = 0; walker !== null; i++) {
+    fn.call(thisp, walker.value, i, this);
+    walker = walker.next;
+  }
+};
 
-	    this[CACHE] = new Map(); // hash of items by key
-	    this[LRU_LIST] = new Yallist(); // list of items in order of use recency
-	    this[LENGTH] = 0; // length of items in the list
-	  }
+Yallist$1.prototype.forEachReverse = function (fn, thisp) {
+  thisp = thisp || this;
+  for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
+    fn.call(thisp, walker.value, i, this);
+    walker = walker.prev;
+  }
+};
 
-	  dump () {
-	    return this[LRU_LIST].map(hit =>
-	      isStale(this, hit) ? false : {
-	        k: hit.key,
-	        v: hit.value,
-	        e: hit.now + (hit.maxAge || 0)
-	      }).toArray().filter(h => h)
-	  }
+Yallist$1.prototype.get = function (n) {
+  for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
+    // abort out of the list early if we hit a cycle
+    walker = walker.next;
+  }
+  if (i === n && walker !== null) {
+    return walker.value
+  }
+};
 
-	  dumpLru () {
-	    return this[LRU_LIST]
-	  }
+Yallist$1.prototype.getReverse = function (n) {
+  for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
+    // abort out of the list early if we hit a cycle
+    walker = walker.prev;
+  }
+  if (i === n && walker !== null) {
+    return walker.value
+  }
+};
 
-	  set (key, value, maxAge) {
-	    maxAge = maxAge || this[MAX_AGE];
+Yallist$1.prototype.map = function (fn, thisp) {
+  thisp = thisp || this;
+  var res = new Yallist$1();
+  for (var walker = this.head; walker !== null;) {
+    res.push(fn.call(thisp, walker.value, this));
+    walker = walker.next;
+  }
+  return res
+};
 
-	    if (maxAge && typeof maxAge !== 'number')
-	      throw new TypeError('maxAge must be a number')
+Yallist$1.prototype.mapReverse = function (fn, thisp) {
+  thisp = thisp || this;
+  var res = new Yallist$1();
+  for (var walker = this.tail; walker !== null;) {
+    res.push(fn.call(thisp, walker.value, this));
+    walker = walker.prev;
+  }
+  return res
+};
 
-	    const now = maxAge ? Date.now() : 0;
-	    const len = this[LENGTH_CALCULATOR](value, key);
+Yallist$1.prototype.reduce = function (fn, initial) {
+  var acc;
+  var walker = this.head;
+  if (arguments.length > 1) {
+    acc = initial;
+  } else if (this.head) {
+    walker = this.head.next;
+    acc = this.head.value;
+  } else {
+    throw new TypeError('Reduce of empty list with no initial value')
+  }
 
-	    if (this[CACHE].has(key)) {
-	      if (len > this[MAX]) {
-	        del(this, this[CACHE].get(key));
-	        return false
-	      }
+  for (var i = 0; walker !== null; i++) {
+    acc = fn(acc, walker.value, i);
+    walker = walker.next;
+  }
 
-	      const node = this[CACHE].get(key);
-	      const item = node.value;
+  return acc
+};
 
-	      // dispose of the old one before overwriting
-	      // split out into 2 ifs for better coverage tracking
-	      if (this[DISPOSE]) {
-	        if (!this[NO_DISPOSE_ON_SET])
-	          this[DISPOSE](key, item.value);
-	      }
+Yallist$1.prototype.reduceReverse = function (fn, initial) {
+  var acc;
+  var walker = this.tail;
+  if (arguments.length > 1) {
+    acc = initial;
+  } else if (this.tail) {
+    walker = this.tail.prev;
+    acc = this.tail.value;
+  } else {
+    throw new TypeError('Reduce of empty list with no initial value')
+  }
 
-	      item.now = now;
-	      item.maxAge = maxAge;
-	      item.value = value;
-	      this[LENGTH] += len - item.length;
-	      item.length = len;
-	      this.get(key);
-	      trim(this);
-	      return true
-	    }
+  for (var i = this.length - 1; walker !== null; i--) {
+    acc = fn(acc, walker.value, i);
+    walker = walker.prev;
+  }
 
-	    const hit = new Entry(key, value, len, now, maxAge);
+  return acc
+};
 
-	    // oversized objects fall out of cache automatically.
-	    if (hit.length > this[MAX]) {
-	      if (this[DISPOSE])
-	        this[DISPOSE](key, value);
+Yallist$1.prototype.toArray = function () {
+  var arr = new Array(this.length);
+  for (var i = 0, walker = this.head; walker !== null; i++) {
+    arr[i] = walker.value;
+    walker = walker.next;
+  }
+  return arr
+};
 
-	      return false
-	    }
+Yallist$1.prototype.toArrayReverse = function () {
+  var arr = new Array(this.length);
+  for (var i = 0, walker = this.tail; walker !== null; i++) {
+    arr[i] = walker.value;
+    walker = walker.prev;
+  }
+  return arr
+};
 
-	    this[LENGTH] += hit.length;
-	    this[LRU_LIST].unshift(hit);
-	    this[CACHE].set(key, this[LRU_LIST].head);
-	    trim(this);
-	    return true
-	  }
+Yallist$1.prototype.slice = function (from, to) {
+  to = to || this.length;
+  if (to < 0) {
+    to += this.length;
+  }
+  from = from || 0;
+  if (from < 0) {
+    from += this.length;
+  }
+  var ret = new Yallist$1();
+  if (to < from || to < 0) {
+    return ret
+  }
+  if (from < 0) {
+    from = 0;
+  }
+  if (to > this.length) {
+    to = this.length;
+  }
+  for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
+    walker = walker.next;
+  }
+  for (; walker !== null && i < to; i++, walker = walker.next) {
+    ret.push(walker.value);
+  }
+  return ret
+};
 
-	  has (key) {
-	    if (!this[CACHE].has(key)) return false
-	    const hit = this[CACHE].get(key).value;
-	    return !isStale(this, hit)
-	  }
+Yallist$1.prototype.sliceReverse = function (from, to) {
+  to = to || this.length;
+  if (to < 0) {
+    to += this.length;
+  }
+  from = from || 0;
+  if (from < 0) {
+    from += this.length;
+  }
+  var ret = new Yallist$1();
+  if (to < from || to < 0) {
+    return ret
+  }
+  if (from < 0) {
+    from = 0;
+  }
+  if (to > this.length) {
+    to = this.length;
+  }
+  for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
+    walker = walker.prev;
+  }
+  for (; walker !== null && i > from; i--, walker = walker.prev) {
+    ret.push(walker.value);
+  }
+  return ret
+};
 
-	  get (key) {
-	    return get(this, key, true)
-	  }
+Yallist$1.prototype.splice = function (start, deleteCount, ...nodes) {
+  if (start > this.length) {
+    start = this.length - 1;
+  }
+  if (start < 0) {
+    start = this.length + start;
+  }
 
-	  peek (key) {
-	    return get(this, key, false)
-	  }
+  for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
+    walker = walker.next;
+  }
 
-	  pop () {
-	    const node = this[LRU_LIST].tail;
-	    if (!node)
-	      return null
+  var ret = [];
+  for (var i = 0; walker && i < deleteCount; i++) {
+    ret.push(walker.value);
+    walker = this.removeNode(walker);
+  }
+  if (walker === null) {
+    walker = this.tail;
+  }
 
-	    del(this, node);
-	    return node.value
-	  }
+  if (walker !== this.head && walker !== this.tail) {
+    walker = walker.prev;
+  }
 
-	  del (key) {
-	    del(this, this[CACHE].get(key));
-	  }
+  for (var i = 0; i < nodes.length; i++) {
+    walker = insert(this, walker, nodes[i]);
+  }
+  return ret;
+};
 
-	  load (arr) {
-	    // reset the cache
-	    this.reset();
+Yallist$1.prototype.reverse = function () {
+  var head = this.head;
+  var tail = this.tail;
+  for (var walker = head; walker !== null; walker = walker.prev) {
+    var p = walker.prev;
+    walker.prev = walker.next;
+    walker.next = p;
+  }
+  this.head = tail;
+  this.tail = head;
+  return this
+};
 
-	    const now = Date.now();
-	    // A previous serialized cache has the most recent items first
-	    for (let l = arr.length - 1; l >= 0; l--) {
-	      const hit = arr[l];
-	      const expiresAt = hit.e || 0;
-	      if (expiresAt === 0)
-	        // the item was created without expiration in a non aged cache
-	        this.set(hit.k, hit.v);
-	      else {
-	        const maxAge = expiresAt - now;
-	        // dont add already expired items
-	        if (maxAge > 0) {
-	          this.set(hit.k, hit.v, maxAge);
-	        }
-	      }
-	    }
-	  }
+function insert (self, node, value) {
+  var inserted = node === self.head ?
+    new Node(value, null, node, self) :
+    new Node(value, node, node.next, self);
 
-	  prune () {
-	    this[CACHE].forEach((value, key) => get(this, key, false));
-	  }
-	}
+  if (inserted.next === null) {
+    self.tail = inserted;
+  }
+  if (inserted.prev === null) {
+    self.head = inserted;
+  }
 
-	const get = (self, key, doUse) => {
-	  const node = self[CACHE].get(key);
-	  if (node) {
-	    const hit = node.value;
-	    if (isStale(self, hit)) {
-	      del(self, node);
-	      if (!self[ALLOW_STALE])
-	        return undefined
-	    } else {
-	      if (doUse) {
-	        if (self[UPDATE_AGE_ON_GET])
-	          node.value.now = Date.now();
-	        self[LRU_LIST].unshiftNode(node);
-	      }
-	    }
-	    return hit.value
-	  }
-	};
+  self.length++;
 
-	const isStale = (self, hit) => {
-	  if (!hit || (!hit.maxAge && !self[MAX_AGE]))
-	    return false
-
-	  const diff = Date.now() - hit.now;
-	  return hit.maxAge ? diff > hit.maxAge
-	    : self[MAX_AGE] && (diff > self[MAX_AGE])
-	};
-
-	const trim = self => {
-	  if (self[LENGTH] > self[MAX]) {
-	    for (let walker = self[LRU_LIST].tail;
-	      self[LENGTH] > self[MAX] && walker !== null;) {
-	      // We know that we're about to delete this one, and also
-	      // what the next least recently used key will be, so just
-	      // go ahead and set it now.
-	      const prev = walker.prev;
-	      del(self, walker);
-	      walker = prev;
-	    }
-	  }
-	};
-
-	const del = (self, node) => {
-	  if (node) {
-	    const hit = node.value;
-	    if (self[DISPOSE])
-	      self[DISPOSE](hit.key, hit.value);
-
-	    self[LENGTH] -= hit.length;
-	    self[CACHE].delete(hit.key);
-	    self[LRU_LIST].removeNode(node);
-	  }
-	};
-
-	class Entry {
-	  constructor (key, value, length, now, maxAge) {
-	    this.key = key;
-	    this.value = value;
-	    this.length = length;
-	    this.now = now;
-	    this.maxAge = maxAge || 0;
-	  }
-	}
-
-	const forEachStep = (self, fn, node, thisp) => {
-	  let hit = node.value;
-	  if (isStale(self, hit)) {
-	    del(self, node);
-	    if (!self[ALLOW_STALE])
-	      hit = undefined;
-	  }
-	  if (hit)
-	    fn.call(thisp, hit.value, hit.key, self);
-	};
-
-	lruCache = LRUCache;
-	return lruCache;
+  return inserted
 }
+
+function push (self, item) {
+  self.tail = new Node(item, self.tail, null, self);
+  if (!self.head) {
+    self.head = self.tail;
+  }
+  self.length++;
+}
+
+function unshift (self, item) {
+  self.head = new Node(item, null, self.head, self);
+  if (!self.tail) {
+    self.tail = self.head;
+  }
+  self.length++;
+}
+
+function Node (value, prev, next, list) {
+  if (!(this instanceof Node)) {
+    return new Node(value, prev, next, list)
+  }
+
+  this.list = list;
+  this.value = value;
+
+  if (prev) {
+    prev.next = this;
+    this.prev = prev;
+  } else {
+    this.prev = null;
+  }
+
+  if (next) {
+    next.prev = this;
+    this.next = next;
+  } else {
+    this.next = null;
+  }
+}
+
+try {
+  // add if support for Symbol.iterator is present
+  requireIterator()(Yallist$1);
+} catch (er) {}
+
+// A linked list to keep track of recently-used-ness
+const Yallist = yallist;
+
+const MAX = Symbol('max');
+const LENGTH = Symbol('length');
+const LENGTH_CALCULATOR = Symbol('lengthCalculator');
+const ALLOW_STALE = Symbol('allowStale');
+const MAX_AGE = Symbol('maxAge');
+const DISPOSE = Symbol('dispose');
+const NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
+const LRU_LIST = Symbol('lruList');
+const CACHE = Symbol('cache');
+const UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
+
+const naiveLength = () => 1;
+
+// lruList is a yallist where the head is the youngest
+// item, and the tail is the oldest.  the list contains the Hit
+// objects as the entries.
+// Each Hit object has a reference to its Yallist.Node.  This
+// never changes.
+//
+// cache is a Map (or PseudoMap) that matches the keys to
+// the Yallist.Node object.
+class LRUCache {
+  constructor (options) {
+    if (typeof options === 'number')
+      options = { max: options };
+
+    if (!options)
+      options = {};
+
+    if (options.max && (typeof options.max !== 'number' || options.max < 0))
+      throw new TypeError('max must be a non-negative number')
+    // Kind of weird to have a default max of Infinity, but oh well.
+    this[MAX] = options.max || Infinity;
+
+    const lc = options.length || naiveLength;
+    this[LENGTH_CALCULATOR] = (typeof lc !== 'function') ? naiveLength : lc;
+    this[ALLOW_STALE] = options.stale || false;
+    if (options.maxAge && typeof options.maxAge !== 'number')
+      throw new TypeError('maxAge must be a number')
+    this[MAX_AGE] = options.maxAge || 0;
+    this[DISPOSE] = options.dispose;
+    this[NO_DISPOSE_ON_SET] = options.noDisposeOnSet || false;
+    this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
+    this.reset();
+  }
+
+  // resize the cache when the max changes.
+  set max (mL) {
+    if (typeof mL !== 'number' || mL < 0)
+      throw new TypeError('max must be a non-negative number')
+
+    this[MAX] = mL || Infinity;
+    trim(this);
+  }
+  get max () {
+    return this[MAX]
+  }
+
+  set allowStale (allowStale) {
+    this[ALLOW_STALE] = !!allowStale;
+  }
+  get allowStale () {
+    return this[ALLOW_STALE]
+  }
+
+  set maxAge (mA) {
+    if (typeof mA !== 'number')
+      throw new TypeError('maxAge must be a non-negative number')
+
+    this[MAX_AGE] = mA;
+    trim(this);
+  }
+  get maxAge () {
+    return this[MAX_AGE]
+  }
+
+  // resize the cache when the lengthCalculator changes.
+  set lengthCalculator (lC) {
+    if (typeof lC !== 'function')
+      lC = naiveLength;
+
+    if (lC !== this[LENGTH_CALCULATOR]) {
+      this[LENGTH_CALCULATOR] = lC;
+      this[LENGTH] = 0;
+      this[LRU_LIST].forEach(hit => {
+        hit.length = this[LENGTH_CALCULATOR](hit.value, hit.key);
+        this[LENGTH] += hit.length;
+      });
+    }
+    trim(this);
+  }
+  get lengthCalculator () { return this[LENGTH_CALCULATOR] }
+
+  get length () { return this[LENGTH] }
+  get itemCount () { return this[LRU_LIST].length }
+
+  rforEach (fn, thisp) {
+    thisp = thisp || this;
+    for (let walker = this[LRU_LIST].tail; walker !== null;) {
+      const prev = walker.prev;
+      forEachStep(this, fn, walker, thisp);
+      walker = prev;
+    }
+  }
+
+  forEach (fn, thisp) {
+    thisp = thisp || this;
+    for (let walker = this[LRU_LIST].head; walker !== null;) {
+      const next = walker.next;
+      forEachStep(this, fn, walker, thisp);
+      walker = next;
+    }
+  }
+
+  keys () {
+    return this[LRU_LIST].toArray().map(k => k.key)
+  }
+
+  values () {
+    return this[LRU_LIST].toArray().map(k => k.value)
+  }
+
+  reset () {
+    if (this[DISPOSE] &&
+        this[LRU_LIST] &&
+        this[LRU_LIST].length) {
+      this[LRU_LIST].forEach(hit => this[DISPOSE](hit.key, hit.value));
+    }
+
+    this[CACHE] = new Map(); // hash of items by key
+    this[LRU_LIST] = new Yallist(); // list of items in order of use recency
+    this[LENGTH] = 0; // length of items in the list
+  }
+
+  dump () {
+    return this[LRU_LIST].map(hit =>
+      isStale(this, hit) ? false : {
+        k: hit.key,
+        v: hit.value,
+        e: hit.now + (hit.maxAge || 0)
+      }).toArray().filter(h => h)
+  }
+
+  dumpLru () {
+    return this[LRU_LIST]
+  }
+
+  set (key, value, maxAge) {
+    maxAge = maxAge || this[MAX_AGE];
+
+    if (maxAge && typeof maxAge !== 'number')
+      throw new TypeError('maxAge must be a number')
+
+    const now = maxAge ? Date.now() : 0;
+    const len = this[LENGTH_CALCULATOR](value, key);
+
+    if (this[CACHE].has(key)) {
+      if (len > this[MAX]) {
+        del(this, this[CACHE].get(key));
+        return false
+      }
+
+      const node = this[CACHE].get(key);
+      const item = node.value;
+
+      // dispose of the old one before overwriting
+      // split out into 2 ifs for better coverage tracking
+      if (this[DISPOSE]) {
+        if (!this[NO_DISPOSE_ON_SET])
+          this[DISPOSE](key, item.value);
+      }
+
+      item.now = now;
+      item.maxAge = maxAge;
+      item.value = value;
+      this[LENGTH] += len - item.length;
+      item.length = len;
+      this.get(key);
+      trim(this);
+      return true
+    }
+
+    const hit = new Entry(key, value, len, now, maxAge);
+
+    // oversized objects fall out of cache automatically.
+    if (hit.length > this[MAX]) {
+      if (this[DISPOSE])
+        this[DISPOSE](key, value);
+
+      return false
+    }
+
+    this[LENGTH] += hit.length;
+    this[LRU_LIST].unshift(hit);
+    this[CACHE].set(key, this[LRU_LIST].head);
+    trim(this);
+    return true
+  }
+
+  has (key) {
+    if (!this[CACHE].has(key)) return false
+    const hit = this[CACHE].get(key).value;
+    return !isStale(this, hit)
+  }
+
+  get (key) {
+    return get(this, key, true)
+  }
+
+  peek (key) {
+    return get(this, key, false)
+  }
+
+  pop () {
+    const node = this[LRU_LIST].tail;
+    if (!node)
+      return null
+
+    del(this, node);
+    return node.value
+  }
+
+  del (key) {
+    del(this, this[CACHE].get(key));
+  }
+
+  load (arr) {
+    // reset the cache
+    this.reset();
+
+    const now = Date.now();
+    // A previous serialized cache has the most recent items first
+    for (let l = arr.length - 1; l >= 0; l--) {
+      const hit = arr[l];
+      const expiresAt = hit.e || 0;
+      if (expiresAt === 0)
+        // the item was created without expiration in a non aged cache
+        this.set(hit.k, hit.v);
+      else {
+        const maxAge = expiresAt - now;
+        // dont add already expired items
+        if (maxAge > 0) {
+          this.set(hit.k, hit.v, maxAge);
+        }
+      }
+    }
+  }
+
+  prune () {
+    this[CACHE].forEach((value, key) => get(this, key, false));
+  }
+}
+
+const get = (self, key, doUse) => {
+  const node = self[CACHE].get(key);
+  if (node) {
+    const hit = node.value;
+    if (isStale(self, hit)) {
+      del(self, node);
+      if (!self[ALLOW_STALE])
+        return undefined
+    } else {
+      if (doUse) {
+        if (self[UPDATE_AGE_ON_GET])
+          node.value.now = Date.now();
+        self[LRU_LIST].unshiftNode(node);
+      }
+    }
+    return hit.value
+  }
+};
+
+const isStale = (self, hit) => {
+  if (!hit || (!hit.maxAge && !self[MAX_AGE]))
+    return false
+
+  const diff = Date.now() - hit.now;
+  return hit.maxAge ? diff > hit.maxAge
+    : self[MAX_AGE] && (diff > self[MAX_AGE])
+};
+
+const trim = self => {
+  if (self[LENGTH] > self[MAX]) {
+    for (let walker = self[LRU_LIST].tail;
+      self[LENGTH] > self[MAX] && walker !== null;) {
+      // We know that we're about to delete this one, and also
+      // what the next least recently used key will be, so just
+      // go ahead and set it now.
+      const prev = walker.prev;
+      del(self, walker);
+      walker = prev;
+    }
+  }
+};
+
+const del = (self, node) => {
+  if (node) {
+    const hit = node.value;
+    if (self[DISPOSE])
+      self[DISPOSE](hit.key, hit.value);
+
+    self[LENGTH] -= hit.length;
+    self[CACHE].delete(hit.key);
+    self[LRU_LIST].removeNode(node);
+  }
+};
+
+class Entry {
+  constructor (key, value, length, now, maxAge) {
+    this.key = key;
+    this.value = value;
+    this.length = length;
+    this.now = now;
+    this.maxAge = maxAge || 0;
+  }
+}
+
+const forEachStep = (self, fn, node, thisp) => {
+  let hit = node.value;
+  if (isStale(self, hit)) {
+    del(self, node);
+    if (!self[ALLOW_STALE])
+      hit = undefined;
+  }
+  if (hit)
+    fn.call(thisp, hit.value, hit.key, self);
+};
+
+var lruCache = LRUCache;
 
 var range;
 var hasRequiredRange;
@@ -4452,7 +4435,7 @@ function requireRange () {
 	}
 	range = Range;
 
-	const LRU = requireLruCache();
+	const LRU = lruCache;
 	const cache = new LRU({ max: 1000 });
 
 	const parseOptions = parseOptions_1;
@@ -5804,14 +5787,14 @@ Object.defineProperty(isPlainObject$3, '__esModule', { value: true });
  * Released under the MIT License.
  */
 
-function isObject$1(o) {
+function isObject(o) {
   return Object.prototype.toString.call(o) === '[object Object]';
 }
 
 function isPlainObject$2(o) {
   var ctor,prot;
 
-  if (isObject$1(o) === false) return false;
+  if (isObject(o) === false) return false;
 
   // If has modified constructor
   ctor = o.constructor;
@@ -5819,7 +5802,7 @@ function isPlainObject$2(o) {
 
   // If has modified prototype
   prot = ctor.prototype;
-  if (isObject$1(prot) === false) return false;
+  if (isObject(prot) === false) return false;
 
   // If constructor does not have an Object-specific method
   if (prot.hasOwnProperty('isPrototypeOf') === false) {
@@ -5874,7 +5857,7 @@ function removeUndefinedProperties(obj) {
   return obj;
 }
 
-function merge$1(defaults, route, options) {
+function merge(defaults, route, options) {
   if (typeof route === "string") {
     let [method, url] = route.split(" ");
     options = Object.assign(url ? {
@@ -6184,16 +6167,16 @@ function parse(options) {
 }
 
 function endpointWithDefaults(defaults, route, options) {
-  return parse(merge$1(defaults, route, options));
+  return parse(merge(defaults, route, options));
 }
 
 function withDefaults$2(oldDefaults, newDefaults) {
-  const DEFAULTS = merge$1(oldDefaults, newDefaults);
+  const DEFAULTS = merge(oldDefaults, newDefaults);
   const endpoint = endpointWithDefaults.bind(null, DEFAULTS);
   return Object.assign(endpoint, {
     DEFAULTS,
     defaults: withDefaults$2.bind(null, DEFAULTS),
-    merge: merge$1.bind(null, DEFAULTS),
+    merge: merge.bind(null, DEFAULTS),
     parse
   });
 }
@@ -89786,1030 +89769,6 @@ function getOctokit(token, options, ...additionalPlugins) {
     return new GitHubWithPlugins(utils_1.getOctokitOptions(token, options));
 }
 github.getOctokit = getOctokit;
-
-/*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
-function isNothing(subject) {
-  return (typeof subject === 'undefined') || (subject === null);
-}
-
-
-function isObject(subject) {
-  return (typeof subject === 'object') && (subject !== null);
-}
-
-
-function toArray(sequence) {
-  if (Array.isArray(sequence)) return sequence;
-  else if (isNothing(sequence)) return [];
-
-  return [ sequence ];
-}
-
-
-function extend(target, source) {
-  var index, length, key, sourceKeys;
-
-  if (source) {
-    sourceKeys = Object.keys(source);
-
-    for (index = 0, length = sourceKeys.length; index < length; index += 1) {
-      key = sourceKeys[index];
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-
-function repeat(string, count) {
-  var result = '', cycle;
-
-  for (cycle = 0; cycle < count; cycle += 1) {
-    result += string;
-  }
-
-  return result;
-}
-
-
-function isNegativeZero(number) {
-  return (number === 0) && (Number.NEGATIVE_INFINITY === 1 / number);
-}
-
-
-var isNothing_1      = isNothing;
-var isObject_1       = isObject;
-var toArray_1        = toArray;
-var repeat_1         = repeat;
-var isNegativeZero_1 = isNegativeZero;
-var extend_1         = extend;
-
-var common = {
-	isNothing: isNothing_1,
-	isObject: isObject_1,
-	toArray: toArray_1,
-	repeat: repeat_1,
-	isNegativeZero: isNegativeZero_1,
-	extend: extend_1
-};
-
-// YAML error class. http://stackoverflow.com/questions/8458984
-
-
-function formatError(exception, compact) {
-  var where = '', message = exception.reason || '(unknown reason)';
-
-  if (!exception.mark) return message;
-
-  if (exception.mark.name) {
-    where += 'in "' + exception.mark.name + '" ';
-  }
-
-  where += '(' + (exception.mark.line + 1) + ':' + (exception.mark.column + 1) + ')';
-
-  if (!compact && exception.mark.snippet) {
-    where += '\n\n' + exception.mark.snippet;
-  }
-
-  return message + ' ' + where;
-}
-
-
-function YAMLException$1(reason, mark) {
-  // Super constructor
-  Error.call(this);
-
-  this.name = 'YAMLException';
-  this.reason = reason;
-  this.mark = mark;
-  this.message = formatError(this, false);
-
-  // Include stack trace in error object
-  if (Error.captureStackTrace) {
-    // Chrome and NodeJS
-    Error.captureStackTrace(this, this.constructor);
-  } else {
-    // FF, IE 10+ and Safari 6+. Fallback for others
-    this.stack = (new Error()).stack || '';
-  }
-}
-
-
-// Inherit from Error
-YAMLException$1.prototype = Object.create(Error.prototype);
-YAMLException$1.prototype.constructor = YAMLException$1;
-
-
-YAMLException$1.prototype.toString = function toString(compact) {
-  return this.name + ': ' + formatError(this, compact);
-};
-
-
-var exception = YAMLException$1;
-
-var TYPE_CONSTRUCTOR_OPTIONS = [
-  'kind',
-  'multi',
-  'resolve',
-  'construct',
-  'instanceOf',
-  'predicate',
-  'represent',
-  'representName',
-  'defaultStyle',
-  'styleAliases'
-];
-
-var YAML_NODE_KINDS = [
-  'scalar',
-  'sequence',
-  'mapping'
-];
-
-function compileStyleAliases(map) {
-  var result = {};
-
-  if (map !== null) {
-    Object.keys(map).forEach(function (style) {
-      map[style].forEach(function (alias) {
-        result[String(alias)] = style;
-      });
-    });
-  }
-
-  return result;
-}
-
-function Type$1(tag, options) {
-  options = options || {};
-
-  Object.keys(options).forEach(function (name) {
-    if (TYPE_CONSTRUCTOR_OPTIONS.indexOf(name) === -1) {
-      throw new exception('Unknown option "' + name + '" is met in definition of "' + tag + '" YAML type.');
-    }
-  });
-
-  // TODO: Add tag format check.
-  this.options       = options; // keep original options in case user wants to extend this type later
-  this.tag           = tag;
-  this.kind          = options['kind']          || null;
-  this.resolve       = options['resolve']       || function () { return true; };
-  this.construct     = options['construct']     || function (data) { return data; };
-  this.instanceOf    = options['instanceOf']    || null;
-  this.predicate     = options['predicate']     || null;
-  this.represent     = options['represent']     || null;
-  this.representName = options['representName'] || null;
-  this.defaultStyle  = options['defaultStyle']  || null;
-  this.multi         = options['multi']         || false;
-  this.styleAliases  = compileStyleAliases(options['styleAliases'] || null);
-
-  if (YAML_NODE_KINDS.indexOf(this.kind) === -1) {
-    throw new exception('Unknown kind "' + this.kind + '" is specified for "' + tag + '" YAML type.');
-  }
-}
-
-var type = Type$1;
-
-/*eslint-disable max-len*/
-
-
-
-
-
-function compileList(schema, name) {
-  var result = [];
-
-  schema[name].forEach(function (currentType) {
-    var newIndex = result.length;
-
-    result.forEach(function (previousType, previousIndex) {
-      if (previousType.tag === currentType.tag &&
-          previousType.kind === currentType.kind &&
-          previousType.multi === currentType.multi) {
-
-        newIndex = previousIndex;
-      }
-    });
-
-    result[newIndex] = currentType;
-  });
-
-  return result;
-}
-
-
-function compileMap(/* lists... */) {
-  var result = {
-        scalar: {},
-        sequence: {},
-        mapping: {},
-        fallback: {},
-        multi: {
-          scalar: [],
-          sequence: [],
-          mapping: [],
-          fallback: []
-        }
-      }, index, length;
-
-  function collectType(type) {
-    if (type.multi) {
-      result.multi[type.kind].push(type);
-      result.multi['fallback'].push(type);
-    } else {
-      result[type.kind][type.tag] = result['fallback'][type.tag] = type;
-    }
-  }
-
-  for (index = 0, length = arguments.length; index < length; index += 1) {
-    arguments[index].forEach(collectType);
-  }
-  return result;
-}
-
-
-function Schema$1(definition) {
-  return this.extend(definition);
-}
-
-
-Schema$1.prototype.extend = function extend(definition) {
-  var implicit = [];
-  var explicit = [];
-
-  if (definition instanceof type) {
-    // Schema.extend(type)
-    explicit.push(definition);
-
-  } else if (Array.isArray(definition)) {
-    // Schema.extend([ type1, type2, ... ])
-    explicit = explicit.concat(definition);
-
-  } else if (definition && (Array.isArray(definition.implicit) || Array.isArray(definition.explicit))) {
-    // Schema.extend({ explicit: [ type1, type2, ... ], implicit: [ type1, type2, ... ] })
-    if (definition.implicit) implicit = implicit.concat(definition.implicit);
-    if (definition.explicit) explicit = explicit.concat(definition.explicit);
-
-  } else {
-    throw new exception('Schema.extend argument should be a Type, [ Type ], ' +
-      'or a schema definition ({ implicit: [...], explicit: [...] })');
-  }
-
-  implicit.forEach(function (type$1) {
-    if (!(type$1 instanceof type)) {
-      throw new exception('Specified list of YAML types (or a single Type object) contains a non-Type object.');
-    }
-
-    if (type$1.loadKind && type$1.loadKind !== 'scalar') {
-      throw new exception('There is a non-scalar type in the implicit list of a schema. Implicit resolving of such types is not supported.');
-    }
-
-    if (type$1.multi) {
-      throw new exception('There is a multi type in the implicit list of a schema. Multi tags can only be listed as explicit.');
-    }
-  });
-
-  explicit.forEach(function (type$1) {
-    if (!(type$1 instanceof type)) {
-      throw new exception('Specified list of YAML types (or a single Type object) contains a non-Type object.');
-    }
-  });
-
-  var result = Object.create(Schema$1.prototype);
-
-  result.implicit = (this.implicit || []).concat(implicit);
-  result.explicit = (this.explicit || []).concat(explicit);
-
-  result.compiledImplicit = compileList(result, 'implicit');
-  result.compiledExplicit = compileList(result, 'explicit');
-  result.compiledTypeMap  = compileMap(result.compiledImplicit, result.compiledExplicit);
-
-  return result;
-};
-
-
-var schema = Schema$1;
-
-var str = new type('tag:yaml.org,2002:str', {
-  kind: 'scalar',
-  construct: function (data) { return data !== null ? data : ''; }
-});
-
-var seq = new type('tag:yaml.org,2002:seq', {
-  kind: 'sequence',
-  construct: function (data) { return data !== null ? data : []; }
-});
-
-var map = new type('tag:yaml.org,2002:map', {
-  kind: 'mapping',
-  construct: function (data) { return data !== null ? data : {}; }
-});
-
-var failsafe = new schema({
-  explicit: [
-    str,
-    seq,
-    map
-  ]
-});
-
-function resolveYamlNull(data) {
-  if (data === null) return true;
-
-  var max = data.length;
-
-  return (max === 1 && data === '~') ||
-         (max === 4 && (data === 'null' || data === 'Null' || data === 'NULL'));
-}
-
-function constructYamlNull() {
-  return null;
-}
-
-function isNull(object) {
-  return object === null;
-}
-
-var _null = new type('tag:yaml.org,2002:null', {
-  kind: 'scalar',
-  resolve: resolveYamlNull,
-  construct: constructYamlNull,
-  predicate: isNull,
-  represent: {
-    canonical: function () { return '~';    },
-    lowercase: function () { return 'null'; },
-    uppercase: function () { return 'NULL'; },
-    camelcase: function () { return 'Null'; },
-    empty:     function () { return '';     }
-  },
-  defaultStyle: 'lowercase'
-});
-
-function resolveYamlBoolean(data) {
-  if (data === null) return false;
-
-  var max = data.length;
-
-  return (max === 4 && (data === 'true' || data === 'True' || data === 'TRUE')) ||
-         (max === 5 && (data === 'false' || data === 'False' || data === 'FALSE'));
-}
-
-function constructYamlBoolean(data) {
-  return data === 'true' ||
-         data === 'True' ||
-         data === 'TRUE';
-}
-
-function isBoolean(object) {
-  return Object.prototype.toString.call(object) === '[object Boolean]';
-}
-
-var bool = new type('tag:yaml.org,2002:bool', {
-  kind: 'scalar',
-  resolve: resolveYamlBoolean,
-  construct: constructYamlBoolean,
-  predicate: isBoolean,
-  represent: {
-    lowercase: function (object) { return object ? 'true' : 'false'; },
-    uppercase: function (object) { return object ? 'TRUE' : 'FALSE'; },
-    camelcase: function (object) { return object ? 'True' : 'False'; }
-  },
-  defaultStyle: 'lowercase'
-});
-
-function isHexCode(c) {
-  return ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) ||
-         ((0x41/* A */ <= c) && (c <= 0x46/* F */)) ||
-         ((0x61/* a */ <= c) && (c <= 0x66/* f */));
-}
-
-function isOctCode(c) {
-  return ((0x30/* 0 */ <= c) && (c <= 0x37/* 7 */));
-}
-
-function isDecCode(c) {
-  return ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */));
-}
-
-function resolveYamlInteger(data) {
-  if (data === null) return false;
-
-  var max = data.length,
-      index = 0,
-      hasDigits = false,
-      ch;
-
-  if (!max) return false;
-
-  ch = data[index];
-
-  // sign
-  if (ch === '-' || ch === '+') {
-    ch = data[++index];
-  }
-
-  if (ch === '0') {
-    // 0
-    if (index + 1 === max) return true;
-    ch = data[++index];
-
-    // base 2, base 8, base 16
-
-    if (ch === 'b') {
-      // base 2
-      index++;
-
-      for (; index < max; index++) {
-        ch = data[index];
-        if (ch === '_') continue;
-        if (ch !== '0' && ch !== '1') return false;
-        hasDigits = true;
-      }
-      return hasDigits && ch !== '_';
-    }
-
-
-    if (ch === 'x') {
-      // base 16
-      index++;
-
-      for (; index < max; index++) {
-        ch = data[index];
-        if (ch === '_') continue;
-        if (!isHexCode(data.charCodeAt(index))) return false;
-        hasDigits = true;
-      }
-      return hasDigits && ch !== '_';
-    }
-
-
-    if (ch === 'o') {
-      // base 8
-      index++;
-
-      for (; index < max; index++) {
-        ch = data[index];
-        if (ch === '_') continue;
-        if (!isOctCode(data.charCodeAt(index))) return false;
-        hasDigits = true;
-      }
-      return hasDigits && ch !== '_';
-    }
-  }
-
-  // base 10 (except 0)
-
-  // value should not start with `_`;
-  if (ch === '_') return false;
-
-  for (; index < max; index++) {
-    ch = data[index];
-    if (ch === '_') continue;
-    if (!isDecCode(data.charCodeAt(index))) {
-      return false;
-    }
-    hasDigits = true;
-  }
-
-  // Should have digits and should not end with `_`
-  if (!hasDigits || ch === '_') return false;
-
-  return true;
-}
-
-function constructYamlInteger(data) {
-  var value = data, sign = 1, ch;
-
-  if (value.indexOf('_') !== -1) {
-    value = value.replace(/_/g, '');
-  }
-
-  ch = value[0];
-
-  if (ch === '-' || ch === '+') {
-    if (ch === '-') sign = -1;
-    value = value.slice(1);
-    ch = value[0];
-  }
-
-  if (value === '0') return 0;
-
-  if (ch === '0') {
-    if (value[1] === 'b') return sign * parseInt(value.slice(2), 2);
-    if (value[1] === 'x') return sign * parseInt(value.slice(2), 16);
-    if (value[1] === 'o') return sign * parseInt(value.slice(2), 8);
-  }
-
-  return sign * parseInt(value, 10);
-}
-
-function isInteger(object) {
-  return (Object.prototype.toString.call(object)) === '[object Number]' &&
-         (object % 1 === 0 && !common.isNegativeZero(object));
-}
-
-var int = new type('tag:yaml.org,2002:int', {
-  kind: 'scalar',
-  resolve: resolveYamlInteger,
-  construct: constructYamlInteger,
-  predicate: isInteger,
-  represent: {
-    binary:      function (obj) { return obj >= 0 ? '0b' + obj.toString(2) : '-0b' + obj.toString(2).slice(1); },
-    octal:       function (obj) { return obj >= 0 ? '0o'  + obj.toString(8) : '-0o'  + obj.toString(8).slice(1); },
-    decimal:     function (obj) { return obj.toString(10); },
-    /* eslint-disable max-len */
-    hexadecimal: function (obj) { return obj >= 0 ? '0x' + obj.toString(16).toUpperCase() :  '-0x' + obj.toString(16).toUpperCase().slice(1); }
-  },
-  defaultStyle: 'decimal',
-  styleAliases: {
-    binary:      [ 2,  'bin' ],
-    octal:       [ 8,  'oct' ],
-    decimal:     [ 10, 'dec' ],
-    hexadecimal: [ 16, 'hex' ]
-  }
-});
-
-var YAML_FLOAT_PATTERN = new RegExp(
-  // 2.5e4, 2.5 and integers
-  '^(?:[-+]?(?:[0-9][0-9_]*)(?:\\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?' +
-  // .2e4, .2
-  // special case, seems not from spec
-  '|\\.[0-9_]+(?:[eE][-+]?[0-9]+)?' +
-  // .inf
-  '|[-+]?\\.(?:inf|Inf|INF)' +
-  // .nan
-  '|\\.(?:nan|NaN|NAN))$');
-
-function resolveYamlFloat(data) {
-  if (data === null) return false;
-
-  if (!YAML_FLOAT_PATTERN.test(data) ||
-      // Quick hack to not allow integers end with `_`
-      // Probably should update regexp & check speed
-      data[data.length - 1] === '_') {
-    return false;
-  }
-
-  return true;
-}
-
-function constructYamlFloat(data) {
-  var value, sign;
-
-  value  = data.replace(/_/g, '').toLowerCase();
-  sign   = value[0] === '-' ? -1 : 1;
-
-  if ('+-'.indexOf(value[0]) >= 0) {
-    value = value.slice(1);
-  }
-
-  if (value === '.inf') {
-    return (sign === 1) ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
-
-  } else if (value === '.nan') {
-    return NaN;
-  }
-  return sign * parseFloat(value, 10);
-}
-
-
-var SCIENTIFIC_WITHOUT_DOT = /^[-+]?[0-9]+e/;
-
-function representYamlFloat(object, style) {
-  var res;
-
-  if (isNaN(object)) {
-    switch (style) {
-      case 'lowercase': return '.nan';
-      case 'uppercase': return '.NAN';
-      case 'camelcase': return '.NaN';
-    }
-  } else if (Number.POSITIVE_INFINITY === object) {
-    switch (style) {
-      case 'lowercase': return '.inf';
-      case 'uppercase': return '.INF';
-      case 'camelcase': return '.Inf';
-    }
-  } else if (Number.NEGATIVE_INFINITY === object) {
-    switch (style) {
-      case 'lowercase': return '-.inf';
-      case 'uppercase': return '-.INF';
-      case 'camelcase': return '-.Inf';
-    }
-  } else if (common.isNegativeZero(object)) {
-    return '-0.0';
-  }
-
-  res = object.toString(10);
-
-  // JS stringifier can build scientific format without dots: 5e-100,
-  // while YAML requres dot: 5.e-100. Fix it with simple hack
-
-  return SCIENTIFIC_WITHOUT_DOT.test(res) ? res.replace('e', '.e') : res;
-}
-
-function isFloat(object) {
-  return (Object.prototype.toString.call(object) === '[object Number]') &&
-         (object % 1 !== 0 || common.isNegativeZero(object));
-}
-
-var float = new type('tag:yaml.org,2002:float', {
-  kind: 'scalar',
-  resolve: resolveYamlFloat,
-  construct: constructYamlFloat,
-  predicate: isFloat,
-  represent: representYamlFloat,
-  defaultStyle: 'lowercase'
-});
-
-var json = failsafe.extend({
-  implicit: [
-    _null,
-    bool,
-    int,
-    float
-  ]
-});
-
-var core = json;
-
-var YAML_DATE_REGEXP = new RegExp(
-  '^([0-9][0-9][0-9][0-9])'          + // [1] year
-  '-([0-9][0-9])'                    + // [2] month
-  '-([0-9][0-9])$');                   // [3] day
-
-var YAML_TIMESTAMP_REGEXP = new RegExp(
-  '^([0-9][0-9][0-9][0-9])'          + // [1] year
-  '-([0-9][0-9]?)'                   + // [2] month
-  '-([0-9][0-9]?)'                   + // [3] day
-  '(?:[Tt]|[ \\t]+)'                 + // ...
-  '([0-9][0-9]?)'                    + // [4] hour
-  ':([0-9][0-9])'                    + // [5] minute
-  ':([0-9][0-9])'                    + // [6] second
-  '(?:\\.([0-9]*))?'                 + // [7] fraction
-  '(?:[ \\t]*(Z|([-+])([0-9][0-9]?)' + // [8] tz [9] tz_sign [10] tz_hour
-  '(?::([0-9][0-9]))?))?$');           // [11] tz_minute
-
-function resolveYamlTimestamp(data) {
-  if (data === null) return false;
-  if (YAML_DATE_REGEXP.exec(data) !== null) return true;
-  if (YAML_TIMESTAMP_REGEXP.exec(data) !== null) return true;
-  return false;
-}
-
-function constructYamlTimestamp(data) {
-  var match, year, month, day, hour, minute, second, fraction = 0,
-      delta = null, tz_hour, tz_minute, date;
-
-  match = YAML_DATE_REGEXP.exec(data);
-  if (match === null) match = YAML_TIMESTAMP_REGEXP.exec(data);
-
-  if (match === null) throw new Error('Date resolve error');
-
-  // match: [1] year [2] month [3] day
-
-  year = +(match[1]);
-  month = +(match[2]) - 1; // JS month starts with 0
-  day = +(match[3]);
-
-  if (!match[4]) { // no hour
-    return new Date(Date.UTC(year, month, day));
-  }
-
-  // match: [4] hour [5] minute [6] second [7] fraction
-
-  hour = +(match[4]);
-  minute = +(match[5]);
-  second = +(match[6]);
-
-  if (match[7]) {
-    fraction = match[7].slice(0, 3);
-    while (fraction.length < 3) { // milli-seconds
-      fraction += '0';
-    }
-    fraction = +fraction;
-  }
-
-  // match: [8] tz [9] tz_sign [10] tz_hour [11] tz_minute
-
-  if (match[9]) {
-    tz_hour = +(match[10]);
-    tz_minute = +(match[11] || 0);
-    delta = (tz_hour * 60 + tz_minute) * 60000; // delta in mili-seconds
-    if (match[9] === '-') delta = -delta;
-  }
-
-  date = new Date(Date.UTC(year, month, day, hour, minute, second, fraction));
-
-  if (delta) date.setTime(date.getTime() - delta);
-
-  return date;
-}
-
-function representYamlTimestamp(object /*, style*/) {
-  return object.toISOString();
-}
-
-var timestamp = new type('tag:yaml.org,2002:timestamp', {
-  kind: 'scalar',
-  resolve: resolveYamlTimestamp,
-  construct: constructYamlTimestamp,
-  instanceOf: Date,
-  represent: representYamlTimestamp
-});
-
-function resolveYamlMerge(data) {
-  return data === '<<' || data === null;
-}
-
-var merge = new type('tag:yaml.org,2002:merge', {
-  kind: 'scalar',
-  resolve: resolveYamlMerge
-});
-
-/*eslint-disable no-bitwise*/
-
-
-
-
-
-// [ 64, 65, 66 ] -> [ padding, CR, LF ]
-var BASE64_MAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r';
-
-
-function resolveYamlBinary(data) {
-  if (data === null) return false;
-
-  var code, idx, bitlen = 0, max = data.length, map = BASE64_MAP;
-
-  // Convert one by one.
-  for (idx = 0; idx < max; idx++) {
-    code = map.indexOf(data.charAt(idx));
-
-    // Skip CR/LF
-    if (code > 64) continue;
-
-    // Fail on illegal characters
-    if (code < 0) return false;
-
-    bitlen += 6;
-  }
-
-  // If there are any bits left, source was corrupted
-  return (bitlen % 8) === 0;
-}
-
-function constructYamlBinary(data) {
-  var idx, tailbits,
-      input = data.replace(/[\r\n=]/g, ''), // remove CR/LF & padding to simplify scan
-      max = input.length,
-      map = BASE64_MAP,
-      bits = 0,
-      result = [];
-
-  // Collect by 6*4 bits (3 bytes)
-
-  for (idx = 0; idx < max; idx++) {
-    if ((idx % 4 === 0) && idx) {
-      result.push((bits >> 16) & 0xFF);
-      result.push((bits >> 8) & 0xFF);
-      result.push(bits & 0xFF);
-    }
-
-    bits = (bits << 6) | map.indexOf(input.charAt(idx));
-  }
-
-  // Dump tail
-
-  tailbits = (max % 4) * 6;
-
-  if (tailbits === 0) {
-    result.push((bits >> 16) & 0xFF);
-    result.push((bits >> 8) & 0xFF);
-    result.push(bits & 0xFF);
-  } else if (tailbits === 18) {
-    result.push((bits >> 10) & 0xFF);
-    result.push((bits >> 2) & 0xFF);
-  } else if (tailbits === 12) {
-    result.push((bits >> 4) & 0xFF);
-  }
-
-  return new Uint8Array(result);
-}
-
-function representYamlBinary(object /*, style*/) {
-  var result = '', bits = 0, idx, tail,
-      max = object.length,
-      map = BASE64_MAP;
-
-  // Convert every three bytes to 4 ASCII characters.
-
-  for (idx = 0; idx < max; idx++) {
-    if ((idx % 3 === 0) && idx) {
-      result += map[(bits >> 18) & 0x3F];
-      result += map[(bits >> 12) & 0x3F];
-      result += map[(bits >> 6) & 0x3F];
-      result += map[bits & 0x3F];
-    }
-
-    bits = (bits << 8) + object[idx];
-  }
-
-  // Dump tail
-
-  tail = max % 3;
-
-  if (tail === 0) {
-    result += map[(bits >> 18) & 0x3F];
-    result += map[(bits >> 12) & 0x3F];
-    result += map[(bits >> 6) & 0x3F];
-    result += map[bits & 0x3F];
-  } else if (tail === 2) {
-    result += map[(bits >> 10) & 0x3F];
-    result += map[(bits >> 4) & 0x3F];
-    result += map[(bits << 2) & 0x3F];
-    result += map[64];
-  } else if (tail === 1) {
-    result += map[(bits >> 2) & 0x3F];
-    result += map[(bits << 4) & 0x3F];
-    result += map[64];
-    result += map[64];
-  }
-
-  return result;
-}
-
-function isBinary(obj) {
-  return Object.prototype.toString.call(obj) ===  '[object Uint8Array]';
-}
-
-var binary = new type('tag:yaml.org,2002:binary', {
-  kind: 'scalar',
-  resolve: resolveYamlBinary,
-  construct: constructYamlBinary,
-  predicate: isBinary,
-  represent: representYamlBinary
-});
-
-var _hasOwnProperty$3 = Object.prototype.hasOwnProperty;
-var _toString$2       = Object.prototype.toString;
-
-function resolveYamlOmap(data) {
-  if (data === null) return true;
-
-  var objectKeys = [], index, length, pair, pairKey, pairHasKey,
-      object = data;
-
-  for (index = 0, length = object.length; index < length; index += 1) {
-    pair = object[index];
-    pairHasKey = false;
-
-    if (_toString$2.call(pair) !== '[object Object]') return false;
-
-    for (pairKey in pair) {
-      if (_hasOwnProperty$3.call(pair, pairKey)) {
-        if (!pairHasKey) pairHasKey = true;
-        else return false;
-      }
-    }
-
-    if (!pairHasKey) return false;
-
-    if (objectKeys.indexOf(pairKey) === -1) objectKeys.push(pairKey);
-    else return false;
-  }
-
-  return true;
-}
-
-function constructYamlOmap(data) {
-  return data !== null ? data : [];
-}
-
-var omap = new type('tag:yaml.org,2002:omap', {
-  kind: 'sequence',
-  resolve: resolveYamlOmap,
-  construct: constructYamlOmap
-});
-
-var _toString$1 = Object.prototype.toString;
-
-function resolveYamlPairs(data) {
-  if (data === null) return true;
-
-  var index, length, pair, keys, result,
-      object = data;
-
-  result = new Array(object.length);
-
-  for (index = 0, length = object.length; index < length; index += 1) {
-    pair = object[index];
-
-    if (_toString$1.call(pair) !== '[object Object]') return false;
-
-    keys = Object.keys(pair);
-
-    if (keys.length !== 1) return false;
-
-    result[index] = [ keys[0], pair[keys[0]] ];
-  }
-
-  return true;
-}
-
-function constructYamlPairs(data) {
-  if (data === null) return [];
-
-  var index, length, pair, keys, result,
-      object = data;
-
-  result = new Array(object.length);
-
-  for (index = 0, length = object.length; index < length; index += 1) {
-    pair = object[index];
-
-    keys = Object.keys(pair);
-
-    result[index] = [ keys[0], pair[keys[0]] ];
-  }
-
-  return result;
-}
-
-var pairs = new type('tag:yaml.org,2002:pairs', {
-  kind: 'sequence',
-  resolve: resolveYamlPairs,
-  construct: constructYamlPairs
-});
-
-var _hasOwnProperty$2 = Object.prototype.hasOwnProperty;
-
-function resolveYamlSet(data) {
-  if (data === null) return true;
-
-  var key, object = data;
-
-  for (key in object) {
-    if (_hasOwnProperty$2.call(object, key)) {
-      if (object[key] !== null) return false;
-    }
-  }
-
-  return true;
-}
-
-function constructYamlSet(data) {
-  return data !== null ? data : {};
-}
-
-var set = new type('tag:yaml.org,2002:set', {
-  kind: 'mapping',
-  resolve: resolveYamlSet,
-  construct: constructYamlSet
-});
-
-core.extend({
-  implicit: [
-    timestamp,
-    merge
-  ],
-  explicit: [
-    binary,
-    omap,
-    pairs,
-    set
-  ]
-});
-
-function simpleEscapeSequence(c) {
-  /* eslint-disable indent */
-  return (c === 0x30/* 0 */) ? '\x00' :
-        (c === 0x61/* a */) ? '\x07' :
-        (c === 0x62/* b */) ? '\x08' :
-        (c === 0x74/* t */) ? '\x09' :
-        (c === 0x09/* Tab */) ? '\x09' :
-        (c === 0x6E/* n */) ? '\x0A' :
-        (c === 0x76/* v */) ? '\x0B' :
-        (c === 0x66/* f */) ? '\x0C' :
-        (c === 0x72/* r */) ? '\x0D' :
-        (c === 0x65/* e */) ? '\x1B' :
-        (c === 0x20/* Space */) ? ' ' :
-        (c === 0x22/* " */) ? '\x22' :
-        (c === 0x2F/* / */) ? '/' :
-        (c === 0x5C/* \ */) ? '\x5C' :
-        (c === 0x4E/* N */) ? '\x85' :
-        (c === 0x5F/* _ */) ? '\xA0' :
-        (c === 0x4C/* L */) ? '\u2028' :
-        (c === 0x50/* P */) ? '\u2029' : '';
-}
-
-var simpleEscapeCheck = new Array(256); // integer, for fast access
-var simpleEscapeMap = new Array(256);
-for (var i = 0; i < 256; i++) {
-  simpleEscapeCheck[i] = simpleEscapeSequence(i) ? 1 : 0;
-  simpleEscapeMap[i] = simpleEscapeSequence(i);
-}
 
 function listNPMTags(packageName) {
 	return JSON.parse(

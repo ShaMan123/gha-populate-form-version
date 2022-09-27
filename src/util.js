@@ -1,6 +1,4 @@
 import github from '@actions/github';
-import fs from 'fs';
-import YAML from 'js-yaml';
 import cp from 'node:child_process';
 
 function listNPMTags(packageName) {
