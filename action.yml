@@ -63,10 +63,9 @@ runs:
   steps:
     - name: Fetch tags from ${{ inputs.registry }}:${{ inputs.package }}
       id: main
+      run-name: Fetching tags from ${{ inputs.registry }}:${{ inputs.package }}
       if: ${{ !inputs.tags }}
-      run: |
-        echo "Fetching tags from ${{ inputs.registry }}:${{ inputs.package }}"
-        node ${{ github.action_path }}/dist/main.cjs
+      run: node ${{ github.action_path }}/dist/main.cjs
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
