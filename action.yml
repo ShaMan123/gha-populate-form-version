@@ -78,6 +78,6 @@ runs:
       with:
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
-        options: ${{ inputs.tags || steps.main.outputs.tags }}
+        options: ${{ inputs.tags || toJSON(steps.main.outputs.tags) }}
         commit_message: ${{ inputs.commit_message }}
         dry_run: ${{ inputs.dry_run }}
