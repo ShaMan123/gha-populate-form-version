@@ -4,7 +4,12 @@
 [![🚀 Update Bug Report](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/update_bug_report.yml/badge.svg)](https://github.com/ShaMan123/gha-populate-form-version/actions/workflows/update_bug_report.yml)
 [![Sponsor ShaMan123](https://img.shields.io/static/v1?label=Sponsor%20ShaMan123&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/ShaMan123)
 
-A github action populating the package version dropdown of a [yaml form](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms)
+A github action populating an [issue forms](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms) version dropdown.
+
+## Supported Registries
+
+- npm
+- github releases
 
 ## Configuring
 
