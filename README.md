@@ -15,6 +15,6 @@ Replace the `uses: ./` directive to point to [![published action ](https://img.s
 
 This repo uses the action it defines.\
 Take a look at the [issue template](../../issues/new?template=bug_report.yml).\
-Versions have been populated into it using [this workflow](.github/workflows/update_bug_report.yml).
+Versions have been populated into it using [this workflow](.github/workflows/update_bug_report.yml), see the [bot](../../commits?author=github-actions%5Bbot%5D) in action.
 
 https://user-images.githubusercontent.com/34343793/192214911-623c0755-3a11-4294-951c-3a03b36fd204.mp4
