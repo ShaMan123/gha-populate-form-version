@@ -4,6 +4,10 @@ import * as dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import assert from 'node:assert/strict';
 import { listTags } from '../src/util.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function getBranch() {
 	if (!process.env.CI) {
