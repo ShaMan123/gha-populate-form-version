@@ -63,7 +63,7 @@ runs:
   steps:
     - name: Fetch tags from ${{ inputs.registry }}:${{ inputs.package }}
       id: main
-      run-name: Fetching tags from ${{ inputs.registry }}:${{ inputs.package }}
+      run-name: 'Fetching tags from ${{ inputs.registry }}:${{ inputs.package }}'
       if: ${{ !inputs.tags }}
       run: node ${{ github.action_path }}/dist/main.cjs
       shell: bash
