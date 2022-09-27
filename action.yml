@@ -61,7 +61,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Update ${{ inputs.form }}
+    - name: Fetch Tags from ${{ inputs.registry }}:${{ inputs.package }}
       id: main
       if: ${{ !inputs.tags }}
       run: node dist/main.cjs
