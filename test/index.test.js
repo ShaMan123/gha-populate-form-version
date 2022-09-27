@@ -11,7 +11,17 @@ import { listTags } from '../src/util.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function getBranch() {
-	return execSync('git branch --show-current').toString().trim();
+	if (!process.env.CI) {
+		return execSync('git branch --show-current').toString().trim();
+	}
+	switch (process.env.GITHUB_EVENT_NAME) {
+		case 'pull_request':
+			return process.env.GITHUB_HEAD_REF;
+		case 'release':
+			return 'main';
+		default:
+			return process.env.GITHUB_REF;
+	}
 }
 
 function parseInputs(inputs) {
@@ -46,7 +56,6 @@ describe('action', function () {
 		);
 	});
 	it('workflow_dispatch', async function () {
-		console.log(process.env);
 		await assert.doesNotReject(
 			github
 				.getOctokit(process.env.GITHUB_TOKEN)
