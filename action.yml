@@ -61,23 +61,23 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Fetch Tags from ${{ inputs.registry }}:${{ inputs.package }}
-      id: main
-      # if: ${{ !inputs.tags }}
-      run: node dist/main.cjs
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-        INPUT_PACKAGE: ${{ inputs.package }}
-        INPUT_REGISTRY: ${{ inputs.registry }}
-        INPUT_ORDER: ${{ inputs.order }}
-        INPUT_LIMIT_TO: ${{ inputs.limit_to }}
-        INPUT_SEMVER: ${{ inputs.semver }}
+    # - name: Fetch Tags from ${{ inputs.registry }}:${{ inputs.package }}
+    #   id: main
+    #   # if: ${{ !inputs.tags }}
+    #   run: node dist/main.cjs
+    #   shell: bash
+    #   env:
+    #     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+    #     INPUT_PACKAGE: ${{ inputs.package }}
+    #     INPUT_REGISTRY: ${{ inputs.registry }}
+    #     INPUT_ORDER: ${{ inputs.order }}
+    #     INPUT_LIMIT_TO: ${{ inputs.limit_to }}
+    #     INPUT_SEMVER: ${{ inputs.semver }}
     - name: Issue Forms Dropdown Options
       uses: ShaMan123/gha-form-dropdown-options@v0.0.1
       with:
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
-        options: ${{ inputs.tags || steps.main.outputs.tags }}
+        options: ${{ inputs.tags || 'a,b,c,d' }}
         commit_message: ${{ inputs.commit_message }}
         dry_run: ${{ inputs.dry_run }}
