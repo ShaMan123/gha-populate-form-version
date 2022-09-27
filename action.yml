@@ -64,9 +64,8 @@ runs:
     - name: Fetch Tags from ${{ inputs.registry }}:${{ inputs.package }}
       id: main
       if: ${{ !inputs.tags }}
-      run: node dist/main.cjs
+      run: node ${{ github.action_path }}/dist/main.cjs
       shell: bash
-      working-directory: ${{ github.action_path }}
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         INPUT_PACKAGE: ${{ inputs.package }}
