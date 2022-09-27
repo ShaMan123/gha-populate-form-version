@@ -1,5 +1,5 @@
-name: Issue Forms Dropdown Version
-description: Populates options for a version dropdown yaml form element
+name: Issue Forms Version Dropdown
+description: Populates options for a version dropdown issue (yaml) form element
 author: ShaMan123
 branding:
   icon: hash
