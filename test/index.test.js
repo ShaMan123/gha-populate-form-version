@@ -1,13 +1,8 @@
 import github from '@actions/github';
 import { execSync } from 'child_process';
 import * as dotenv from 'dotenv';
-import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
 import assert from 'node:assert/strict';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { listTags } from '../src/util.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function getBranch() {
 	if (!process.env.CI) {
@@ -21,16 +16,6 @@ function getBranch() {
 		default:
 			return process.env.GITHUB_REF;
 	}
-}
-
-function parseInputs(inputs) {
-	return Object.keys(inputs).reduce((parsed, key) => {
-		parsed[`INPUT_${key.toUpperCase()}`] =
-			typeof inputs[key] !== 'string'
-				? JSON.stringify(inputs[key])
-				: inputs[key];
-		return parsed;
-	}, {});
 }
 
 describe('action', function () {
@@ -51,7 +36,7 @@ describe('action', function () {
 			'should fetch tags from github by user and repo',
 		);
 	});
-	it('workflow_dispatch', async function () {
+	it.skip('workflow_dispatch', async function () {
 		await assert.doesNotReject(
 			github
 				.getOctokit(process.env.GITHUB_TOKEN)
@@ -62,42 +47,5 @@ describe('action', function () {
 					workflow_id: '.github/workflows/update_bug_report.yml',
 				}),
 		);
-	});
-
-	describe('manual trigger', function () {
-		const expected = path.resolve(__dirname, 'expected.yml');
-		const template = path.resolve(__dirname, 'template.yml');
-		const test = path.resolve(__dirname, 'temp.yml');
-		this.beforeEach(() => {
-			writeFileSync(test, readFileSync(template));
-			assert.equal(
-				readFileSync(test).toString(),
-				readFileSync(template).toString(),
-				'should prepare test',
-			);
-		});
-		this.afterEach(() => {
-			unlinkSync(test);
-			assert.ok(!existsSync(test), 'should cleanup test');
-		});
-
-		it('passing tags', async function () {
-			const inputs = {
-				// github_token,
-				form: test,
-				dropdown: 'version',
-				tags: ['1.2.3', '4.5.6', '7.8.9'],
-				// add some junk
-				order: 'desc',
-				dry_run: true,
-			};
-			Object.assign(process.env, parseInputs(inputs));
-			await import('../dist/main.cjs');
-			assert.strictEqual(
-				readFileSync(test).toString().replace(/\s/gm, ''),
-				readFileSync(expected).toString().replace(/\s/gm, ''),
-				'output should match',
-			);
-		});
 	});
 });

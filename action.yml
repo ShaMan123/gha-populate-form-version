@@ -75,25 +75,21 @@ runs:
         ref: ${{ env.job_ref }}
     - name: Update ${{ inputs.form }}
       id: main
+      if: ${{ !inputs.tags }}
       run: node dist/main.cjs
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-        INPUT_FORM: ${{ inputs.form }}
-        INPUT_DROPDOWN: ${{ inputs.dropdown }}
         INPUT_PACKAGE: ${{ inputs.package }}
         INPUT_REGISTRY: ${{ inputs.registry }}
         INPUT_ORDER: ${{ inputs.order }}
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
         INPUT_SEMVER: ${{ inputs.semver }}
-        INPUT_TAGS: ${{ inputs.tags }}
-        INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
-    - name: Commit to ${{ env.job_ref }}
-      if: ${{ !fromJSON(inputs.dry_run) }}
-      run: |
-        git config user.name github-actions[bot]
-        git config user.email github-actions[bot]@users.noreply.github.com
-        git add ${{ inputs.form }}
-        git diff --staged --quiet || git commit -m "${{ inputs.commit_message }}"
-        git push
-      shell: bash
+    - name: Issue Forms Dropdown Options
+      uses: ShaMan123/gha-form-dropdown-options@v0.0.1
+      with:
+        form: ${{ inputs.form }}
+        dropdown: ${{ inputs.dropdown }}
+        options: ${{ inputs.tags || steps.main.outputs.tags }}
+        commit_message: ${{ inputs.commit_message }}
+        dry_run: ${{ inputs.dry_run }}
