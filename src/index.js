@@ -5,22 +5,20 @@ import { listTags, writeYAML } from './util';
 async function run() {
 	try {
 		const form = getInput('form', { trimWhitespace: true, required: true });
-		const packageName = getInput('package', {
-			trimWhitespace: true,
-			required: true,
-		});
-		const registry = getInput('registry', {
-			trimWhitespace: true,
-			required: true,
-		});
-		const order = getInput('order', { trimWhitespace: true, required: true });
-		const limitTo =
-			Math.max(Number(getInput('limit_to', { trimWhitespace: true })), 0) ||
-			undefined;
 		const dropdownId = getInput('dropdown', {
 			trimWhitespace: true,
 			required: true,
 		});
+		const packageName = getInput('package', {
+			trimWhitespace: true,
+		});
+		const registry = getInput('registry', {
+			trimWhitespace: true,
+		});
+		const order = getInput('order', { trimWhitespace: true });
+		const limitTo =
+			Math.max(Number(getInput('limit_to', { trimWhitespace: true })), 0) ||
+			undefined;
 		const semverRange = getInput('semver', {
 			trimWhitespace: true,
 		});
@@ -53,6 +51,7 @@ async function run() {
 		}
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
+		console.error(error);
 		setFailed(error);
 	}
 }

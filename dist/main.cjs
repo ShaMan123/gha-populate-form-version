@@ -93676,22 +93676,20 @@ function writeYAML(file, dropdownId, tags) {
 async function run() {
 	try {
 		const form = coreExports.getInput('form', { trimWhitespace: true, required: true });
-		const packageName = coreExports.getInput('package', {
-			trimWhitespace: true,
-			required: true,
-		});
-		const registry = coreExports.getInput('registry', {
-			trimWhitespace: true,
-			required: true,
-		});
-		const order = coreExports.getInput('order', { trimWhitespace: true, required: true });
-		const limitTo =
-			Math.max(Number(coreExports.getInput('limit_to', { trimWhitespace: true })), 0) ||
-			undefined;
 		const dropdownId = coreExports.getInput('dropdown', {
 			trimWhitespace: true,
 			required: true,
 		});
+		const packageName = coreExports.getInput('package', {
+			trimWhitespace: true,
+		});
+		const registry = coreExports.getInput('registry', {
+			trimWhitespace: true,
+		});
+		const order = coreExports.getInput('order', { trimWhitespace: true });
+		const limitTo =
+			Math.max(Number(coreExports.getInput('limit_to', { trimWhitespace: true })), 0) ||
+			undefined;
 		const semverRange = coreExports.getInput('semver', {
 			trimWhitespace: true,
 		});
@@ -93724,6 +93722,7 @@ async function run() {
 		}
 		writeYAML(form, dropdownId, tags);
 	} catch (error) {
+		console.error(error);
 		coreExports.setFailed(error);
 	}
 }
