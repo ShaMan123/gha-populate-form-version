@@ -32,7 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Update bug report
     steps:
-      - name: Get branch for job
+      # used for testing this action
+      # needed to reference the local action
+      - name: 'TEST: Get branch for job'
         id: branch
         uses: actions/github-script@v6
         with:
@@ -47,7 +49,8 @@ jobs:
               default:
                 return '${{ github.ref }}';
             }
-      - name: Checkout ${{ steps.branch.outputs.result }}
+      # used for testing this action
+      - name: 'TEST: Checkout ${{ steps.branch.outputs.result }}'
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.branch.outputs.result }}
