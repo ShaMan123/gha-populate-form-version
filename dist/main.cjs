@@ -89805,7 +89805,7 @@ async function listTags(registry, packageName) {
 			tags = listGithubReleases(packageName);
 			break;
 		default:
-			throw new Error(`registry ${registry} is not available`);
+			throw new Error(`registry "${registry}" is not available`);
 	}
 	return tags;
 }
