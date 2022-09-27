@@ -54,7 +54,7 @@ describe('action', function () {
 		);
 	});
 
-	describe('manual runs', function () {
+	describe('manual trigger', function () {
 		const expected = path.resolve(__dirname, 'expected.yml');
 		const template = path.resolve(__dirname, 'template.yml');
 		const test = path.resolve(__dirname, 'temp.yml');
@@ -67,7 +67,7 @@ describe('action', function () {
 			);
 		});
 		this.afterEach(() => {
-			// unlinkSync(test);
+			unlinkSync(test);
 			assert.ok(!existsSync(test), 'should cleanup test');
 		});
 
@@ -83,9 +83,9 @@ describe('action', function () {
 			};
 			Object.assign(process.env, parseInputs(inputs));
 			await import('../dist/main.cjs');
-			assert.equal(
-				readFileSync(test).toString(),
-				readFileSync(expected).toString(),
+			assert.strictEqual(
+				readFileSync(test).toString().replace(/\s/gm, ''),
+				readFileSync(expected).toString().replace(/\s/gm, ''),
 				'output should match',
 			);
 		});
