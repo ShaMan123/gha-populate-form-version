@@ -5,7 +5,6 @@ import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import sinon from 'sinon';
 import { listTags } from '../src/util.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -39,9 +38,6 @@ describe('action', function () {
 	this.beforeAll(() => {
 		// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 		dotenv.config();
-	});
-	this.afterEach(() => {
-		sinon.restore();
 	});
 	it('npm by package', async function () {
 		assert.ok(
