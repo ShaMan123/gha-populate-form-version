@@ -1,0 +1,11 @@
+name: 🧪 Test Form
+title: 🧪 Test Form
+body:
+  - type: dropdown
+    id: version
+    attributes:
+      label: version
+      options:
+        -
+    validations:
+      required: true

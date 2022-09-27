@@ -1,4 +1,3 @@
-import { getInput } from '@actions/core';
 import github from '@actions/github';
 import fs from 'fs';
 import YAML from 'js-yaml';
