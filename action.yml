@@ -63,7 +63,7 @@ runs:
   steps:
     - name: Fetch Tags from ${{ inputs.registry }}:${{ inputs.package }}
       id: main
-      if: ${{ !inputs.tags }}
+      # if: ${{ !inputs.tags }}
       run: node dist/main.cjs
       shell: bash
       env:
@@ -78,6 +78,6 @@ runs:
       with:
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
-        options: ${{ inputs.tags || toJSON(steps.main.outputs.tags) }}
+        options: ${{ inputs.tags || steps.main.outputs.tags }}
         commit_message: ${{ inputs.commit_message }}
         dry_run: ${{ inputs.dry_run }}
