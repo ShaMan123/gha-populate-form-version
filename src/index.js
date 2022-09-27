@@ -6,9 +6,11 @@ async function run() {
 	try {
 		const packageName = getInput('package', {
 			trimWhitespace: true,
+			required: true,
 		});
 		const registry = getInput('registry', {
 			trimWhitespace: true,
+			required: true,
 		});
 		const order = getInput('order', { trimWhitespace: true });
 		const limitTo =

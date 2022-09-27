@@ -89814,9 +89814,11 @@ async function run() {
 	try {
 		const packageName = coreExports.getInput('package', {
 			trimWhitespace: true,
+			required: true,
 		});
 		const registry = coreExports.getInput('registry', {
 			trimWhitespace: true,
+			required: true,
 		});
 		const order = coreExports.getInput('order', { trimWhitespace: true });
 		const limitTo =
