@@ -1,11 +1,10 @@
 import github from '@actions/github';
 import { execSync } from 'child_process';
 import * as dotenv from 'dotenv';
-import { readFileSync } from 'fs';
 import assert from 'node:assert/strict';
-import { listTags } from '../src/util.js';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { listTags } from '../src/util.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -33,37 +32,47 @@ function parseInputs(inputs) {
 	}, {});
 }
 
+function assertOutputs(inputs, expectedTags) {
+	const { latest, tags } = execSync('node dist/main.cjs', {
+		env: {
+			...process.env,
+			...parseInputs(inputs),
+			GITHUB_REPOSITORY: 'ShaMan123/gha-populate-form-version',
+		},
+	})
+		.toString()
+		.trim()
+		.split('\n')
+		.reduce((outputs, value) => {
+			const directive = '::set-output name=';
+			if (value.includes(directive)) {
+				const [key, val] = value.trim().replace(directive, '').split('::');
+				outputs[key] = val;
+			}
+			return outputs;
+		}, {});
+	assert.deepEqual(JSON.parse(tags), expectedTags, 'should set outputs.tags');
+	assert.ok(latest, 'should set outputs.latest');
+}
+
 describe('action', function () {
-	const expected = path.resolve(__dirname, 'expected.yml');
-	const template = path.resolve(__dirname, 'template.yml');
-	const test = path.resolve(__dirname, 'temp.yml');
-	this.timeout(5000);
+	this.timeout(10000);
 	this.beforeAll(() => {
 		// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 		dotenv.config();
 	});
-	this.beforeEach(() => {
-		writeFileSync(test, readFileSync(template));
-		assert.equal(
-			readFileSync(test).toString(),
-			readFileSync(template).toString(),
-			'should prepare test',
-		);
-	});
-	this.afterEach(() => {
-		unlinkSync(test);
-		assert.ok(!existsSync(test), 'should cleanup test');
-	});
-	it('npm by package', async function () {
+	it('fetches', async function () {
 		assert.ok(
 			(await listTags('npm', '  fabric ')).length > 0,
 			'should fetch tags from npm',
 		);
-	});
-	it('github by user and repo', async function () {
 		assert.ok(
 			(await listTags('github', 'ShaMan123/react-native-math-view')).length > 0,
 			'should fetch tags from github by user and repo',
+		);
+		assert.ok(
+			(await listTags('github', 'nodejs/node')).length > 300,
+			'should paginate and fetch all results',
 		);
 	});
 	it.skip('workflow_dispatch', async function () {
@@ -78,20 +87,60 @@ describe('action', function () {
 				}),
 		);
 	});
-	it('passing options', async function () {
+	it('github releases', async function () {
 		const inputs = {
-			// github_token,
-			form: test,
 			dropdown: 'version',
-			tags: ['1.2.3', '4.5.6', '7.8.9'],
-			dry_run: true,
+			package: 'gha-populate-form-version',
+			registry: 'github',
+			order: 'asc',
+			limit_to: 5,
 		};
-		Object.assign(process.env, parseInputs(inputs));
-		await import('../dist/main.cjs');
-		assert.strictEqual(
-			readFileSync(test).toString().replace(/\s/gm, ''),
-			readFileSync(expected).toString().replace(/\s/gm, ''),
-			'output should match',
+		assertOutputs(inputs, ['v0.1.0', 'v0.1.1', 'v0.1.2', 'v0.1.11', 'v0.1.12']);
+	});
+	it('github releases different user', async function () {
+		const inputs = {
+			dropdown: 'version',
+			package: 'fabricjs/fabric.js',
+			registry: 'github',
+			order: 'asc',
+			limit_to: 5,
+		};
+		assertOutputs(inputs, ['v1.4.0', 'v1.4.8', 'v1.4.9', 'v1.4.10', 'v1.4.11']);
+	});
+	it('semver', async function () {
+		const inputs = {
+			dropdown: 'version',
+			package: 'gha-populate-form-version',
+			registry: 'github',
+			semver: 'v0.1.x',
+		};
+		assertOutputs(
+			inputs,
+			[
+				'v0.1.0',
+				'v0.1.1',
+				'v0.1.2',
+				'v0.1.11',
+				'v0.1.12',
+				'v0.1.13',
+				'v0.1.14',
+				'v0.1.15',
+				'v0.1.16',
+				'v0.1.17',
+				'v0.1.18',
+				'v0.1.19',
+				'v0.1.21',
+			].reverse(),
 		);
+	});
+	it('npm package', async function () {
+		const inputs = {
+			dropdown: 'version',
+			package: 'fabric',
+			registry: 'npm',
+			order: 'asc',
+			limit_to: 5,
+		};
+		assertOutputs(inputs, ['0.5.2', '0.5.3', '0.5.5', '0.5.6', '0.5.7']);
 	});
 });
