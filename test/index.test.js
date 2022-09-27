@@ -9,7 +9,10 @@ import sinon from 'sinon';
 import { listTags } from '../src/util.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const branch = execSync('git branch --show-current').toString().trim();
+
+function getBranch() {
+	return execSync('git branch --show-current').toString().trim();
+}
 
 function parseInputs(inputs) {
 	return Object.keys(inputs).reduce((parsed, key) => {
@@ -22,6 +25,7 @@ function parseInputs(inputs) {
 }
 
 describe('action', function () {
+	this.timeout(5000);
 	this.beforeAll(() => {
 		// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 		dotenv.config();
@@ -42,13 +46,14 @@ describe('action', function () {
 		);
 	});
 	it('workflow_dispatch', async function () {
+		console.log(process.env);
 		await assert.doesNotReject(
 			github
 				.getOctokit(process.env.GITHUB_TOKEN)
 				.rest.actions.createWorkflowDispatch({
 					owner: 'ShaMan123',
 					repo: 'gha-populate-form-version',
-					ref: branch,
+					ref: getBranch(),
 					workflow_id: '.github/workflows/update_bug_report.yml',
 				}),
 		);
