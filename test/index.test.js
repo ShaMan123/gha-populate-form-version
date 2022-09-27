@@ -1,18 +1,32 @@
 import github from '@actions/github';
-import assert from 'node:assert/strict';
 import { execSync } from 'child_process';
 import * as dotenv from 'dotenv';
+import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
+import assert from 'node:assert/strict';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import sinon from 'sinon';
 import { listTags } from '../src/util.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const branch = execSync('git branch --show-current').toString().trim();
 
+function parseInputs(inputs) {
+	return Object.keys(inputs).reduce((parsed, key) => {
+		parsed[`INPUT_${key.toUpperCase()}`] =
+			typeof inputs[key] !== 'string'
+				? JSON.stringify(inputs[key])
+				: inputs[key];
+		return parsed;
+	}, {});
+}
+
 describe('action', function () {
-	before(() => {
+	this.beforeAll(() => {
 		// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 		dotenv.config();
 	});
-	after(() => {
+	this.afterEach(() => {
 		sinon.restore();
 	});
 	it('npm by package', async function () {
@@ -38,5 +52,42 @@ describe('action', function () {
 					workflow_id: '.github/workflows/update_bug_report.yml',
 				}),
 		);
+	});
+
+	describe('manual runs', function () {
+		const expected = path.resolve(__dirname, 'expected.yml');
+		const template = path.resolve(__dirname, 'template.yml');
+		const test = path.resolve(__dirname, 'temp.yml');
+		this.beforeEach(() => {
+			writeFileSync(test, readFileSync(template));
+			assert.equal(
+				readFileSync(test).toString(),
+				readFileSync(template).toString(),
+				'should prepare test',
+			);
+		});
+		this.afterEach(() => {
+			// unlinkSync(test);
+			assert.ok(!existsSync(test), 'should cleanup test');
+		});
+
+		it.only('passing tags', async function () {
+			const inputs = {
+				// github_token,
+				form: test,
+				dropdown: 'version',
+				tags: ['1.2.3', '4.5.6', '7.8.9'],
+				// add some junk
+				order: 'desc',
+				dry_run: true,
+			};
+			Object.assign(process.env, parseInputs(inputs));
+			await import('../dist/main.cjs');
+			assert.equal(
+				readFileSync(test).toString(),
+				readFileSync(expected).toString(),
+				'output should match',
+			);
+		});
 	});
 });
