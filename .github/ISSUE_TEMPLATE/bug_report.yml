@@ -440,6 +440,7 @@ body:
       label: Github releases of triggering repo + semver option
       description: Releases of this repo
       options:
+        - v1.1.0
         - v1.0.0
         - v0.4.3
         - v0.4.2
