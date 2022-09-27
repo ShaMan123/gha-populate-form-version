@@ -76,7 +76,7 @@ runs:
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Issue Forms Dropdown Options
-      uses: ShaMan123/gha-form-dropdown-options@v0.0.3
+      uses: ShaMan123/gha-form-dropdown-options@v0.0.4
       with:
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
