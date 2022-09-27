@@ -23,3 +23,7 @@ Take a look at the [issue template](../../issues/new?template=bug_report.yml).\
 Versions have been populated into it using [this workflow](.github/workflows/update_bug_report.yml), see the [bot](../../commits?author=github-actions%5Bbot%5D) in action.
 
 https://user-images.githubusercontent.com/34343793/192214911-623c0755-3a11-4294-951c-3a03b36fd204.mp4
+
+## Low level
+
+If you're in need for a low level action setting options for a dropdown use [![issue-forms-dropdown-options](https://img.shields.io/github/v/tag/ShaMan123/gha-form-dropdown-options?label=ShaMan123%2Fgha-form-dropdown-options%40&sort=semver)](https://github.com/marketplace/actions/issue-forms-dropdown-options)
