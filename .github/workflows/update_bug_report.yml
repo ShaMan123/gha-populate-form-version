@@ -32,9 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Update bug report
     steps:
-      # used for testing this action
-      # needed to reference the local action
       - name: 'TEST: Get branch for job'
+        # used for testing this action, needed to reference the local action
         id: branch
         uses: actions/github-script@v6
         with:
@@ -49,8 +48,8 @@ jobs:
               default:
                 return '${{ github.ref }}';
             }
-      # used for testing this action
       - name: 'TEST: Checkout ${{ steps.branch.outputs.result }}'
+        # used for testing this action, needed to reference the local action
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.branch.outputs.result }}
@@ -118,8 +117,9 @@ jobs:
         with:
           dropdown: copy
           tags: ${{ steps.axios.outputs.tags }}
-      # This step demonstrates how to generate tags
       - name: Mock tags
+        # This step demonstrates how to generate tags
+        # Consider using the underlying action https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options directly
         id: mock_tags
         uses: actions/github-script@v6
         env:
