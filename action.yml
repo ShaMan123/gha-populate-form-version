@@ -1,5 +1,7 @@
 name: Issue Forms Version Dropdown
-description: Populates options for a version dropdown issue (yaml) form element
+description: |
+  Populates options for a version dropdown issue forms element
+  Extends https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
 author: ShaMan123
 branding:
   icon: hash
@@ -11,12 +13,21 @@ inputs:
   ref:
     description: Github ref/branch to update, inferred from the event type if omitted
     type: string
+  template:
+    description: |
+      The location of the template file used to build the form, useful for ease of maintenance
+      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+    type: string
   form:
-    description: 'The location of the yaml form file'
+    description: |
+      The location of the yaml form file
+      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
     default: '.github/ISSUE_TEMPLATE/bug_report.yml'
     type: string
   dropdown:
-    description: 'The id of the dropdown in the yaml form to populate tags into'
+    description: |
+      The id of the dropdown in the yaml form to populate tags into
+      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
     default: 'version'
     type: string
   package:
@@ -44,13 +55,20 @@ inputs:
     description: 'A semver range query used to filter satisfying tags, see `semver#satisfies`'
     type: string
   tags:
-    description: 'A stringified array of tags overriding fetching `package` tags from `registry`, overrides `order`, `limit_to` and dismisses outputs as well'
+    description: |
+      A stringified array of tags overriding fetching `package` tags from `registry`
+      Overrides `order`, `limit_to` and dismisses outputs as well'
+
+      Consider using https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options directly
     type: string
   commit_message:
+    description: see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
     default: 'chore(): update bug report version'
     type: string
   dry_run:
-    description: When set to `true` will not commit the modified yaml form
+    description: |
+      When set to `true` will not commit the modified yaml form
+      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
     default: false
     type: boolean
 outputs:
@@ -61,6 +79,11 @@ outputs:
   latest:
     description: Latest tag of `package` in `registry`
     value: ${{ steps.main.outputs.latest }}
+  ref:
+    description: |
+      Github ref/branch checked out and updated by the action
+      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+    value: ${{ steps.write.outputs.ref }}
 runs:
   using: composite
   steps:
@@ -79,8 +102,10 @@ runs:
         INPUT_LIMIT_TO: ${{ inputs.limit_to }}
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Set dropdown options
-      uses: ShaMan123/gha-form-dropdown-options@v0.0.5
+      id: write
+      uses: ShaMan123/gha-form-dropdown-options@v0.1.0
       with:
+        template: ${{ inputs.template }}
         ref: ${{ inputs.ref }}
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
