@@ -1,7 +1,7 @@
 name: Issue Forms Version Dropdown
 description: |
   Populates options for a version dropdown issue forms element
-  Extends https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+  Extends ShaMan123/gha-form-dropdown-options
 author: ShaMan123
 branding:
   icon: hash
