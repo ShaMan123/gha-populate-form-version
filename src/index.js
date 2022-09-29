@@ -1,4 +1,4 @@
-import { getInput, setFailed, setOutput } from '@actions/core';
+import { getInput, info, setFailed, setOutput } from '@actions/core';
 import semver from 'semver';
 import { listTags } from './util';
 
@@ -19,6 +19,7 @@ async function run() {
 		const semverRange = getInput('semver', {
 			trimWhitespace: true,
 		});
+		info(`Fetching tags from ${registry}`);
 		const list = await listTags(registry, packageName);
 		const latest = list[0];
 		if (order === 'asc') {

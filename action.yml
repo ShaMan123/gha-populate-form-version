@@ -90,7 +90,6 @@ runs:
       id: main
       if: ${{ !inputs.tags }}
       run: |
-        echo "Fetching tags from ${{ inputs.registry }}:${{ inputs.package }}"
         node ${{ github.action_path }}/dist/main.cjs
       shell: bash
       env:

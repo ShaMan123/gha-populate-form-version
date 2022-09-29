@@ -89838,6 +89838,7 @@ async function run() {
 		const semverRange = coreExports.getInput('semver', {
 			trimWhitespace: true,
 		});
+		coreExports.info(`Fetching tags from ${registry}`);
 		const list = await listTags(registry, packageName);
 		const latest = list[0];
 		if (order === 'asc') {
