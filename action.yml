@@ -68,7 +68,12 @@ inputs:
       When set to `true` will not commit the modified yaml form
       see https://github.com/ShaMan123/gha-form-dropdown-options
     default: false
-    type: boolean
+    type: choice
+    options:
+      - true
+      - false
+      - no-write
+      - no-commit
 
 outputs:
   # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#example-declaring-outputs-for-composite-actions
