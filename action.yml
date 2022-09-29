@@ -22,37 +22,37 @@ inputs:
     description: |
       The location of the yaml form file
       see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
-    default: '.github/ISSUE_TEMPLATE/bug_report.yml'
+    default: .github/ISSUE_TEMPLATE/bug_report.yml
     type: string
   dropdown:
     description: |
       The id of the dropdown in the yaml form to populate tags into
       see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
-    default: 'version'
+    default: version
     type: string
   package:
-    description: 'The name of the published package'
+    description: The name of the published package
     default: ${{ github.event.repository.name }}
     type: string
   registry:
-    description: 'The name of the registry the package is published at'
+    description: The name of the registry the package is published at
     default: 'npm'
     type: string
     options:
       - npm
       - github
   order:
-    description: 'Display order of populated tags (`asc | desc`)'
+    description: Display order of populated tags (`asc | desc`)
     default: 'desc'
     type: choice
     options:
       - desc
       - asc
   limit_to:
-    description: 'Limit populated tags'
+    description: Limit populated tags
     type: number
   semver:
-    description: 'A semver range query used to filter satisfying tags, see `semver#satisfies`'
+    description: A semver range query used to filter satisfying tags, see `semver#satisfies`
     type: string
   tags:
     description: |
