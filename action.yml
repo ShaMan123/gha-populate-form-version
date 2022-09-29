@@ -6,28 +6,26 @@ author: ShaMan123
 branding:
   icon: hash
   color: black
+
 inputs:
   github_token:
     description: Github token
     default: ${{ github.token }}
-  ref:
-    description: Github ref/branch to update, inferred from the event type if omitted
-    type: string
   template:
     description: |
       The location of the template file used to build the form, useful for ease of maintenance
-      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+      see https://github.com/ShaMan123/gha-form-dropdown-options
     type: string
   form:
     description: |
       The location of the yaml form file
-      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+      see https://github.com/ShaMan123/gha-form-dropdown-options
     default: .github/ISSUE_TEMPLATE/bug_report.yml
     type: string
   dropdown:
     description: |
       The id of the dropdown in the yaml form to populate tags into
-      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+      see https://github.com/ShaMan123/gha-form-dropdown-options
     default: version
     type: string
   package:
@@ -59,18 +57,19 @@ inputs:
       A stringified array of tags overriding fetching `package` tags from `registry`
       Overrides `order`, `limit_to` and dismisses outputs as well'
 
-      Consider using https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options directly
+      Consider using https://github.com/ShaMan123/gha-form-dropdown-options directly
     type: string
   commit_message:
-    description: see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+    description: see https://github.com/ShaMan123/gha-form-dropdown-options
     default: 'chore(): update bug report version'
     type: string
   dry_run:
     description: |
       When set to `true` will not commit the modified yaml form
-      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
+      see https://github.com/ShaMan123/gha-form-dropdown-options
     default: false
     type: boolean
+
 outputs:
   # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#example-declaring-outputs-for-composite-actions
   tags:
@@ -79,11 +78,11 @@ outputs:
   latest:
     description: Latest tag of `package` in `registry`
     value: ${{ steps.main.outputs.latest }}
-  ref:
+  pushed:
     description: |
-      Github ref/branch checked out and updated by the action
-      see https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options
-    value: ${{ steps.write.outputs.ref }}
+      see https://github.com/ShaMan123/gha-form-dropdown-options
+    value: ${{ steps.write.outputs.pushed }}
+
 runs:
   using: composite
   steps:
@@ -106,7 +105,6 @@ runs:
       uses: ShaMan123/gha-form-dropdown-options@v1.0.0
       with:
         template: ${{ inputs.template }}
-        ref: ${{ inputs.ref }}
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
         options: ${{ inputs.tags || steps.main.outputs.tags }}
