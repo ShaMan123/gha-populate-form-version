@@ -81,7 +81,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           registry: github
           semver: '>=0.1.21'
-          commit_message: 'chore(): update bug report'
       - name: Update react-native-math-view
         uses: ./
         with:
