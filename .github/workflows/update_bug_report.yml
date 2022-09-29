@@ -36,9 +36,9 @@ jobs:
         # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
         run: |
           BRANCH=""
-          if [ ${{ github.event_name == 'release' || github.event_name == 'create' }} ]; then
+          if [ ${{ github.event_name == 'release' || github.event_name == 'create' }} == true ]; then
             BRANCH=${{ github.event.repository.default_branch }}
-          elif [ ${{ github.event_name == 'pull_request' }} ]; then
+          elif [ ${{ github.event_name == 'pull_request' }} == true ]; then
             BRANCH=${{ github.head_ref }}
           else
             BRANCH=${{ github.ref }}
