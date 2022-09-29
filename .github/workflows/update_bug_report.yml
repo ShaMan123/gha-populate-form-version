@@ -40,12 +40,12 @@ jobs:
           elif [ ${{ github.event_name == 'pull_request' }} ]; then
             BRANCH=${{ github.head_ref }}
           fi
-          echo "::set-output name=name::$BRANCH"
-      - name: Checkout ${{ steps.branch.outputs.name }}
+          echo "job_ref=$BRANCH" >> $GITHUB_ENV
+      - name: Checkout ${{ env.job_ref }}
         # used for testing this action, needed to reference the local action
         uses: actions/checkout@v3
         with:
-          ref: ${{ steps.branch.outputs.name }}
+          ref: ${{ env.job_ref }}
       - name: Update fabric
         id: fabric
         uses: ./
