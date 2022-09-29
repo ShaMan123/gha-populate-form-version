@@ -65,13 +65,10 @@ inputs:
     type: string
   dry_run:
     description: |
-      When set to `true` will not commit the modified yaml form
-      see https://github.com/ShaMan123/gha-form-dropdown-options
-    default: false
+      Pass `no-write` to leave the form untouched, stricter than `no-commit`
+      Pass `no-commit` to leave the git history untouched
     type: choice
     options:
-      - true
-      - false
       - no-write
       - no-commit
 
@@ -106,6 +103,7 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Set dropdown options
       id: write
+      if: ${{ !inputs.dry_run }}
       uses: ShaMan123/gha-form-dropdown-options@v1.0.1
       with:
         template: ${{ inputs.template }}
@@ -113,4 +111,4 @@ runs:
         dropdown: ${{ inputs.dropdown }}
         options: ${{ inputs.tags || steps.main.outputs.tags }}
         commit_message: ${{ inputs.commit_message }}
-        dry_run: ${{ inputs.dry_run }}
+        dry_run: ${{ inputs.dry_run == 'no-commit' }}
