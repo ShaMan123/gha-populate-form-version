@@ -440,16 +440,18 @@ body:
       label: Github releases of triggering repo + semver option
       description: Releases of this repo
       options:
-        - v7.0.0-alpha.3
-        - v6.5.4
-        - v7.0.0-alpha.2
-        - v7.0.0-alpha
-        - v6.5.3
-        - v6.5.2
-        - v6.5.1
-        - v6.5.0
-        - v6.5.0-rc.4
-        - v6.5.0-rc.3
+        - v1.2.0
+        - v1.1.0
+        - v1.0.0
+        - v0.4.3
+        - v0.4.2
+        - v0.4.1
+        - v0.4.0
+        - v0.3.2
+        - v0.3.1
+        - v0.3.0
+        - v0.2.0
+        - v0.1.21
     validations:
       required: true
   - type: dropdown
