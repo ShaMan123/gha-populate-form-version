@@ -13,7 +13,7 @@ A github action populating an [issue forms](https://docs.github.com/en/communiti
 
 ## Configuring
 
-See `inputs` in the [spec](/action.yml).
+See `inputs` and `outputs` in the [spec](/action.yml).
 
 Follow [this workflow](.github/workflows/update_bug_report.yml).\
 Replace the `uses: ./` directive to point to [![published action ](https://img.shields.io/github/v/tag/ShaMan123/gha-populate-form-version?label=ShaMan123%2Fgha-populate-form-version%40&sort=semver)](https://github.com/marketplace/actions/issue-forms-version-dropdown).
