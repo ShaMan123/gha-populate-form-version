@@ -103,7 +103,7 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Set dropdown options
       id: write
-      uses: ShaMan123/gha-form-dropdown-options@v0.1.0
+      uses: ShaMan123/gha-form-dropdown-options@v1.0.0
       with:
         template: ${{ inputs.template }}
         ref: ${{ inputs.ref }}
