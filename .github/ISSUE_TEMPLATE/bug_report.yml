@@ -495,6 +495,7 @@ body:
         - 1.0.0-alpha.1
         - 0.27.2
         - 0.27.1
+        - 0.27.0
         - 0.26.1
         - 0.26.0
         - 0.25.0
@@ -521,11 +522,11 @@ body:
         - lodash@4.17.19
         - lodash@4.17.18
         - lodash@4.17.17
+        - pixijs@v6.5.5
         - pixijs@v7.0.0-alpha.3
         - pixijs@v6.5.4
         - pixijs@v7.0.0-alpha.2
         - pixijs@v7.0.0-alpha
-        - pixijs@v6.5.3
     validations:
       required: false
   - type: textarea
