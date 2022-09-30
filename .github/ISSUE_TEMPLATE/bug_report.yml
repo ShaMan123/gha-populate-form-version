@@ -19,6 +19,7 @@ body:
     attributes:
       label: Select Release Version
       options:
+        - v1.2.0-rc.2
         - v1.2.0-rc.1
         - v1.2.0-rc.0
         - v1.2.0
