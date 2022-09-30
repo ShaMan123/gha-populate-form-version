@@ -1,138 +1,32 @@
-name: 🚀 Update Bug Report
+name: 🐞 Update Bug Report
 
 on:
-  # used for testing this action
-  # you shouldn't use this trigger in production
-  push:
-    branches:
-      - main
-
-  # used for testing this action
-  # you shouldn't use this trigger in production
-  pull_request:
-    branches: [main]
-
-  # use in production
   workflow_dispatch:
-
-  # use in production
   release:
-    branches:
-      - main
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
     types: [published]
-
-  # use in production
-  schedule:
-    # runs on Monday midnight
-    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
-    - cron: '0 0 * * 1'
 
 jobs:
   update-bug-report:
     runs-on: ubuntu-latest
     name: Update bug report
     steps:
-      - name: 'TEST: Get branch for job'
-        # used for testing this action, needed to reference the local action
-        id: branch
-        uses: actions/github-script@v6
+      - uses: actions/checkout@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          result-encoding: string
-          script: |
-            switch ('${{ github.event_name }}') {
-              case 'pull_request':
-                return '${{ github.head_ref }}';
-              case 'release':
-                return '${{ github.event.repository.default_branch }}';
-              default:
-                return '${{ github.ref }}';
-            }
-      - name: 'TEST: Checkout ${{ steps.branch.outputs.result }}'
-        # used for testing this action, needed to reference the local action
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ steps.branch.outputs.result }}
-      - name: Update fabric
-        id: fabric
+          # uncomment to update the default branch always
+          # ref: ${{ github.event.repository.default_branch }}
+          # update the branch that the release was created from
+          ref: ${{ github.event.release.target_commitish }}
+      - name: Update version
         uses: ./
         with:
-          package: fabric
-          dropdown: fabric
-      - name: Update fabric tags
-        uses: ./
-        with:
-          # needed to fetch tags with the github client
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: fabric_tags
-          registry: github
-          package: fabricjs/fabric.js
-      - name: Update lodash
-        id: lodash
-        uses: ./
-        with:
-          package: lodash
-          dropdown: lodash
-          limit_to: 20
-      - name: Update self
-        uses: ./
-        with:
-          # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
           registry: github
-          semver: '>=0.1.21'
-      - name: Update react-native-math-view
-        uses: ./
-        with:
-          # needed to fetch tags with the github client
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: math
-          registry: github
-          package: react-native-math-view
-      - name: Update node
+      - name: Update node version
         id: node
         uses: ./
         with:
-          dropdown: node_version
+          dropdown: _node_version
           package: node
-          order: asc
-          limit_to: 15
-      - name: Dry Run Axios
-        id: axios
-        uses: ./
-        with:
-          package: axios
-          limit_to: 10
-          dry_run: true
-      - name: Dry Run pixijs
-        id: pixijs
-        uses: ./
-        with:
-          package: pixijs/pixijs
-          registry: github
-          limit_to: 10
-          dry_run: true
-      - name: Update copy
-        uses: ./
-        with:
-          dropdown: copy
-          tags: ${{ steps.axios.outputs.tags }}
-      - name: Mock tags
-        # This step demonstrates how to generate tags
-        # Consider using the underlying action https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options directly
-        id: mock_tags
-        uses: actions/github-script@v6
-        env:
-          NODE_LATEST_VERSION: ${{ steps.node.outputs.latest }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          result-encoding: string
-          script: |
-            return ['1.2.3', '4.5.6', '7.8.9', `node@${process.env.NODE_LATEST_VERSION}`, 'fabric@${{ steps.fabric.outputs.latest }}']
-              .concat(${{ steps.lodash.outputs.tags }}.slice(0, 5).map(tag => `lodash@${tag}`))
-              .concat(${{ steps.pixijs.outputs.tags }}.slice(0, 5).map(tag => `pixijs@${tag}`));
-      - name: Update generated
-        uses: ./
-        with:
-          dropdown: generated
-          tags: ${{ steps.mock_tags.outputs.result }}
+          semver: '>=12.0.0'
+          commit_message: 'chore(): update bug report / node'

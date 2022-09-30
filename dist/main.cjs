@@ -89788,6 +89788,7 @@ function getOctokit(token, options, ...additionalPlugins) {
 github.getOctokit = getOctokit;
 
 function listNPMTags(packageName) {
+	coreExports.info(`Fetching npm versions for ${packageName}`);
 	return JSON.parse(
 		cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
 	).reverse();
@@ -89800,6 +89801,7 @@ async function listGithubReleases(repoName) {
 		owner = github.context.repo.owner;
 		repo = repoName;
 	}
+	coreExports.info(`Fetching github releases for ${owner}/${repo}`);
 	let page = 1;
 	const tags = [];
 	async function fetch() {
@@ -89853,6 +89855,7 @@ async function run() {
 		const semverRange = coreExports.getInput('semver', {
 			trimWhitespace: true,
 		});
+		coreExports.info(`Fetching tags from ${registry}`);
 		const list = await listTags(registry, packageName);
 		const latest = list[0];
 		if (order === 'asc') {

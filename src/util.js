@@ -1,7 +1,9 @@
 import github from '@actions/github';
+import { info } from '@actions/core';
 import cp from 'node:child_process';
 
 function listNPMTags(packageName) {
+	info(`Fetching npm versions for ${packageName}`);
 	return JSON.parse(
 		cp.execSync(`npm view ${packageName} versions --json`).toString(),
 	).reverse();
@@ -14,6 +16,7 @@ async function listGithubReleases(repoName) {
 		owner = github.context.repo.owner;
 		repo = repoName;
 	}
+	info(`Fetching github releases for ${owner}/${repo}`);
 	let page = 1;
 	const tags = [];
 	async function fetch() {

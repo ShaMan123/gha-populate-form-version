@@ -62,6 +62,7 @@ describe('action', function () {
 		dotenv.config();
 	});
 	it('fetches', async function () {
+		this.timeout(20000);
 		assert.ok(
 			(await listTags('npm', '  fabric ')).length > 0,
 			'should fetch tags from npm',
@@ -73,6 +74,24 @@ describe('action', function () {
 		assert.ok(
 			(await listTags('github', 'nodejs/node')).length > 300,
 			'should paginate and fetch all results',
+		);
+		assert.deepEqual(
+			(await listTags('github', 'ShaMan123/gha-populate-form-version'))
+				.reverse()
+				.slice(0, 10),
+			[
+				'v0.1.0',
+				'v0.1.1',
+				'v0.1.2',
+				'v0.1.11',
+				'v0.1.12',
+				'v0.1.13',
+				'v0.1.14',
+				'v0.1.15',
+				'v0.1.16',
+				'v0.1.17',
+			],
+			'tags should match',
 		);
 	});
 	it.skip('workflow_dispatch', async function () {
