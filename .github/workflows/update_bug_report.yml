@@ -55,14 +55,14 @@ jobs:
         uses: ./
         with:
           package: fabric
-          dropdown: fabric
+          dropdown: $fabric
           dry_run: no-commit
       - name: Update fabric tags
         uses: ./
         with:
           # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: fabric_tags
+          dropdown: $fabric_tags
           registry: github
           package: fabricjs/fabric.js
           commit_message: 'chore(): update bug report / fabric'
@@ -71,7 +71,7 @@ jobs:
         uses: ./
         with:
           package: lodash
-          dropdown: lodash
+          dropdown: $lodash
           limit_to: 20
           commit_message: 'chore(): update bug report / lodash'
       - name: Update self
@@ -86,7 +86,7 @@ jobs:
         with:
           # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: math
+          dropdown: $math
           registry: github
           package: react-native-math-view
           commit_message: 'chore(): update bug report / math'
@@ -94,7 +94,7 @@ jobs:
         id: node
         uses: ./
         with:
-          dropdown: node_version
+          dropdown: $node_version
           package: node
           order: asc
           limit_to: 15
@@ -110,7 +110,7 @@ jobs:
         id: pixijs
         uses: ./
         with:
-          dropdown: copy
+          dropdown: $copy
           package: pixijs/pixijs
           registry: github
           limit_to: 10
@@ -118,7 +118,7 @@ jobs:
       - name: Update copy
         uses: ./
         with:
-          dropdown: copy
+          dropdown: $copy
           tags: ${{ steps.axios.outputs.tags }}
           dry_run: no-commit
       - name: Mock tags
@@ -138,6 +138,6 @@ jobs:
       - name: Update generated
         uses: ./
         with:
-          dropdown: generated
+          dropdown: $generated
           tags: ${{ steps.mock_tags.outputs.result }}
           commit_message: 'chore(): update bug report / generated'

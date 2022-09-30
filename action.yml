@@ -1,7 +1,7 @@
 name: Issue Forms Version Dropdown
 description: |
   Populates options for a version dropdown issue forms element
-  Extends ShaMan123/gha-form-dropdown-options
+  Extends https://github.com/ShaMan123/gha-form-dropdown-options
 author: ShaMan123
 branding:
   icon: hash
@@ -11,75 +11,108 @@ inputs:
   github_token:
     description: Github token
     default: ${{ github.token }}
-  template:
-    description: |
-      The location of the template file used to build the form, useful for ease of maintenance
-      see https://github.com/ShaMan123/gha-form-dropdown-options
-    type: string
-  form:
-    description: |
-      The location of the yaml form file
-      see https://github.com/ShaMan123/gha-form-dropdown-options
-    default: .github/ISSUE_TEMPLATE/bug_report.yml
-    type: string
-  dropdown:
-    description: |
-      The id of the dropdown in the yaml form to populate tags into
-      see https://github.com/ShaMan123/gha-form-dropdown-options
-    default: version
-    type: string
+
   package:
     description: The name of the published package
     default: ${{ github.event.repository.name }}
     type: string
+
   registry:
     description: The name of the registry the package is published at
-    default: 'npm'
+    default: npm
     type: string
     options:
       - npm
       - github
+
   order:
-    description: Display order of populated tags (`asc | desc`)
-    default: 'desc'
+    description: Display order of populated tags
+    default: desc
     type: choice
     options:
       - desc
       - asc
+
   limit_to:
     description: Limit populated tags
     type: number
+
   semver:
-    description: A semver range query used to filter satisfying tags, see `semver#satisfies`
+    description: |
+      A semver range query used to filter satisfying tags
+      see [semver satisfies](https://github.com/npm/node-semver#ranges-1)
     type: string
+
   tags:
     description: |
       A stringified array of tags overriding fetching `package` tags from `registry`
-      Overrides `order`, `limit_to` and dismisses outputs as well'
+      Overrides `order`, `limit_to` and dismisses outputs as well
 
       Consider using https://github.com/ShaMan123/gha-form-dropdown-options directly
     type: string
-  commit_message:
-    description: see https://github.com/ShaMan123/gha-form-dropdown-options
-    default: 'chore(): update bug report version'
+
+  # inherited from https://github.com/ShaMan123/gha-form-dropdown-options
+
+  template:
+    description: |
+      The location of the template file used to build the form, useful for ease of maintenance
     type: string
+
+  form:
+    description: |
+      The location of the yaml form file
+    default: .github/ISSUE_TEMPLATE/bug_report.yml
+    type: string
+
+  dropdown:
+    description: |
+      The id of the dropdown in the yaml form to populate tags into prefixed with $
+    default: $version
+    type: string
+
+  label:
+    description: |
+      The label of the dropdown
+    type: string
+
+  description:
+    description: |
+      The description of the dropdown
+    type: string
+
+  commit_message:
+    type: string
+
   dry_run:
     description: |
-      Pass `no-write` to leave the form untouched, stricter than `no-commit`
-      Pass `no-commit` to leave the git history untouched
+      see https://github.com/ShaMan123/gha-form-dropdown-options for the rest
     type: choice
     options:
       - no-write
       - no-commit
+      - no-push
 
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#example-declaring-outputs-for-composite-actions
 outputs:
-  # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#example-declaring-outputs-for-composite-actions
   tags:
     description: A stringified array of the resulting tags
     value: ${{ steps.main.outputs.tags }}
+
   latest:
     description: Latest tag of `package` in `registry`
     value: ${{ steps.main.outputs.latest }}
+
+  # inherited from https://github.com/ShaMan123/gha-form-dropdown-options
+
+  form:
+    description: JSON stringified form
+    value: ${{ steps.write.outputs.form }}
+
+  modified:
+    description: |
+      see https://github.com/ShaMan123/gha-form-dropdown-options
+    value: ${{ steps.write.outputs.modified }}
+
   pushed:
     description: |
       see https://github.com/ShaMan123/gha-form-dropdown-options
@@ -103,12 +136,11 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Set dropdown options
       id: write
-      if: ${{ !inputs.dry_run }}
-      uses: ShaMan123/gha-form-dropdown-options@v1.0.1
+      uses: ShaMan123/gha-form-dropdown-options@v2.0.2
       with:
         template: ${{ inputs.template }}
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
         options: ${{ inputs.tags || steps.main.outputs.tags }}
         commit_message: ${{ inputs.commit_message }}
-        dry_run: ${{ inputs.dry_run == 'no-commit' }}
+        dry_run: ${{ inputs.dry_run }}
