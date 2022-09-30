@@ -21,6 +21,13 @@ body:
       options:
     validations:
       required: true
+  - type: dropdown
+    id: $node_version
+    attributes:
+      label: Select Node Version
+      options:
+    validations:
+      required: false
   - type: textarea
     id: steps
     attributes:
