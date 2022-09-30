@@ -1,8 +1,12 @@
 import github from '@actions/github';
 import { info } from '@actions/core';
 import cp from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
 function listNPMTags(packageName) {
+	if (!packageName) {
+		packageName = JSON.parse(readFileSync('package.json')).name;
+	}
 	info(`Fetching npm versions for ${packageName}`);
 	return JSON.parse(
 		cp.execSync(`npm view ${packageName} versions --json`).toString(),
@@ -12,9 +16,12 @@ async function listGithubReleases(repoName) {
 	let owner, repo;
 	if (repoName.indexOf('/') > -1) {
 		[owner, repo] = repoName.split('/');
-	} else {
+	} else if (repoName) {
 		owner = github.context.repo.owner;
 		repo = repoName;
+	} else {
+		owner = github.context.repo.owner;
+		repo = github.context.repo.repo;
 	}
 	info(`Fetching github releases for ${owner}/${repo}`);
 	let page = 1;

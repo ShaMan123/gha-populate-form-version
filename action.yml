@@ -13,8 +13,11 @@ inputs:
     default: ${{ github.token }}
 
   package:
-    description: The name of the published package
-    default: ${{ github.event.repository.name }}
+    description: |
+      The name of the published package
+      By default infers:
+      - npm package from `package.json`
+      - github repo from context
     type: string
 
   registry:
