@@ -56,7 +56,7 @@ jobs:
         with:
           package: fabric
           dropdown: $fabric
-          dry_run: no-commit
+          dry_run: no-push
       - name: Update fabric tags
         uses: ./
         with:
@@ -66,6 +66,7 @@ jobs:
           registry: github
           package: fabricjs/fabric.js
           commit_message: 'chore(): update bug report / fabric'
+          dry_run: no-push
       - name: Update lodash
         id: lodash
         uses: ./
@@ -74,6 +75,7 @@ jobs:
           dropdown: $lodash
           limit_to: 20
           commit_message: 'chore(): update bug report / lodash'
+          dry_run: no-push
       - name: Update self
         uses: ./
         with:
@@ -81,6 +83,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           registry: github
           semver: '>=0.1.21'
+          dry_run: no-push
       - name: Update react-native-math-view
         uses: ./
         with:
@@ -90,6 +93,7 @@ jobs:
           registry: github
           package: react-native-math-view
           commit_message: 'chore(): update bug report / math'
+          dry_run: no-push
       - name: Update node
         id: node
         uses: ./
@@ -99,6 +103,7 @@ jobs:
           order: asc
           limit_to: 15
           commit_message: 'chore(): update bug report / node'
+          dry_run: no-push
       - name: Dry Run Axios
         id: axios
         uses: ./
@@ -120,7 +125,7 @@ jobs:
         with:
           dropdown: $copy
           tags: ${{ steps.axios.outputs.tags }}
-          dry_run: no-commit
+          dry_run: no-push
       - name: Mock tags
         # This step demonstrates how to generate tags
         # Consider using the underlying action https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options directly
@@ -141,3 +146,8 @@ jobs:
           dropdown: $generated
           tags: ${{ steps.mock_tags.outputs.result }}
           commit_message: 'chore(): update bug report / generated'
+          dry_run: no-push
+      - run: |
+          if [[ $(git log origin/update-action..update-action | wc -c) -gt 0 ]]; then
+            git push
+          fi
