@@ -15,7 +15,7 @@ body:
         - label: I agree to follow this project's Code of Conduct
           required: true
   - type: dropdown
-    id: $version
+    id: _version
     attributes:
       label: Select Release Version
       options:
@@ -50,7 +50,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: $node_version
+    id: _node_version
     attributes:
       label: Select Node Version
       options:

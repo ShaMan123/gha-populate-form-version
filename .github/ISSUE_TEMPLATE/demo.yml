@@ -15,7 +15,7 @@ body:
         - label: I agree to follow this project's Code of Conduct
           required: true
   - type: dropdown
-    id: $fabric
+    id: _fabric
     attributes:
       label: npm version
       description: fabric npm
@@ -281,7 +281,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: $fabric_tags
+    id: _fabric_tags
     attributes:
       label: Github Releases
       description: fabric tags
@@ -407,7 +407,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: $lodash
+    id: _lodash
     attributes:
       label: limit to 20
       description: lodash
@@ -435,7 +435,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: $version
+    id: _version
     attributes:
       label: Github releases of triggering repo + semver option
       description: Releases of this repo
@@ -455,7 +455,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: $math
+    id: _math
     attributes:
       label: Using owner of triggering repo
       description: Releases of `react-native-math-view`
@@ -464,7 +464,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: $node_version
+    id: _node_version
     attributes:
       label: asc, limit to 15
       description: node npm
@@ -487,7 +487,7 @@ body:
     validations:
       required: false
   - type: dropdown
-    id: $copy
+    id: _copy
     attributes:
       label: Using `outputs.tags` from a dry run
       description: Axios npm
@@ -505,7 +505,7 @@ body:
     validations:
       required: false
   - type: dropdown
-    id: $generated
+    id: _generated
     attributes:
       label: Generated Tags
       description: >-

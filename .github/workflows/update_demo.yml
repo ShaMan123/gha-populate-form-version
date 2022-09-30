@@ -57,7 +57,7 @@ jobs:
         uses: ./
         with:
           package: fabric
-          dropdown: $fabric
+          dropdown: _fabric
           dry_run: no-push
           form: .github/ISSUE_TEMPLATE/demo.yml
       - name: Update fabric tags
@@ -65,7 +65,7 @@ jobs:
         with:
           # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: $fabric_tags
+          dropdown: _fabric_tags
           registry: github
           package: fabricjs/fabric.js
           form: .github/ISSUE_TEMPLATE/demo.yml
@@ -76,7 +76,7 @@ jobs:
         uses: ./
         with:
           package: lodash
-          dropdown: $lodash
+          dropdown: _lodash
           limit_to: 20
           form: .github/ISSUE_TEMPLATE/demo.yml
           commit_message: 'chore(): update bug report / lodash'
@@ -95,7 +95,7 @@ jobs:
         with:
           # needed to fetch tags with the github client
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dropdown: $math
+          dropdown: _math
           registry: github
           package: react-native-math-view
           form: .github/ISSUE_TEMPLATE/demo.yml
@@ -105,7 +105,7 @@ jobs:
         id: node
         uses: ./
         with:
-          dropdown: $node_version
+          dropdown: _node_version
           package: node
           order: asc
           limit_to: 15
@@ -124,7 +124,7 @@ jobs:
         id: pixijs
         uses: ./
         with:
-          dropdown: $copy
+          dropdown: _copy
           package: pixijs/pixijs
           registry: github
           limit_to: 10
@@ -133,7 +133,7 @@ jobs:
       - name: Update copy
         uses: ./
         with:
-          dropdown: $copy
+          dropdown: _copy
           tags: ${{ steps.axios.outputs.tags }}
           form: .github/ISSUE_TEMPLATE/demo.yml
           dry_run: no-push
@@ -154,7 +154,7 @@ jobs:
       - name: Update generated
         uses: ./
         with:
-          dropdown: $generated
+          dropdown: _generated
           tags: ${{ steps.mock_tags.outputs.result }}
           form: .github/ISSUE_TEMPLATE/demo.yml
           commit_message: 'chore(): update bug report / generated'

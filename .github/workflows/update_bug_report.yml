@@ -26,7 +26,7 @@ jobs:
         id: node
         uses: ./
         with:
-          dropdown: $node_version
+          dropdown: _node_version
           package: node
           semver: '>=12.0.0'
           commit_message: 'chore(): update bug report / node'
