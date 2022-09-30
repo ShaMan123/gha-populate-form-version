@@ -89788,6 +89788,9 @@ function getOctokit(token, options, ...additionalPlugins) {
 github.getOctokit = getOctokit;
 
 function listNPMTags(packageName) {
+	if (!packageName) {
+		packageName = JSON.parse(require$$0$1.readFileSync('package.json')).name;
+	}
 	coreExports.info(`Fetching npm versions for ${packageName}`);
 	return JSON.parse(
 		cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
@@ -89797,9 +89800,12 @@ async function listGithubReleases(repoName) {
 	let owner, repo;
 	if (repoName.indexOf('/') > -1) {
 		[owner, repo] = repoName.split('/');
-	} else {
+	} else if (repoName) {
 		owner = github.context.repo.owner;
 		repo = repoName;
+	} else {
+		owner = github.context.repo.owner;
+		repo = github.context.repo.repo;
 	}
 	coreExports.info(`Fetching github releases for ${owner}/${repo}`);
 	let page = 1;
@@ -89842,7 +89848,6 @@ async function run() {
 	try {
 		const packageName = coreExports.getInput('package', {
 			trimWhitespace: true,
-			required: true,
 		});
 		const registry = coreExports.getInput('registry', {
 			trimWhitespace: true,
