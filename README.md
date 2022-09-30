@@ -19,16 +19,16 @@ PRs adding support to more registries are WELCOME.
 ## Configuring
 
 - Follow [this workflow](.github/workflows/update_bug_report.yml).
-- Replace the `uses: ./` directive to point to [![published action ](https://img.shields.io/github/v/tag/ShaMan123/gha-populate-form-version?label=ShaMan123%2Fgha-populate-form-version%40&sort=semver)](https://github.com/marketplace/actions/issue-forms-version-dropdown).
+- Replace the `uses: ./` directive to point to [![published action](https://img.shields.io/github/v/tag/ShaMan123/gha-populate-form-version?label=ShaMan123%2Fgha-populate-form-version%40&sort=semver)](https://github.com/marketplace/actions/issue-forms-version-dropdown).
 - See `inputs` and `outputs` in the [spec](/action.yml).
 
 Take a look at the resulting [issue template](../../issues/new?template=bug_report.yml).
-See the [bot](../../commits?author=github-actions%5Bbot%5D) in action.
+And see the [bot](../../commits?author=github-actions%5Bbot%5D) in action.
 
 https://user-images.githubusercontent.com/34343793/192214911-623c0755-3a11-4294-951c-3a03b36fd204.mp4
 
 ## Advanced Usage
 
-Refer to the [demo workflow](.github/workflows/update_demo.yml) the populates version for the [demo report](../../issues/new?template=demo.yml).
+Refer to the [demo workflow](.github/workflows/update_demo.yml) which populates version dropdowns for the [demo report](../../issues/new?template=demo.yml).
 
 Refer to [![issue-forms-dropdown-options](https://img.shields.io/github/v/tag/ShaMan123/gha-form-dropdown-options?label=ShaMan123%2Fgha-form-dropdown-options%40&sort=semver)](https://github.com/marketplace/actions/issue-forms-dropdown-options) for [advanced usage](https://github.com/ShaMan123/gha-form-dropdown-options#advanced-usage) such as [creating a PR](https://github.com/ShaMan123/gha-form-dropdown-options#creating-a-pr) to update a bug report, [using a template](https://github.com/ShaMan123/gha-form-dropdown-options#templates) and more.
