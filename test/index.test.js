@@ -62,6 +62,7 @@ describe('action', function () {
 		dotenv.config();
 	});
 	it('fetches', async function () {
+		this.timeout(20000);
 		assert.ok(
 			(await listTags('npm', '  fabric ')).length > 0,
 			'should fetch tags from npm',
