@@ -67,7 +67,7 @@ inputs:
   dropdown:
     description: |
       The id of the dropdown in the yaml form to populate tags into prefixed with $
-    default: $version
+    default: _version
     type: string
 
   label:
