@@ -440,6 +440,7 @@ body:
       label: Github releases of triggering repo + semver option
       description: Releases of this repo
       options:
+        - v1.2.0-rc.0
         - v1.2.0
         - v1.1.0
         - v1.0.0
@@ -450,8 +451,22 @@ body:
         - v0.3.2
         - v0.3.1
         - v0.3.0
+        - v0.2.1-rc1
+        - v0.2.1-rc
         - v0.2.0
         - v0.1.21
+        - v0.1.19
+        - v0.1.18
+        - v0.1.17
+        - v0.1.16
+        - v0.1.15
+        - v0.1.14
+        - v0.1.13
+        - v0.1.12
+        - v0.1.11
+        - v0.1.2
+        - v0.1.1
+        - v0.1.0
     validations:
       required: true
   - type: dropdown
