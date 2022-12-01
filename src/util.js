@@ -8,9 +8,14 @@ function listNPMTags(packageName) {
 		packageName = JSON.parse(readFileSync('package.json')).name;
 	}
 	info(`Fetching npm versions for ${packageName}`);
-	return JSON.parse(
-		cp.execSync(`npm view ${packageName} versions --json`).toString(),
-	).reverse();
+	// safeguard in case there is 1 version (the cmd returns a string)
+	return []
+		.concat(
+			JSON.parse(
+				cp.execSync(`npm view ${packageName} versions --json`).toString(),
+			),
+		)
+		.reverse();
 }
 async function listGithubReleases(repoName) {
 	let owner, repo;

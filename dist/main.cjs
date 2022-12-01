@@ -89792,9 +89792,14 @@ function listNPMTags(packageName) {
 		packageName = JSON.parse(require$$0$1.readFileSync('package.json')).name;
 	}
 	coreExports.info(`Fetching npm versions for ${packageName}`);
-	return JSON.parse(
-		cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
-	).reverse();
+	// safeguard in case there is 1 version (the cmd returns a string)
+	return []
+		.concat(
+			JSON.parse(
+				cp__default["default"].execSync(`npm view ${packageName} versions --json`).toString(),
+			),
+		)
+		.reverse();
 }
 async function listGithubReleases(repoName) {
 	let owner, repo;
