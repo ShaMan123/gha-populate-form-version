@@ -1,6 +1,6 @@
 {
 	"name": "gha-populate-form-version",
-	"version": "0.0.1",
+	"version": "2.0.2",
 	"description": "A github action populating the package version dropdown of a yaml form",
 	"license": "MIT",
 	"author": "ShaMan123",
