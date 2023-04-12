@@ -11,6 +11,12 @@ inputs:
   github_token:
     description: Github token
     default: ${{ github.token }}
+  github_user:
+    description: Github user
+    default: github-actions[bot]
+  github_email:
+    description: Github email
+    default: github-actions[bot]@users.noreply.github.com
 
   package:
     description: |
@@ -131,7 +137,7 @@ runs:
         node ${{ github.action_path }}/dist/main.cjs
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_PACKAGE: ${{ inputs.package }}
         INPUT_REGISTRY: ${{ inputs.registry }}
         INPUT_ORDER: ${{ inputs.order }}
@@ -139,8 +145,11 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Set dropdown options
       id: write
-      uses: ShaMan123/gha-form-dropdown-options@v2.0.3
+      uses: ynput/gha-form-dropdown-options@main
       with:
+        github_token: ${{ inputs.github_token }}
+        github_user: ${{ inputs.github_user }}
+        github_email: ${{ inputs.github_email }}
         template: ${{ inputs.template }}
         form: ${{ inputs.form }}
         dropdown: ${{ inputs.dropdown }}
