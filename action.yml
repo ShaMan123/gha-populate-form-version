@@ -145,7 +145,7 @@ runs:
         INPUT_SEMVER: ${{ inputs.semver }}
     - name: Set dropdown options
       id: write
-      uses: ynput/gha-form-dropdown-options@main
+      uses: ShaMan123/gha-form-dropdown-options@v2.0.3
       with:
         github_token: ${{ inputs.github_token }}
         github_user: ${{ inputs.github_user }}
