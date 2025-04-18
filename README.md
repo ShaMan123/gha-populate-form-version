@@ -50,8 +50,8 @@ npm test
 
 ## Release
 
+Create a release after bumping a version and committing it:
+
 ```
 npm version <major/minor/patch>
 ```
-
-Create a release
