@@ -32,3 +32,18 @@ https://user-images.githubusercontent.com/34343793/192214911-623c0755-3a11-4294-
 Refer to the [demo workflow](.github/workflows/update_demo.yml) which populates version dropdowns for the [demo report](../../issues/new?template=demo.yml).
 
 Refer to [![issue-forms-dropdown-options](https://img.shields.io/github/v/tag/ShaMan123/gha-form-dropdown-options?label=ShaMan123%2Fgha-form-dropdown-options%40&sort=semver)](https://github.com/marketplace/actions/issue-forms-dropdown-options) for [advanced usage](https://github.com/ShaMan123/gha-form-dropdown-options#advanced-usage) such as [creating a PR](https://github.com/ShaMan123/gha-form-dropdown-options#creating-a-pr) to update a bug report, [using a template](https://github.com/ShaMan123/gha-form-dropdown-options#templates) and more.
+
+## Developing
+
+- Create a [github access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)
+- Add it to `.env`:
+
+```
+GITHUB_TOKEN=
+```
+
+```bash
+npm i
+npm start
+npm test
+```
