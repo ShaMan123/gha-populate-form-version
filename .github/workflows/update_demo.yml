@@ -49,7 +49,7 @@ jobs:
           echo "Branch: $BRANCH"
       - name: Checkout ${{ env.job_ref }}
         # used for testing this action, needed to reference the local action
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.job_ref }}
       - name: Update fabric
@@ -141,7 +141,7 @@ jobs:
         # This step demonstrates how to generate tags
         # Consider using the underlying action https://github.com/ShaMan123/gha-form-dropdown-options#issue-forms-dropdown-options directly
         id: mock_tags
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           NODE_LATEST_VERSION: ${{ steps.node.outputs.latest }}
         with:

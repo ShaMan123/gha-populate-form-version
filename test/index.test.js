@@ -33,24 +33,39 @@ function parseInputs(inputs) {
 }
 
 function assertOutputs(inputs, expectedTags) {
-	const { latest, tags } = execSync('node dist/main.cjs', {
+	const stdout = execSync('node dist/main.cjs', {
 		env: {
 			...process.env,
 			...parseInputs(inputs),
 			GITHUB_REPOSITORY: 'ShaMan123/gha-populate-form-version',
 		},
-	})
-		.toString()
-		.trim()
-		.split('\n')
-		.reduce((outputs, value) => {
-			const directive = '::set-output name=';
-			if (value.includes(directive)) {
-				const [key, val] = value.trim().replace(directive, '').split('::');
-				outputs[key] = val;
-			}
-			return outputs;
-		}, {});
+	});
+
+	let output;
+	if (fs.existsSync(process.env.GITHUB_OUTPUT)) {
+		const ghaEnvFile = fs.readFileSync(process.env.GITHUB_OUTPUT).toString();
+		output = Object.fromEntries(
+			ghaEnvFile.split(/^ghadelimiter_.+\n/gm).map((entry) => {
+				const [header, body] = entry.split('\n');
+				return [header.split('<<')[0], body];
+			}),
+		);
+	} else {
+		output = stdout
+			.toString()
+			.trim()
+			.split('\n')
+			.reduce((outputs, value) => {
+				const directive = '::set-output name=';
+				if (value.includes(directive)) {
+					const [key, val] = value.trim().replace(directive, '').split('::');
+					outputs[key] = val;
+				}
+				return outputs;
+			}, {});
+	}
+
+	const { latest, tags } = output;
 	assert.deepEqual(JSON.parse(tags), expectedTags, 'should set outputs.tags');
 	assert.ok(latest, 'should set outputs.latest');
 }

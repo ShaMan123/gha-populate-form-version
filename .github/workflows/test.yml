@@ -10,11 +10,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Compare the expected and actual dist/ after building
+        run: |
+          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build.  See status below:"
+            git diff
+            exit 1
+          fi
       - run: npm test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
