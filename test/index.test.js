@@ -2,6 +2,7 @@ import github from '@actions/github';
 import { execSync } from 'child_process';
 import * as dotenv from 'dotenv';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { listTags } from '../src/util.js';
