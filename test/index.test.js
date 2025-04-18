@@ -76,6 +76,9 @@ describe('action', function () {
 	this.beforeAll(() => {
 		// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 		dotenv.config();
+		if (!process.env.GITHUB_TOKEN) {
+			throw new Error('GITHUB_TOKEN not found');
+		}
 	});
 	it('fetches', async function () {
 		this.timeout(20000);
