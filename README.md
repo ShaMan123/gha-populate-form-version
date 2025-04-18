@@ -47,3 +47,11 @@ npm i
 npm start
 npm test
 ```
+
+## Release
+
+```
+npm version <major/minor/patch>
+```
+
+Create a release
