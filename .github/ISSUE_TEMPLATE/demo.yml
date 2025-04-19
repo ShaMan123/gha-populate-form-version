@@ -604,16 +604,16 @@ body:
       label: Using `outputs.tags` from a dry run
       description: Axios npm
       options:
-        - 1.0.0-alpha.1
-        - 0.27.2
-        - 0.27.1
-        - 0.27.0
-        - 0.26.1
-        - 0.26.0
-        - 0.25.0
-        - 0.24.0
-        - 0.23.0
-        - 0.22.0
+        - 1.8.4
+        - 1.8.3
+        - 1.8.2
+        - 1.8.1
+        - 1.8.0
+        - 1.7.9
+        - 1.7.8
+        - 1.7.7
+        - 1.7.6
+        - 1.7.5
     validations:
       required: false
   - type: dropdown
