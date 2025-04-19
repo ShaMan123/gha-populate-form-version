@@ -19,7 +19,7 @@ body:
     id: _erase2d
     attributes:
       label: npm version
-      description: fabric npm
+      description: '@erase2/fabric npm'
       options:
         - 1.1.7
         - 1.1.6
