@@ -343,6 +343,57 @@ body:
       label: Github Releases
       description: fabric tags
       options:
+        - v664
+        - v663
+        - v552
+        - v662
+        - v661
+        - v660
+        - v654
+        - v551
+        - v550
+        - v653
+        - v652
+        - v651
+        - v542b
+        - v650
+        - v541
+        - v643
+        - v642
+        - v641
+        - v640
+        - v630
+        - v620
+        - v610
+        - v540
+        - v6.0.2
+        - v6.0.1
+        - v6.0.0-rc5
+        - v6.0.0-rc4
+        - v6.0.0-rc3
+        - v6.0.0-rc2
+        - v6.0.0-rc1
+        - v6.0.0-beta20
+        - v6.0.0-beta19
+        - v6.0.0-beta18
+        - v6.0.0-beta17
+        - v6.0.0-beta16
+        - v6.0.0-beta15
+        - v6.0.0-beta14
+        - v6.0.0-beta13
+        - v6.0.0-beta12
+        - v6.0.0-beta11
+        - v6.0.0-beta10
+        - v6.0.0-beta9
+        - v6.0.0-beta8
+        - v6.0.0-beta7
+        - v6.0.0-beta6
+        - v6.0.0-beta5
+        - v6.0.0-beta4
+        - v6.0.0-beta3
+        - v6.0.0-beta2
+        - v6.0.0-beta1
+        - v5.3.1
         - v5.2.4
         - v5.2.3
         - v521
