@@ -158,8 +158,3 @@ jobs:
           tags: ${{ steps.mock_tags.outputs.result }}
           form: .github/ISSUE_TEMPLATE/demo.yml
           commit_message: 'chore(): update bug report / generated'
-          dry_run: no-push
-      - run: |
-          if [[ $(git log origin/update-action..update-action | wc -c) -gt 0 ]]; then
-            git push
-          fi
