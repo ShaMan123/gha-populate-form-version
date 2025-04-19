@@ -52,14 +52,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ env.job_ref }}
-      - name: Update fabric
-        id: fabric
+      - name: Update @erase2d/fabric
+        id: erase2d
         uses: ./
         with:
-          package: fabric
-          dropdown: _fabric
-          dry_run: no-push
+          package: '@erase2d/fabric'
+          dropdown: _erase2d
           form: .github/ISSUE_TEMPLATE/demo.yml
+          commit_message: 'chore(): update bug report / @erase2d/fabric'
+          dry_run: no-push
       - name: Update fabric tags
         uses: ./
         with:
@@ -69,7 +70,7 @@ jobs:
           registry: github
           package: fabricjs/fabric.js
           form: .github/ISSUE_TEMPLATE/demo.yml
-          commit_message: 'chore(): update bug report / fabric'
+          commit_message: 'chore(): update bug report / fabric tags'
           dry_run: no-push
       - name: Update lodash
         id: lodash
@@ -89,6 +90,7 @@ jobs:
           registry: github
           semver: '>=0.1.21'
           form: .github/ISSUE_TEMPLATE/demo.yml
+          commit_message: 'chore(): update bug report / self'
           dry_run: no-push
       - name: Update react-native-math-view
         uses: ./
@@ -148,7 +150,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
-            return ['1.2.3', '4.5.6', '7.8.9', `node@${process.env.NODE_LATEST_VERSION}`, 'fabric@${{ steps.fabric.outputs.latest }}']
+            return ['1.2.3', '4.5.6', '7.8.9', `node@${process.env.NODE_LATEST_VERSION}`, 'erase2d/fabric@${{ steps.erase2d.outputs.latest }}']
               .concat(${{ steps.lodash.outputs.tags }}.slice(0, 5).map(tag => `lodash@${tag}`))
               .concat(${{ steps.pixijs.outputs.tags }}.slice(0, 5).map(tag => `pixijs@${tag}`));
       - name: Update generated
@@ -158,8 +160,3 @@ jobs:
           tags: ${{ steps.mock_tags.outputs.result }}
           form: .github/ISSUE_TEMPLATE/demo.yml
           commit_message: 'chore(): update bug report / generated'
-          dry_run: no-push
-      - run: |
-          if [[ $(git log origin/update-action..update-action | wc -c) -gt 0 ]]; then
-            git push
-          fi
