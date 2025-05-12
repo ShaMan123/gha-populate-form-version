@@ -39,6 +39,7 @@ body:
       label: Github Releases
       description: fabric tags
       options:
+        - v665
         - v664
         - v663
         - v552
