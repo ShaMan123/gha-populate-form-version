@@ -335,11 +335,11 @@ body:
         - lodash@4.17.19
         - lodash@4.17.18
         - lodash@4.17.17
+        - pixijs@v8.10.1
+        - pixijs@v8.10.0
         - pixijs@v8.9.2
         - pixijs@v8.9.1
         - pixijs@v8.9.0
-        - pixijs@v7.4.3
-        - pixijs@v8.8.1
     validations:
       required: false
   - type: textarea
