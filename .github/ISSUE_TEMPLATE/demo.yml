@@ -39,6 +39,8 @@ body:
       label: Github Releases
       description: fabric tags
       options:
+        - v670
+        - v667
         - v666
         - v665
         - v664
