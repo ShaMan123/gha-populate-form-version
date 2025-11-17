@@ -310,6 +310,7 @@ body:
       label: Using `outputs.tags` from a dry run
       description: Axios npm
       options:
+        - 1.13.2
         - 1.13.1
         - 1.13.0
         - 1.12.2
@@ -319,7 +320,6 @@ body:
         - 1.10.0
         - 1.9.0
         - 1.8.4
-        - 1.8.3
     validations:
       required: false
   - type: dropdown
