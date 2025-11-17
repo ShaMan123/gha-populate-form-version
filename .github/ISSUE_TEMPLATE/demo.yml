@@ -40,6 +40,8 @@ body:
       label: Github Releases
       description: fabric tags
       options:
+        - v690
+        - v680
         - v700-beta1
         - v671
         - v670
