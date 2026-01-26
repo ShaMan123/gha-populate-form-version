@@ -232,6 +232,7 @@ body:
       label: limit to 20
       description: lodash
       options:
+        - 4.17.23
         - 4.17.21
         - 4.17.20
         - 4.17.19
@@ -251,7 +252,6 @@ body:
         - 4.17.2
         - 4.17.1
         - 4.17.0
-        - 4.16.6
     validations:
       required: true
   - type: dropdown
