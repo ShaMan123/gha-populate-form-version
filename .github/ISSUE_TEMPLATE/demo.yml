@@ -21,6 +21,7 @@ body:
       label: npm version
       description: '@erase2/fabric npm'
       options:
+        - 1.2.1
         - 1.2.0
         - 1.1.10
         - 1.1.9
