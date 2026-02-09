@@ -341,18 +341,18 @@ body:
         - 1.2.3
         - 4.5.6
         - 7.8.9
-        - node@25.5.0
-        - erase2d/fabric@1.2.0
+        - node@25.6.0
+        - erase2d/fabric@1.2.1
         - lodash@4.17.23
         - lodash@4.17.21
         - lodash@4.17.20
         - lodash@4.17.19
         - lodash@4.17.18
+        - pixijs@v8.16.0
         - pixijs@v8.15.0
         - pixijs@v8.15.0-rc
         - pixijs@v8.14.3
         - pixijs@v8.14.2
-        - pixijs@v8.14.1
     validations:
       required: false
   - type: textarea
