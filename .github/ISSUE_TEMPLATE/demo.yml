@@ -350,11 +350,11 @@ body:
         - lodash@4.17.23
         - lodash@4.17.21
         - lodash@4.17.20
+        - pixijs@v8.18.1
+        - pixijs@v8.18.0
         - pixijs@v8.17.1
         - pixijs@v8.17.0
         - pixijs@v8.16.0
-        - pixijs@v8.15.0
-        - pixijs@v8.15.0-rc
     validations:
       required: false
   - type: textarea
